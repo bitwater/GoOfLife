@@ -17,7 +17,7 @@ define([], function() {
     timeBetweenUpdates: 10000,
 
     // player settings
-    cellsPerPlayer: 30,
+    cellsPerPlayer: 20,
     lastSeenTimeout: 180000,
 
     // chat settings

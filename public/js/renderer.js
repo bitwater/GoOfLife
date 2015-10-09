@@ -565,9 +565,9 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function(Colorpi
 
   Renderer.prototype._handleClickRulesOverlay = function(event) {
     // make sure we're clicking the overlay and not the rules box content
-    if (event.target !== this.rulesEl) {
-      return false;
-    }
+    //if (event.target !== this.rulesEl) {
+    //  return false;
+    //}
 
     this.hideRules();
   };
