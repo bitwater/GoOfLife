@@ -19,7 +19,7 @@ module.exports = function(grunt) {
           name: 'main',
           out: 'public/js/main-built.js',
           paths: {
-              'socket.io': 'https://cdn.socket.io/socket.io-1.0.4'
+              'socket.io': 'https://cdn.socket.io/socket.io-1.3.7'
           }
         }
       }

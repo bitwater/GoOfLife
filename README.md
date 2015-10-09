@@ -1,7 +1,7 @@
 # Go of life (生命围棋)  Web
 双人对弈生命游戏围棋，让围棋活起来。
 
-这是我和张江在集智俱乐部，发起的生命围棋开源项目，详见[Wiki](http://http://wiki.swarma.net/index.php/%E7%94%9F%E5%91%BD%E6%B8%B8%E6%88%8F%E5%9B%B4%E6%A3%8B)
+这是我和张江在集智俱乐部，发起的生命围棋开源项目，详见[Wiki](http://wiki.swarma.net/index.php/%E7%94%9F%E5%91%BD%E6%B8%B8%E6%88%8F%E5%9B%B4%E6%A3%8B)
 
 Web端主要作为快速迭代和可传播的游戏原型，后续计划开发Android和iOS App。
 
