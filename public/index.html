@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="description"
+        content="This is a multiplayer version of Conway's Game of Life. Players compete in real-time for space on the board and are ranked on a leaderboard by the amount of cells they control.">
+  <meta name="viewport"
+        content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <title>Go of Life 生命围棋</title>
+  <link rel="shortcut icon" type="image/x-icon" id="favicon">
+  <link rel="stylesheet" href="css/transitions.css">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="js/lib/require.min.js" data-main="js/main.js"></script>
+</head>
+<body>
+<div id="timestamp-tooltip"></div>
+<div id="rules">
+  <div class="rules-box">
+    <p><a href="http://wiki.swarma.net/index.php/%E7%94%9F%E5%91%BD%E6%B8%B8%E6%88%8F%E5%9B%B4%E6%A3%8B"
+          target="_blank">生命围棋Wiki</a></p>
+
+    <p>Conway生命游戏规则：</p>
+
+    <p>1. 死细胞周围如果有3个活细胞，下一代则为活细胞</p>
+
+    <p>2. 活细胞周围如果少于2个或大于3个活细胞，下一代则为死细胞</p>
+
+    <p>3. 活细胞周围如果2或者3个活细胞，下一代仍为活细胞</p>
+
+    <p>竞争性生命游戏：遵循多数原则，当出现偶数个相等的情况时采用继承原则</p>
+
+    <p>每个格子对应一个或生活死的细胞，点击放置你的自由活细胞或一键随机生成，时间滴答一下生命游戏演化一次同时生成一个自由活细胞，最高分是你的历史最高活细胞数</p>
+
+    <p>版本：V0.1.1_alpha</p>
+
+    <p>正在玩命迭代开发中...</p>
+  </div>
+</div>
+<div class="container">
+  <h1 class="brand-name">Go of Life</h1>
+
+  <div class="links-outer">
+    <div class="table">
+      <ul class="links">
+        <li>
+          <a href="#" id="rules-link">说明</a>
+        </li>
+        <li>
+          <a href="https://github.com/luomiao3/GoOfLife" target="_blank">
+            Github
+          </a>
+        </li>
+        <li id="login-link-container">
+          <a href="#" id="login-link">登录</a>
+        </li>
+        <li id="leave-game-container">
+          <a href="#" id="leave-game">退出</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div id="connecting">
+    <div class="spinner"></div>
+    <h3>Connecting</h3>
+  </div>
+  <div id="game">
+    <canvas id="tickbar"></canvas>
+    <div class="canvas-container">
+      <canvas id="c"></canvas>
+      <div class="new-player-container">
+        <div id="new-player">
+          <div class="colorpicker">
+            <div>
+              点击选择颜色
+            </div>
+          </div>
+          <input type="text" class="player-name" placeholder="昵称">
+          <a href="#" class="play">开始</a>
+          <a href="#" id="observe">或旁观</a>
+
+          <div id="new-player-error-message"></div>
+        </div>
+      </div>
+    </div>
+    <div id="controls">
+      <div class="place-cells-container">
+        <a href="#" class="place-cells">自主放置</a>
+      </div>
+      <div class="place-cells-container">
+        <a href="#" class="place-cells enabled" id="place-random-cells">一键随机</a>
+      </div>
+    </div>
+    <div id="stats">
+      <div class="high-score-container">
+        最高分
+        <span id="high-score">0</span>
+      </div>
+      <div class="cell-count-container">
+        自由活细胞数
+        <span class="cell-count"></span>
+      </div>
+      <div class="cells-on-grid-container">
+                        <span id="cells-on-grid-stat">
+                            场上活细胞数
+                            <span class="cells-on-grid"></span>
+                        </span>
+      </div>
+      <div class="flash">
+        <div id="flash-news"></div>
+      </div>
+    </div>
+    <div class="boards">
+      <div class="leaderboard-container">
+        <h2>排行榜</h2>
+
+        <h3>最高分</h3>
+
+        <div id="leaderboard"></div>
+      </div>
+      <div class="players-online-container">
+        <h2>在线玩家</h2>
+
+        <h3>活细胞数</h3>
+
+        <div id="players-online"></div>
+      </div>
+      <div class="chat-container">
+        <h2>聊天</h2>
+        <!--<h3>Communicate and Strategize</h3>-->
+        <div id="chat">
+          <div id="chat-log"></div>
+          <input type="text" name="new-chat" id="new-chat" placeholder="输入..." maxlength="140">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer>
+  <div>
+    <p></p><a href="http://wiki.swarma.net/index.php/%E7%94%9F%E5%91%BD%E6%B8%B8%E6%88%8F%E5%9B%B4%E6%A3%8B" target="_blank">
+    Copyright © 2015 Go Of Life Wiki</a></p>
+  </div>
+</footer>
+</body>
+</html>
