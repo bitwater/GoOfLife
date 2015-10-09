@@ -133,7 +133,7 @@ define([], function() {
 
       this._broadcastPlayerConnect(socket, player);
 
-      socket.on('place_live_cells', this._handlePlaceLiveCells.bind(this));
+      socket.on('place_live_cells', this._handlePlaceLiveCells.bind(this, socket));
       socket.on('disconnect', this._handleDisconnect.bind(this, socket, player));
       socket.on('chat_message', this._handleChatMessage.bind(this));
 
@@ -175,12 +175,12 @@ define([], function() {
 
     this._broadcastPlayerConnect(socket, player);
 
-    socket.on('place_live_cells', this._handlePlaceLiveCells.bind(this));
+    socket.on('place_live_cells', this._handlePlaceLiveCells.bind(this, socket));
     socket.on('disconnect', this._handleDisconnect.bind(this, socket, player));
     socket.on('chat_message', this._handleChatMessage.bind(this));
   };
 
-  GameServer.prototype._handlePlaceLiveCells = function(message) {
+  GameServer.prototype._handlePlaceLiveCells = function(socket, message) {
     var cells = message.cells,
       player = this.playerManager.getPlayer(message.playerId),
       token = player.getToken();
@@ -200,8 +200,8 @@ define([], function() {
         player: player.transmission()
       });
     } else {
-      // do nothing for now
       console.log("no cells placed");
+      socket.emit("no_cells_placed", {msg: "无法落子..."})
     }
   };
 

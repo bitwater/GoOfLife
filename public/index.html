@@ -22,25 +22,14 @@
     <p><a href="http://wiki.swarma.net/index.php/%E7%94%9F%E5%91%BD%E6%B8%B8%E6%88%8F%E5%9B%B4%E6%A3%8B"
           target="_blank">生命围棋Wiki</a></p>
 
-    <p>Conway生命游戏规则：每个格子对应一个或生或死的细胞</p>
-
-    <p>1. 死细胞周围如果有3个活细胞，下一代则为活细胞</p>
-
-    <p>2. 活细胞周围如果少于2个或大于3个活细胞，下一代则为死细胞</p>
-
-    <p>3. 活细胞周围如果2或者3个活细胞，下一代仍为活细胞</p>
+    <p>Conway生命游戏规则：每个格子对应一个或生或死的细胞<br>1. 死细胞周围如果有3个活细胞，下一代则为活细胞
+      <br>2. 活细胞周围如果少于2个或大于3个活细胞，下一代则为死细胞<br>3. 活细胞周围如果2或者3个活细胞，下一代仍为活细胞</p>
 
     <p>竞争性生命游戏：遵循多数原则，当出现偶数个相等的情况时采用继承原则</p>
 
     <p>点击放下你的自由活细胞或一键随机生成，时间滴答一下生命游戏演化一次同时生成一个自由活细胞，最高分是你的历史最高活细胞数</p>
 
-    <p>版本：V0.1.1_alpha</p>
-
-    <p>正在玩命迭代开发中...</p>
-
-    <p>根据程序质能方程: Errors = more code^2</p>
-
-    <p>如有BUG 纯属正常</p>
+    <p>版本：V0.1.1_alpha<br>正在玩命开发迭代中...<br>根据程序质能方程：Errors = more code^2<br>如有Bug  纯属正常 :)</p>
   </div>
 </div>
 <div class="container">
@@ -65,6 +54,25 @@
         </li>
       </ul>
     </div>
+  </div>
+  <div id="stats">
+    <div class="cell-count-container">
+      自由活细胞：
+      <span class="cell-count"></span>
+    </div>
+    <div class="cells-on-grid-container">
+      <span id="cells-on-grid-stat">
+        场上活细胞：
+        <span class="cells-on-grid"></span>
+      </span>
+    </div>
+    <div class="high-score-container">
+      最高分：
+      <span id="high-score">0</span>
+    </div>
+  </div>
+  <div class="flash">
+    <div id="flash-news"></div>
   </div>
   <div id="connecting">
     <div class="spinner"></div>
@@ -97,25 +105,6 @@
         <a href="#" class="place-cells enabled" id="place-random-cells">随机生成</a>
       </div>
     </div>
-    <div id="stats">
-      <div class="high-score-container">
-        最高分
-        <span id="high-score">0</span>
-      </div>
-      <div class="cell-count-container">
-        自由活细胞：
-        <span class="cell-count"></span>
-      </div>
-      <div class="cells-on-grid-container">
-                        <span id="cells-on-grid-stat">
-                            场上活细胞：
-                            <span class="cells-on-grid"></span>
-                        </span>
-      </div>
-      <div class="flash">
-        <div id="flash-news"></div>
-      </div>
-    </div>
     <div class="boards">
       <div class="leaderboard-container">
         <h2>排行榜</h2>
@@ -144,7 +133,8 @@
 </div>
 <footer>
   <div>
-    <p></p><a href="http://wiki.swarma.net/index.php/%E7%94%9F%E5%91%BD%E6%B8%B8%E6%88%8F%E5%9B%B4%E6%A3%8B" target="_blank">
+    <p></p><a href="http://wiki.swarma.net/index.php/%E7%94%9F%E5%91%BD%E6%B8%B8%E6%88%8F%E5%9B%B4%E6%A3%8B"
+              target="_blank">
     Copyright © 2015 Go Of Life Wiki</a></p>
   </div>
 </footer>

@@ -86,6 +86,26 @@ html, body {
   text-decoration: underline;
 }
 
+#stats {
+  display: none;
+  text-align: center;
+  font-weight: 300;
+  margin-top: 3px;
+  text-transform: uppercase;
+  font-size: 12px;
+  cursor: default;
+}
+
+#stats div {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+#cells-on-grid-stat:hover {
+  font-weight: bold;
+}
+
+
 #rules {
   display: none;
   opacity: 0;
@@ -180,20 +200,6 @@ html, body {
 
 .place-cells.enabled {
   color: #222;
-}
-
-#stats {
-  display: none;
-  text-align: center;
-  font-weight: 300;
-  margin-top: 7px;
-  text-transform: uppercase;
-  font-size: 12px;
-  cursor: default;
-}
-
-#cells-on-grid-stat:hover {
-  font-weight: bold;
 }
 
 .canvas-container {
@@ -471,6 +477,7 @@ html, body {
 
 .flash {
   height: 5px;
+  margin-bottom: 8px;
   text-align: center;
 }
 

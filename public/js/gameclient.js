@@ -1,5 +1,5 @@
-define(['lib/socket.io'], function(io) {
-  var GameClient = function(app, game, playerManager) {
+define(['lib/socket.io'], function (io) {
+  var GameClient = function (app, game, playerManager) {
     this.app = app;
     this.game = game;
     this.playerManager = playerManager;
@@ -12,7 +12,7 @@ define(['lib/socket.io'], function(io) {
     this.updating = false;
   };
 
-  GameClient.prototype.init = function(callback) {
+  GameClient.prototype.init = function (callback) {
     var _this = this;
 
     this.callback = callback;
@@ -24,6 +24,7 @@ define(['lib/socket.io'], function(io) {
     this.socket.on('latency_echo', this._handleLatencyEcho.bind(this));
     this.socket.on('state', this._handleState.bind(this));
     this.socket.on('cells_placed', this._handleCellsPlaced.bind(this));
+    this.socket.on('no_cells_placed', this._handleNoCellsPlaced.bind(this));
     this.socket.on('player_connect', this._handlePlayerConnect.bind(this));
     this.socket.on('receive_new_player', this._handleReceiveNewPlayer.bind(this));
     this.socket.on('player_disconnect', this._handlePlayerDisconnect.bind(this));
@@ -31,18 +32,18 @@ define(['lib/socket.io'], function(io) {
     this.socket.on('chat_message', this._handleChatMessage.bind(this));
   };
 
-  GameClient.prototype.requestPlayer = function(token) {
-    this.socket.emit('request_player', { token: token });
+  GameClient.prototype.requestPlayer = function (token) {
+    this.socket.emit('request_player', {token: token});
   };
 
-  GameClient.prototype.requestNewPlayer = function(name, color) {
+  GameClient.prototype.requestNewPlayer = function (name, color) {
     name = name.trim();
-    this.socket.emit('request_new_player', { 'name': name, 'color': color });
+    this.socket.emit('request_new_player', {'name': name, 'color': color});
   };
 
-  GameClient.prototype.sendChatMessage = function(message) {
+  GameClient.prototype.sendChatMessage = function (message) {
     var player = this.playerManager.getLocalPlayer()
-      playerId = player.id,
+    playerId = player.id,
       token = this.app.getToken();
 
     this.socket.emit('chat_message', {
@@ -52,11 +53,11 @@ define(['lib/socket.io'], function(io) {
     });
   };
 
-  GameClient.prototype._handleCellsPlaced = function(message) {
+  GameClient.prototype._handleCellsPlaced = function (message) {
     var cells = message.cells,
       cellCount = message.cellCount,
       player = this.playerManager.getPlayer(message.player.id);
-    
+
     if (player) {
       player.setOnline(true);
     } else {
@@ -80,7 +81,11 @@ define(['lib/socket.io'], function(io) {
     this._testStateSync(cellCount);
   };
 
-  GameClient.prototype._handleChatMessage = function(message) {
+  GameClient.prototype._handleNoCellsPlaced = function (message) {
+    this.app.renderer.flashMsg(message.msg);
+  }
+
+  GameClient.prototype._handleChatMessage = function (message) {
     var player = this.playerManager.getPlayer(message.player.id);
 
     if (player) {
@@ -92,21 +97,21 @@ define(['lib/socket.io'], function(io) {
     this.chatManager.addMessage(player, message.message, message.timestamp);
   };
 
-  GameClient.prototype._handleLatencyEcho = function(message) {
+  GameClient.prototype._handleLatencyEcho = function (message) {
     this.socket.emit('latency_echo', message);
   };
 
-  GameClient.prototype._handleLatencyResponse = function(message) {
+  GameClient.prototype._handleLatencyResponse = function (message) {
     this.latency = message;
   };
 
-  GameClient.prototype._handleNewPlayerError = function(message) {
+  GameClient.prototype._handleNewPlayerError = function (message) {
     var message = message.message;
 
     this.app.renderer.newPlayerError(message);
   };
 
-  GameClient.prototype._handlePlayerConnect = function(message) {
+  GameClient.prototype._handlePlayerConnect = function (message) {
     var playerObj = message.player,
       player = this.playerManager.getPlayer(playerObj.id),
       cellCount = message.cellCount;
@@ -130,7 +135,7 @@ define(['lib/socket.io'], function(io) {
     this._testStateSync(cellCount);
   };
 
-  GameClient.prototype._handlePlayerDisconnect = function(message) {
+  GameClient.prototype._handlePlayerDisconnect = function (message) {
     var player = this.playerManager.getPlayer(message.playerId);
 
     player.setOnline(false);
@@ -138,7 +143,7 @@ define(['lib/socket.io'], function(io) {
     console.log(player.name + ' has disconnected.');
   };
 
-  GameClient.prototype._handleReceiveNewPlayer = function(message) {
+  GameClient.prototype._handleReceiveNewPlayer = function (message) {
     var playerObj = message.player,
       player = this.playerManager.getPlayer(playerObj.id);
 
@@ -161,7 +166,7 @@ define(['lib/socket.io'], function(io) {
     this.app.setPlaying(true);
   };
 
-  GameClient.prototype._handleState = function(message) {
+  GameClient.prototype._handleState = function (message) {
     this.app.updateState(message);
     this.outOfSync = false;
 
@@ -172,30 +177,30 @@ define(['lib/socket.io'], function(io) {
     }
   };
 
-  GameClient.prototype._handleVisibilityChange = function(event) {
+  GameClient.prototype._handleVisibilityChange = function (event) {
     if (this.hidden && this.outOfSync) {
       // the page wasn't visible and is out of sync, request state
       this._requestState();
-    } 
-    
+    }
+
     this.hidden = document.hidden;
   };
 
-  GameClient.prototype._requestState = function() {
+  GameClient.prototype._requestState = function () {
     console.log('--- REQUESTING STATE ---');
-    
+
     var player = this.playerManager.getLocalPlayer();
     if (player) {
       player.setOnline(true);
-      this.socket.emit('request_state', { playerId: this.playerManager.getLocalPlayer().id });
+      this.socket.emit('request_state', {playerId: this.playerManager.getLocalPlayer().id});
     } else {
       // "observe mode" state request
-      this.socket.emit('request_state', { playerId: "" });
+      this.socket.emit('request_state', {playerId: ""});
     }
 
   };
 
-  GameClient.prototype._testStateSync = function(serverCellCount) {
+  GameClient.prototype._testStateSync = function (serverCellCount) {
     var localCellCount = this.game.grid.getLivingCellCount();
 
     if (serverCellCount !== localCellCount) {
@@ -210,7 +215,7 @@ define(['lib/socket.io'], function(io) {
     }
   };
 
-  GameClient.prototype.placeLiveCells = function(cells, callback) {
+  GameClient.prototype.placeLiveCells = function (cells, callback) {
     var _this = this,
       localPlayer = this.playerManager.getLocalPlayer(),
       message = {
