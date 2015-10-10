@@ -201,7 +201,7 @@ define([], function() {
       });
     } else {
       console.log("no cells placed");
-      socket.emit("no_cells_placed", {msg: "无法落子..."})
+      socket.emit("no_cells_placed", {msg: "自由细胞放不下..."})
     }
   };
 
