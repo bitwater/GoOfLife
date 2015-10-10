@@ -64,6 +64,10 @@ avoscloud deploy
 avoscloud publish
 ```
 
+## 大问题
+1. Canvas可能将迅速成为性能瓶颈；
+2. 目前并发和同步控制还较为初级；
+
 ##注意
 * core/目录下修改代码，以防代码不同步
 
