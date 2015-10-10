@@ -546,12 +546,12 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
 
   Renderer.prototype._handleClick = function (event) {
     var clickedCell = this.getCellFromPosition(this.lastX, this.lastY),
-      cells = [
-        {
-          x: clickedCell.x,
-          y: clickedCell.y
-        }
-      ],
+      //cells = [
+      //  {
+      //    x: clickedCell.x,
+      //    y: clickedCell.y
+      //  }
+      //],
       player = this.playerManager.getLocalPlayer();
 
     if (!app.isPlaying()) {
