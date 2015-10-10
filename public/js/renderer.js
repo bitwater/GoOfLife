@@ -20,6 +20,8 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     this.lastCellsOnGrid = 0;
     this.lastCellCount = 0;
     this.lastChatMessage = 0;
+    // random state
+    this.randomState = false;
 
     this.pixelWidth = this.width * (this.cellSize + this.spacing) + 1;
     this.pixelHeight = this.height * (this.cellSize + this.spacing) + 1;
@@ -204,7 +206,7 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
 
         setTimeout(function () {
           _this.flashNewsEl.className = '';
-        }, 1500);
+        }, 800);
       }
     }
   };
@@ -249,9 +251,9 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     this.flashNewsEl.innerHTML += message;
     this.flashNewsEl.className = 'active';
 
-      setTimeout(function () {
-        this.flashNewsEl.className = '';
-      }, 333);
+    setTimeout(function () {
+      this.flashNewsEl.className = '';
+    }, 333);
   };
 
   Renderer.prototype.render = function () {
@@ -376,7 +378,6 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
       var cellCount = localPlayer.cells,
         cellsOnGrid = localPlayer.cellsOnGrid;
 
-      this.placeRandomCellsEl.style.borderColor = this.color;
       if (this.flaggedCells.length > 0
         && localPlayer.cells >= this.flaggedCells.length
         && this.game.canPlaceLiveCells(localPlayer, this.flaggedCells)) {
@@ -502,6 +503,21 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     }
   };
 
+  Renderer.prototype._drawRandomCells = function (cell) {
+    if (cell === undefined)
+      return;
+
+    //console.log(cell);
+    var size = 4;
+    var x = cell.x, y = cell.y;
+
+    for (var i= 0; i<size; i++) {
+      for (var j = 0; j < size; j++) {
+        this._drawCell(this.grid.getCell(x + i, y + j));
+      }
+    }
+  }
+
   Renderer.prototype._drawFramedCell = function (cell) {
     if (cell === undefined) {
       return;
@@ -542,18 +558,25 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
       return false;
     }
 
-    // if it isn't a flagged cell, and you have cells left to place
-    if (!this._isFlaggedCell(clickedCell) && (player.cells - this.flaggedCells.length > 0)) {
-      // flag it
-      this.flaggedCells.push(clickedCell);
-      clickedCell.setDirty();
+    if (this.randomState) {
+      this.placeRandomCellsEl.style.borderColor = '#bbb';
+      var cells = this.grid.getXRandomCells(clickedCell);
+      this.gameClient.placeLiveCells(cells);
+      this.randomState = false;
     } else {
-      // remove the cell
-      for (var i = 0; i < this.flaggedCells.length; i++) {
-        if (clickedCell.equals(this.flaggedCells[i])) {
-          this.flaggedCells.splice(i, 1);
-          clickedCell.setDirty();
-          break;
+      // if it isn't a flagged cell, and you have cells left to place
+      if (!this._isFlaggedCell(clickedCell) && (player.cells - this.flaggedCells.length > 0)) {
+        // flag it
+        this.flaggedCells.push(clickedCell);
+        clickedCell.setDirty();
+      } else {
+        // remove the cell
+        for (var i = 0; i < this.flaggedCells.length; i++) {
+          if (clickedCell.equals(this.flaggedCells[i])) {
+            this.flaggedCells.splice(i, 1);
+            clickedCell.setDirty();
+            break;
+          }
         }
       }
     }
@@ -636,10 +659,20 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
       oldCell = this.hoveredCell;
     this.hoveredCell = this.getCellFromPosition(this.lastX, this.lastY);
 
-    this._drawCell(oldCell);
+    if (!this.randomState) {
+      // 自主状态
+      this._drawCell(oldCell);
 
-    if (this.app.isPlaying() && (player.cells - this.flaggedCells.length) > 0) {
-      this._drawFramedCell(this.hoveredCell);
+      if (this.app.isPlaying() && (player.cells - this.flaggedCells.length) > 0) {
+        this._drawFramedCell(this.hoveredCell);
+      }
+    } else {
+      // 随机状态
+      this._drawRandomCells(oldCell);
+
+      if (this.app.isPlaying() && (player.cells - this.flaggedCells.length) > 0) {
+        this._drawFramedCell(this.getCellFromPosition(3,3));
+      }
     }
   };
 
@@ -674,8 +707,14 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     var player = this.playerManager.getLocalPlayer();
     event.preventDefault();
 
-    var cells = this.grid.getXRandomCells();
-    this.gameClient.placeLiveCells(cells);
+    if (this.randomState) {
+      this.placeRandomCellsEl.style.borderColor = '#bbb';
+      this.randomState = false;
+    } else {
+      this.randomState = true;
+      this.placeRandomCellsEl.style.borderColor = this.color;
+
+    }
   };
 
   Renderer.prototype._handlePlayButtonClick = function (event) {
