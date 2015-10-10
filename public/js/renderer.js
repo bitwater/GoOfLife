@@ -668,7 +668,8 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
       }
     } else {
       // 随机状态
-      this._drawRandomCells(oldCell);
+      //this._drawRandomCells(oldCell);
+      this._drawCell(oldCell);
 
       if (this.app.isPlaying() && (player.cells - this.flaggedCells.length) > 0) {
         this._drawFramedCell(this.getCellFromPosition(3,3));
