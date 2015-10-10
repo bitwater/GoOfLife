@@ -560,7 +560,6 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
 
     if (this.randomState) {
       this.placeRandomCellsEl.style.borderColor = '#bbb';
-      console.log(clickedCell);
       var cells = this.grid.getXRandomCells(clickedCell);
       this.gameClient.placeLiveCells(cells);
       this.randomState = false;

@@ -166,12 +166,12 @@ define(['core/cell'], function(Cell) {
     return this.getCell(x, y);
   };
 
-  Grid.prototype.getXRandomCells = function() {
+  Grid.prototype.getXRandomCells = function(cell) {
     var size = 4;
+    var x =cell.x - 2,
+      y = cell.y - 2;
 
-    var x = Math.floor(Math.random() * this.width),
-      y = Math.floor(Math.random() * this.height);
-
+    //console.log(cell + "   " + x + "   " + y);
     var cells = [];
     for (var i= 0; i<size; i++) {
       for (var j=0; j<size; j++) {
@@ -182,7 +182,6 @@ define(['core/cell'], function(Cell) {
         }
       }
     }
-
     return cells;
   };
 
