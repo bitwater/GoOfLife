@@ -1,5 +1,5 @@
-define(['core/grid'], function(Grid) {
-  var Game = function(app) {
+define(['core/grid', 'core/board'], function (Grid, Board) {
+  var Game = function (app) {
     this.app = app;
     this.config = app.config;
     this.playerManager = app.playerManager;
@@ -12,11 +12,19 @@ define(['core/grid'], function(Grid) {
     this.updating = false;
   };
 
-  Game.prototype.canPlaceLiveCells = function(player, cells) {
+  Game.prototype.init = function (width, height) {
+    this.grid = new Grid(this.app);
+    this.grid.init(width, height);
+
+    this.board = new Board(this.app);
+    this.board.init(width / this.config.M, height / this.config.M)
+  };
+
+  Game.prototype.canPlaceLiveCells = function (player, cells) {
     if (cells.length > player.cells) {
       return false;
     }
-    
+
     for (var i = 0; i < cells.length; i++) {
       var cell = this.grid.getCell(cells[i].x, cells[i].y);
 
@@ -28,15 +36,15 @@ define(['core/grid'], function(Grid) {
     return true;
   };
 
-  Game.prototype.getCellCountByPlayer = function(playerId) {
+  Game.prototype.getCellCountByPlayer = function (playerId) {
     return this.grid.getCellCountByPlayer(playerId);
   };
 
-  Game.prototype.getPlayerStats = function() {
+  Game.prototype.getPlayerStats = function () {
     return this.playerStats;
   };
 
-  Game.prototype.giveNewCells = function() {
+  Game.prototype.giveNewCells = function () {
     var players = this.playerManager.getPlayers();
 
     for (var i = 0; i < players.length; i++) {
@@ -47,34 +55,29 @@ define(['core/grid'], function(Grid) {
     }
   };
 
-  Game.prototype.init = function(width, height) {
-    this.grid = new Grid(this.app);
-    this.grid.init(width, height);
-  };
-
-  Game.prototype.isTimeToGiveNewCells = function() {
+  Game.prototype.isTimeToGiveNewCells = function () {
     return this.generation % this.config.giveCellsEvery === 0;
   };
 
-  Game.prototype.isTimeToTick = function() {
+  Game.prototype.isTimeToTick = function () {
     var now = Date.now();
     return (now >= this.nextTick);
   };
 
-  Game.prototype.isBehindOnTicks = function() {
+  Game.prototype.isBehindOnTicks = function () {
     var now = Date.now();
 
     return ((now - this.nextTick) > this.config.generationDuration);
   };
 
-  Game.prototype.percentageOfTick = function() {
+  Game.prototype.percentageOfTick = function () {
     return ((this.app.config.generationDuration - this.timeBeforeTick()) / this.app.config.generationDuration);
   };
 
-  Game.prototype.placeCells = function(player, cells) {
+  Game.prototype.placeCells = function (player, cells) {
     for (var i = 0; i < cells.length; i++) {
       var cell = this.grid.getCell(cells[i].x, cells[i].y);
-      
+
       if (!cell) {
         return false;
       }
@@ -86,7 +89,7 @@ define(['core/grid'], function(Grid) {
     player.setCells(player.cells - cells.length);
   };
 
-  Game.prototype.tick = function() {
+  Game.prototype.tick = function () {
     this.generation += 1;
 
     this.grid.setNextGeneration();
@@ -95,12 +98,12 @@ define(['core/grid'], function(Grid) {
     this.nextTick += this.app.config.generationDuration;
   };
 
-  Game.prototype.timeBeforeTick = function() {
+  Game.prototype.timeBeforeTick = function () {
     var now = Date.now();
     return (this.nextTick - now);
   };
 
-  Game.prototype.updatePlayerStats = function() {
+  Game.prototype.updatePlayerStats = function () {
     var cells = this.grid.getCells(),
       playerIds,
       players = this.playerManager.getPlayers(),

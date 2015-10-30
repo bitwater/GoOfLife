@@ -5,6 +5,13 @@ define(['core/cell'], function(Cell) {
     this.dirty = true;
   };
 
+  Grid.prototype.init = function(width, height) {
+    this.width = width;
+    this.height = height;
+
+    this.cells = this._buildCells(width, height);
+  };
+
   Grid.prototype.getCellCountByPlayer = function(playerId) {
     var cells = this.getCells(),
       n = 0;
@@ -183,14 +190,6 @@ define(['core/cell'], function(Cell) {
       }
     }
     return cells;
-  };
-
-
-  Grid.prototype.init = function(width, height) {
-    this.width = width;
-    this.height = height;
-
-    this.cells = this._buildCells(width, height);
   };
 
   Grid.prototype.setClean = function() {

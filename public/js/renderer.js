@@ -7,8 +7,12 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     this.chatManager = app.chatManager;
     this.config = app.config;
     this.grid = app.game.grid;
+    this.board = app.game.board;
+    this.M = this.config.M;
     this.width = app.width;
     this.height = app.height;
+    this.boardWidth = this.width / this.M,
+    this.boardHeight = this.height / this.M,
     this.cellSize = this.config.cellSize;
     this.spacing = this.config.cellSpacing;
     this.pickedColor = false;
@@ -174,6 +178,20 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
 
     this.setAccentColor(this.config.defaultAccentColor);
     this.setFaviconColor(this.config.defaultAccentColor);
+  };
+
+  Renderer.prototype.getManFromPosition = function (x, y) {
+    var cellSize = this.cellSize,
+      spacing = this.spacing,
+      boardX = Math.floor((x - 1) / (cellSize + spacing) / this.M),
+      boardY = Math.floor((y - 1) / (cellSize + spacing) / this.M );
+
+    if (boardY === this.config.gridHeight) {
+      boardY--;
+    }
+
+    //console.log(" " + boardX + " " + boardY + this.board)
+    return this.board.getMan(boardX, boardY);
   };
 
   Renderer.prototype.getCellFromPosition = function (x, y) {
@@ -452,8 +470,8 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
       cellSize = this.cellSize,
       spacing = this.spacing,
       M = config.M,
-      boardHeight = this.height / M,
-      boardWidth = this.width / M;
+      boardHeight = this.boardHeight,
+      boardWidth = this.boardWidth;
 
     for (i = 0; i < boardHeight; i++) {
       context.lineWidth = spacing;
@@ -505,9 +523,11 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
       cellSize = this.cellSize,
       spacing = this.spacing,
       M = this.M,
-      x1 = man.x * (cellSize + spacing) + 1,
-      y1 = man.y * (cellSize + spacing) + 1,
+      x1 = man.x * M * (cellSize + spacing),
+      y1 = man.y * M * (cellSize + spacing),
       color;
+
+    console.log(x1, y1);
 
     if (!man.alive) {
       context.fillStyle = config.deadCellColor;
@@ -515,29 +535,12 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
       context.fillStyle = this.playerManager.getPlayer(man.playerId).color;
     }
 
-    if (this.hoveredPlayer) {
-      if (man.alive && man.playerId !== this.hoveredPlayer && this.playerManager.getPlayer(man.playerId)) {
-        color = this._hexToRGB(this.playerManager.getPlayer(man.playerId).color);
-        color.r = Math.floor(((255 - color.r) / 1.4) + color.r);
-        color.g = Math.floor(((255 - color.g) / 1.4) + color.g);
-        color.b = Math.floor(((255 - color.b) / 1.4) + color.b);
-
-        context.fillStyle = 'rgba(' + color.r + ', ' + color.g + ', ' + color.b + ', 1)';
-      }
-    }
-
-    context.fillRect(x1, y1, cellSize * M, cellSize * M);
-
-    if (this.app.isPlaying() && this.hoveredCell !== undefined && this.hoveredCell.equals(man)) {
-      var player = this.playerManager.getLocalPlayer();
-      if (player.cells - this.flaggedCells.length > 0) {
-        this._drawHoveredMan(man);
-      }
-    }
-
-    if (this._isFlaggedCell(man)) {
-      this._drawFramedCell(man);
-    }
+    context.beginPath();
+    context.fillStyle = this.playerManager.getLocalPlayer().color;
+    //context.strokeStyle = this.color;
+    context.arc(x1 + (cellSize) * M/2, y1 + (cellSize) * M/2, cellSize * M /2, 0, 2 * Math.PI);
+    context.fill();
+    //context.fillRect(x1, y1, cellSize * M, cellSize * M);
 
   }
 
@@ -686,6 +689,7 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
 
   Renderer.prototype._handleClick = function (event) {
     var clickedCell = this.getCellFromPosition(this.lastX, this.lastY),
+      clickedMan = this.getManFromPosition(this.lastX, this.lastY),
     //cells = [
     //  {
     //    x: clickedCell.x,
@@ -699,7 +703,7 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     }
 
     if (this.view == 'big') {
-      this._drawMan()
+      this._drawMan(clickedMan)
       var cells = this.grid.getXRandomCells(clickedCell);
       this.gameClient.placeLiveCells(cells);
     } else {
@@ -730,8 +734,14 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     this.updateControls();
   };
 
-  Renderer.prototype.getManFromCell = function (cell) {
 
+  Renderer.prototype.getPlacementCell = function (cell) {
+    var x = cell.x;
+    var y = cell.y;
+
+    var x1 = Math.floor(x/this.M) * this.M;
+
+    return this.grid.getCellFromPosition();
   };
 
   Renderer.prototype._handleClickDouble = function (event) {

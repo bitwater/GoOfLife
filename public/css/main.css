@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Lato:100,300,400,700);
+/*@import url(http://fonts.googleapis.com/css?family=Lato:100,300,400,700);*/
 
 * {
   font-family: "Helvetica", "Lato", Arial, sans-serif;
@@ -106,8 +106,8 @@ html, body {
 }
 
 #view {
-  margin-top: 3px;
-  font-size: 14px;
+  margin-top: 15px;
+  font-size: 16px;
 }
 
 #rules {
