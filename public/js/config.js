@@ -11,6 +11,11 @@ define([], function() {
     gridWidth: 30,
     gridHeight: 40,
 
+    M:5,
+    T:3000,
+    boardWidth: 5,
+    boardHeight: 10,
+
     // game settings
     generationDuration: 3000,
     giveCellsEvery: 1, // generations

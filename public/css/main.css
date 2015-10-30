@@ -105,6 +105,10 @@ html, body {
   font-weight: bold;
 }
 
+#view {
+  margin-top: 3px;
+  font-size: 14px;
+}
 
 #rules {
   display: none;

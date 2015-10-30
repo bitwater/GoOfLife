@@ -32,7 +32,7 @@
 
     <p>在场上放下你的自由活细胞，有自主或随机两种方式，时间滴答一下生命游戏演化一次同时生成一个自由活细胞，快去占领地盘吧！</p>
 
-    <p>版本：V0.1.1_alpha   By 罗三水<br>正在玩命开发迭代中...<br>根据程序质能方程：Errors = more code^2<br>如有Bug  纯属正常 :)</p>
+    <p>版本：V0.1.1_alpha   By 罗三水<br>正在开发迭代中...<br>根据程序质能方程：Errors = more code^2<br>如有Bug  纯属正常 :)</p>
   </div>
 </div>
 <div class="container">
@@ -49,6 +49,11 @@
             Github
           </a>
         </li>
+        <li>
+          <a href="http://weibo.com/moshell" target="_blank">
+            微博互动
+          </a>
+        </li>
         <li id="login-link-container">
           <a href="#" id="login-link">登录</a>
         </li>
@@ -57,6 +62,10 @@
         </li>
       </ul>
     </div>
+  </div>
+  <div id="model" style="display: none">
+    <label><input id="double-model" name="model" type="radio" value="" />双人对弈</label>
+    <label><input id="multi-model" name="model" type="radio" value="" />多人对战</label>
   </div>
   <div id="stats">
     <div class="cell-count-container">
@@ -76,6 +85,10 @@
   </div>
   <div class="flash">
     <div id="flash-news"></div>
+  </div>
+  <div id="view">
+    <label><input id="big-view" name="view" type="radio" checked="true" value="" />宏观视角</label>
+    <label><input id="small-view" name="view" type="radio" value="" />微观视角</label>
   </div>
   <div id="connecting">
     <div class="spinner"></div>
@@ -136,7 +149,7 @@
 </div>
 <footer>
   <div>
-    <p></p><a href="http://wiki.swarma.net/index.php/%E7%94%9F%E5%91%BD%E6%B8%B8%E6%88%8F%E5%9B%B4%E6%A3%8B"
+    <p><a href="http://wiki.swarma.net/index.php/%E7%94%9F%E5%91%BD%E6%B8%B8%E6%88%8F%E5%9B%B4%E6%A3%8B"
               target="_blank">
     Copyright © 2015 集智百科 Go Of Life </a></p>
   </div>

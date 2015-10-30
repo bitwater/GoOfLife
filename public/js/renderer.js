@@ -20,6 +20,10 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     this.lastCellsOnGrid = 0;
     this.lastCellCount = 0;
     this.lastChatMessage = 0;
+
+    // view big-bigView small-samllView
+    this.view = 'big';
+
     // random state
     this.randomState = false;
 
@@ -63,6 +67,17 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     this.cellsOnGridStatEl = document.getElementById('cells-on-grid-stat');
     this.loginLinkContainerEl = document.getElementById('login-link-container');
     this.loginLinkEl = document.getElementById('login-link');
+    this.doubleModel = document.getElementById('double-model');
+    this.multiModel = document.getElementById('multi-model');
+    this.bigView = document.getElementById('big-view');
+    this.smallView = document.getElementById('small-view');
+
+    this.doubleModel.addEventListener('click', this._handleClickDouble.bind(this), false);
+    this.multiModel.addEventListener('click', this._handleClickMulti.bind(this), false);
+
+    this.bigView.addEventListener('click', this._handleClickBigView.bind(this), false);
+    this.smallView.addEventListener('click', this._handleClickSmallView.bind(this), false);
+
 
     this.colorpicker = new Colorpicker(this.app);
     this.colorpicker.init();
@@ -153,7 +168,9 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
 
     this.gameEl.style.width = this.pixelWidth + 'px';
 
-    this._drawGrid();
+    //this._drawGrid();
+    //this.view = 'small';
+    this._drawBoard();
 
     this.setAccentColor(this.config.defaultAccentColor);
     this.setFaviconColor(this.config.defaultAccentColor);
@@ -279,16 +296,21 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
       cellCount,
       cellsOnGrid;
 
-    for (var i = 0; i < cells.length; i++) {
-      if (cells[i].isDirty()) {
-        this._drawCell(cells[i]);
-        cells[i].setClean();
-      }
-    }
+    if (this.view == 'big') {
 
-    if (this.playerManager.localPlayer && localPlayer.isDirty()) {
-      this.updateControls();
-      localPlayer.setClean();
+    } else {
+      for (var i = 0; i < cells.length; i++) {
+        if (cells[i].isDirty()) {
+          this._drawCell(cells[i]);
+          cells[i].setClean();
+        }
+      }
+
+      if (this.playerManager.localPlayer && localPlayer.isDirty()) {
+        this.updateControls();
+        localPlayer.setClean();
+      }
+
     }
 
     if (this.lastChatMessage !== this.chatManager.lastChatMessage) {
@@ -423,6 +445,102 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     context.fillRect(x, 0, nextWidth, this.tickBarHeight);
   };
 
+  Renderer.prototype._drawBoard = function () {
+    var i,
+      config = this.config,
+      context = this.context,
+      cellSize = this.cellSize,
+      spacing = this.spacing,
+      M = config.M,
+      boardHeight = this.height / M,
+      boardWidth = this.width / M;
+
+    for (i = 0; i < boardHeight; i++) {
+      context.lineWidth = spacing;
+      context.beginPath();
+      context.moveTo(0, i * M * (cellSize + spacing) + 0.5 + cellSize * M / 2);
+      context.lineTo(this.pixelWidth * M, i * M * (cellSize + spacing) + 0.5 + cellSize * M / 2);
+      context.strokeStyle = 'rgba(0, 0, 0, 1)';
+      context.stroke();
+    }
+
+    for (i = 0; i < boardWidth; i++) {
+      context.beginPath();
+      context.moveTo(i * M * (cellSize + spacing) + 0.5 + cellSize * M / 2, 0);
+      context.lineTo(i * M * (cellSize + spacing) + 0.5 + cellSize * M / 2, this.pixelHeight);
+      context.stroke();
+    }
+
+    // finish the border
+    //context.beginPath();
+    //context.moveTo(0, 0);
+    //context.lineTo(0, this.pixelHeight - 0.5);
+    //context.stroke();
+    //
+    //context.beginPath();
+    //context.moveTo(0, 0);
+    //context.lineTo(this.pixelWidth - 0.5, 0);
+    //context.stroke();
+    //
+    //context.beginPath();
+    //context.moveTo(this.pixelWidth - 0.5, 0);
+    //context.lineTo(this.pixelWidth - 0.5, this.pixelHeight);
+    //context.stroke();
+    //
+    //context.beginPath();
+    //context.moveTo(0, this.pixelHeight - 0.5);
+    //context.lineTo(this.pixelWidth - 0.5, this.pixelHeight - 0.5);
+    //context.stroke();
+
+  }
+
+  Renderer.prototype._drawMan = function (man) {
+    // return if the cell was made undefined by _handleMouseLeave
+    if (man === undefined) {
+      return;
+    }
+
+    var config = this.config,
+      context = this.context,
+      cellSize = this.cellSize,
+      spacing = this.spacing,
+      M = this.M,
+      x1 = man.x * (cellSize + spacing) + 1,
+      y1 = man.y * (cellSize + spacing) + 1,
+      color;
+
+    if (!man.alive) {
+      context.fillStyle = config.deadCellColor;
+    } else {
+      context.fillStyle = this.playerManager.getPlayer(man.playerId).color;
+    }
+
+    if (this.hoveredPlayer) {
+      if (man.alive && man.playerId !== this.hoveredPlayer && this.playerManager.getPlayer(man.playerId)) {
+        color = this._hexToRGB(this.playerManager.getPlayer(man.playerId).color);
+        color.r = Math.floor(((255 - color.r) / 1.4) + color.r);
+        color.g = Math.floor(((255 - color.g) / 1.4) + color.g);
+        color.b = Math.floor(((255 - color.b) / 1.4) + color.b);
+
+        context.fillStyle = 'rgba(' + color.r + ', ' + color.g + ', ' + color.b + ', 1)';
+      }
+    }
+
+    context.fillRect(x1, y1, cellSize * M, cellSize * M);
+
+    if (this.app.isPlaying() && this.hoveredCell !== undefined && this.hoveredCell.equals(man)) {
+      var player = this.playerManager.getLocalPlayer();
+      if (player.cells - this.flaggedCells.length > 0) {
+        this._drawHoveredMan(man);
+      }
+    }
+
+    if (this._isFlaggedCell(man)) {
+      this._drawFramedCell(man);
+    }
+
+  }
+
   Renderer.prototype._drawGrid = function () {
     var i,
       config = this.config,
@@ -456,6 +574,9 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     context.moveTo(0, this.pixelHeight - 0.5);
     context.lineTo(this.pixelWidth - 0.5, this.pixelHeight - 0.5);
     context.stroke();
+
+    //context.strokeStyle = 'rgba(0,0,0,1)';
+
   };
 
   Renderer.prototype._drawCell = function (cell) {
@@ -511,12 +632,31 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     var size = 4;
     var x = cell.x, y = cell.y;
 
-    for (var i= 0; i<size; i++) {
+    for (var i = 0; i < size; i++) {
       for (var j = 0; j < size; j++) {
         this._drawCell(this.grid.getCell(x + i, y + j));
       }
     }
   }
+
+  Renderer.prototype._drawHoveredMan = function (cell) {
+    if (cell === undefined) {
+      return;
+    }
+
+    var context = this.context,
+      cellSize = this.cellSize,
+      spacing = this.spacing,
+      x1 = cell.x * (cellSize + spacing) + 1.5,
+      y1 = cell.y * (cellSize + spacing) + 1.5;
+
+    context.lineWidth = 1.5;
+    context.beginPath();
+    context.strokeStyle = this.color;
+    context.arc(x1, y1, 30, 0, 2 * Math.PI);
+    context.stroke();
+    //context.strokeRect(x1 + .5, y1 + .5, cellSize - 2, cellSize - 2);
+  };
 
   Renderer.prototype._drawFramedCell = function (cell) {
     if (cell === undefined) {
@@ -546,42 +686,83 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
 
   Renderer.prototype._handleClick = function (event) {
     var clickedCell = this.getCellFromPosition(this.lastX, this.lastY),
-      //cells = [
-      //  {
-      //    x: clickedCell.x,
-      //    y: clickedCell.y
-      //  }
-      //],
+    //cells = [
+    //  {
+    //    x: clickedCell.x,
+    //    y: clickedCell.y
+    //  }
+    //],
       player = this.playerManager.getLocalPlayer();
 
     if (!app.isPlaying()) {
       return false;
     }
 
-    if (this.randomState) {
-      this.placeRandomCellsEl.style.borderColor = '#bbb';
+    if (this.view == 'big') {
+      this._drawMan()
       var cells = this.grid.getXRandomCells(clickedCell);
       this.gameClient.placeLiveCells(cells);
-      this.randomState = false;
     } else {
-      // if it isn't a flagged cell, and you have cells left to place
-      if (!this._isFlaggedCell(clickedCell) && (player.cells - this.flaggedCells.length > 0)) {
-        // flag it
-        this.flaggedCells.push(clickedCell);
-        clickedCell.setDirty();
+      if (this.randomState) {
+        this.placeRandomCellsEl.style.borderColor = '#bbb';
+        var cells = this.grid.getXRandomCells(clickedCell);
+        this.gameClient.placeLiveCells(cells);
+        this.randomState = false;
       } else {
-        // remove the cell
-        for (var i = 0; i < this.flaggedCells.length; i++) {
-          if (clickedCell.equals(this.flaggedCells[i])) {
-            this.flaggedCells.splice(i, 1);
-            clickedCell.setDirty();
-            break;
+        // if it isn't a flagged cell, and you have cells left to place
+        if (!this._isFlaggedCell(clickedCell) && (player.cells - this.flaggedCells.length > 0)) {
+          // flag it
+          this.flaggedCells.push(clickedCell);
+          clickedCell.setDirty();
+        } else {
+          // remove the cell
+          for (var i = 0; i < this.flaggedCells.length; i++) {
+            if (clickedCell.equals(this.flaggedCells[i])) {
+              this.flaggedCells.splice(i, 1);
+              clickedCell.setDirty();
+              break;
+            }
           }
         }
       }
     }
 
     this.updateControls();
+  };
+
+  Renderer.prototype.getManFromCell = function (cell) {
+
+  };
+
+  Renderer.prototype._handleClickDouble = function (event) {
+    //console.log("double");
+
+    this.canvas.style.display = 'none'
+    this.statsEl.style.display = 'none'
+    this.tickBar.style.display = 'none'
+    this.controlsEl.style.display = 'none'
+  };
+
+  Renderer.prototype._handleClickMulti = function (event) {
+    //console.log("multi");
+
+    this.canvas.style.display = 'inline-block'
+    this.statsEl.style.display = 'inline-block'
+    this.tickBar.style.display = 'inline-block'
+    this.controlsEl.style.display = 'inline-block'
+  };
+
+  Renderer.prototype._handleClickBigView = function (event) {
+    this.view = 'big';
+    this.clear();
+    this._drawBoard();
+  };
+
+  Renderer.prototype._handleClickSmallView = function (event) {
+    this.view = 'samll';
+
+    this.clear();
+    this._drawGrid();
   };
 
   Renderer.prototype._handleClickObserve = function (event) {
@@ -659,20 +840,14 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
       oldCell = this.hoveredCell;
     this.hoveredCell = this.getCellFromPosition(this.lastX, this.lastY);
 
-    if (!this.randomState) {
-      // 自主状态
+    if (this.view == 'big') {
+      //this._drawMan(oldCell);
+
+    } else {
       this._drawCell(oldCell);
 
       if (this.app.isPlaying() && (player.cells - this.flaggedCells.length) > 0) {
         this._drawFramedCell(this.hoveredCell);
-      }
-    } else {
-      // 随机状态
-      //this._drawRandomCells(oldCell);
-      this._drawCell(oldCell);
-
-      if (this.app.isPlaying() && (player.cells - this.flaggedCells.length) > 0) {
-        this._drawFramedCell(this.getCellFromPosition(3,3));
       }
     }
   };
