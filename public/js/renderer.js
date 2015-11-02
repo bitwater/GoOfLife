@@ -172,9 +172,9 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
 
     this.gameEl.style.width = this.pixelWidth + 'px';
 
-    //this._drawGrid();
-    //this.view = 'small';
-    this._drawBoard();
+    this._drawGrid();
+    this.view = 'small';
+    //this._drawBoard();
 
     this.setAccentColor(this.config.defaultAccentColor);
     this.setFaviconColor(this.config.defaultAccentColor);
@@ -287,6 +287,7 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     this.flashNewsEl.className = 'active';
 
     setTimeout(function () {
+
       this.flashNewsEl.className = '';
     }, 333);
   };
@@ -294,16 +295,30 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
   Renderer.prototype.render = function () {
     var i,
       cells = this.grid.getCells(),
-      l = cells.length;
+      l = cells.length,
+      mans = this.board.getMansFromLivingCells(this.grid.getLivingCells()),
+      m = mans.length;
 
+    console.log(mans)
     this.clear();
-    this._drawGrid();
+    if (this.view === 'big') {
+      this._drawBoard();
 
-    // draw all cells, set clean
-    for (i = 0; i < l; i++) {
-      this._drawCell(cells[i]);
-      cells[i].setClean();
+      for (i=0; i<m; i++) {
+        this._drawMan(mans[i]);
+        mans[i].setClean();
+      }
+
+    } else {
+      this._drawGrid();
+
+      // draw all cells, set clean
+      for (i = 0; i < l; i++) {
+        this._drawCell(cells[i]);
+        cells[i].setClean();
+      }
     }
+
   };
 
   Renderer.prototype.renderChanges = function () {
@@ -315,6 +330,17 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
       cellsOnGrid;
 
     if (this.view == 'big') {
+      this.clear();
+      this._drawBoard();
+      var mans = this.board.getMansFromLivingCells(this.grid.getLivingCells());
+      for (var i = 0; i < mans.length; i++) {
+        this._drawMan(mans[i]);
+        mans[i].setClean();
+        //if (cells[i].isDirty()) {
+        //  this._drawCell(cells[i]);
+        //  cells[i].setClean();
+        //}
+      }
 
     } else {
       for (var i = 0; i < cells.length; i++) {
@@ -527,20 +553,19 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
       y1 = man.y * M * (cellSize + spacing),
       color;
 
-    console.log(x1, y1);
-
     if (!man.alive) {
       context.fillStyle = config.deadCellColor;
     } else {
-      context.fillStyle = this.playerManager.getPlayer(man.playerId).color;
-    }
+      //console.log(x1, y1);
 
-    context.beginPath();
-    context.fillStyle = this.playerManager.getLocalPlayer().color;
-    //context.strokeStyle = this.color;
-    context.arc(x1 + (cellSize) * M/2, y1 + (cellSize) * M/2, cellSize * M /2, 0, 2 * Math.PI);
-    context.fill();
-    //context.fillRect(x1, y1, cellSize * M, cellSize * M);
+      context.fillStyle = this.playerManager.getPlayer(man.playerId).color;
+      context.beginPath();
+      //context.fillStyle = this.playerManager.getLocalPlayer().color;
+      //context.strokeStyle = this.color;
+      context.arc(x1 + (cellSize) * M/2, y1 + (cellSize) * M/2, cellSize * M /2, 0, 2 * Math.PI);
+      context.fill();
+      //context.fillRect(x1, y1, cellSize * M, cellSize * M);
+    }
 
   }
 
@@ -689,7 +714,7 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
 
   Renderer.prototype._handleClick = function (event) {
     var clickedCell = this.getCellFromPosition(this.lastX, this.lastY),
-      clickedMan = this.getManFromPosition(this.lastX, this.lastY),
+      clickedMan = this.board.getManFromCell(clickedCell),
     //cells = [
     //  {
     //    x: clickedCell.x,
@@ -698,18 +723,22 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     //],
       player = this.playerManager.getLocalPlayer();
 
+    // clear hovererPlayer
+    this.hoveredPlayer = false;
+
     if (!app.isPlaying()) {
       return false;
     }
 
     if (this.view == 'big') {
-      this._drawMan(clickedMan)
-      var cells = this.grid.getXRandomCells(clickedCell);
+      var cells = this.grid.getRandomCells(clickedCell);
       this.gameClient.placeLiveCells(cells);
+      this._drawMan(clickedMan)
+
     } else {
       if (this.randomState) {
         this.placeRandomCellsEl.style.borderColor = '#bbb';
-        var cells = this.grid.getXRandomCells(clickedCell);
+        var cells = this.grid.getRandomCells(clickedCell);
         this.gameClient.placeLiveCells(cells);
         this.randomState = false;
       } else {
@@ -764,15 +793,16 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
 
   Renderer.prototype._handleClickBigView = function (event) {
     this.view = 'big';
-    this.clear();
-    this._drawBoard();
+    this.placeCellsEl.style.display = 'none'
+    this.placeRandomCellsEl.style.display = 'none'
+    this.render();
   };
 
   Renderer.prototype._handleClickSmallView = function (event) {
     this.view = 'samll';
-
-    this.clear();
-    this._drawGrid();
+    this.placeCellsEl.style.display = 'inline-block'
+    this.placeRandomCellsEl.style.display = 'inline-block'
+    this.render();
   };
 
   Renderer.prototype._handleClickObserve = function (event) {

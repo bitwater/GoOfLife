@@ -4,10 +4,11 @@ define([], function() {
     this.y = y;
     this.alive = false;
     this.dirty = true;
+    this.livingCells = [];
   };
 
-  Man.prototype.equals = function(c) {
-    if (c !== undefined && this.x === c.x && this.y === c.y) {
+  Man.prototype.equals = function(m) {
+    if (m !== undefined && this.x === m.x && this.y === m.y) {
       return true;
     }
 
@@ -38,6 +39,18 @@ define([], function() {
   Man.prototype.tick = function() {
     this.set('alive', this.aliveNextGeneration);
     this.aliveNextGeneration = undefined;
+  };
+
+  Man.prototype.addLivingCells = function(c) {
+    this.livingCells.push(c);
+  };
+
+  Man.prototype.getLivingCells = function() {
+    return this.livingCells;
+  };
+
+  Man.prototype.clearLivingCells = function() {
+    this.livingCells = [];
   };
 
   return Man;

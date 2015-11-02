@@ -1,18 +1,19 @@
-define(['core/cell'], function(Cell) {
-  var Grid = function(app) {
+define(['core/cell'], function (Cell) {
+  var Grid = function (app) {
     this.app = app;
     this.cells = [];
     this.dirty = true;
+    this.M = app.config.M;
   };
 
-  Grid.prototype.init = function(width, height) {
+  Grid.prototype.init = function (width, height) {
     this.width = width;
     this.height = height;
 
     this.cells = this._buildCells(width, height);
   };
 
-  Grid.prototype.getCellCountByPlayer = function(playerId) {
+  Grid.prototype.getCellCountByPlayer = function (playerId) {
     var cells = this.getCells(),
       n = 0;
 
@@ -25,7 +26,7 @@ define(['core/cell'], function(Cell) {
     return n;
   };
 
-  Grid.prototype.getDominantNeighbor = function(x, y) {
+  Grid.prototype.getDominantNeighbor = function (x, y) {
     var neighbors = this.getLivingCells(this.getNeighbors(x, y)),
       max = 0,
       bestParent,
@@ -47,7 +48,7 @@ define(['core/cell'], function(Cell) {
     return bestParent;
   };
 
-  Grid.prototype.getDominantNeighborIsAlive = function(x, y, thisPlayerId) {
+  Grid.prototype.getDominantNeighborIsAlive = function (x, y, thisPlayerId) {
     var neighbors = this.getLivingCells(this.getNeighbors(x, y)),
       max = 0,
       bestParent,
@@ -74,7 +75,7 @@ define(['core/cell'], function(Cell) {
     return bestParent;
   };
 
-  Grid.prototype.getLivingNeighborCount = function(x, y) {
+  Grid.prototype.getLivingNeighborCount = function (x, y) {
     var i,
       n = 0,
       neighbors = this.getNeighbors(x, y),
@@ -89,13 +90,13 @@ define(['core/cell'], function(Cell) {
     return n;
   };
 
-  Grid.prototype.getLivingCellCount = function(cells) {
+  Grid.prototype.getLivingCellCount = function (cells) {
     cells = (cells !== undefined) ? cells : this.getCells();
 
     return this.getLivingCells(cells).length;
   };
 
-  Grid.prototype.getLivingCells = function(cells) {
+  Grid.prototype.getLivingCells = function (cells) {
     var aliveCells = [],
       cells = (cells !== undefined) ? cells : this.getCells(),
       i,
@@ -110,21 +111,21 @@ define(['core/cell'], function(Cell) {
     return aliveCells;
   };
 
-  Grid.prototype.getCells = function() {
+  Grid.prototype.getCells = function () {
     return [].concat.apply([], this.cells);
   };
 
-  Grid.prototype.getCell = function(x, y) {
+  Grid.prototype.getCell = function (x, y) {
     x = Math.max(x, 0);
     y = Math.max(y, 0);
-    if (this.cells[y] && this.cells[y][x]){
+    if (this.cells[y] && this.cells[y][x]) {
       return this.cells[y][x];
     } else {
       return false;
     }
   };
 
-  Grid.prototype.getNeighbors = function(x, y) {
+  Grid.prototype.getNeighbors = function (x, y) {
     var i,
       neighbors = [],
       tests = [
@@ -166,23 +167,23 @@ define(['core/cell'], function(Cell) {
     return neighbors;
   };
 
-  Grid.prototype.getRandomCell = function() {
+  Grid.prototype.getRandomCell = function () {
     var x = Math.floor(Math.random() * this.width),
       y = Math.floor(Math.random() * this.height);
 
     return this.getCell(x, y);
   };
 
-  Grid.prototype.getXRandomCells = function(cell) {
-    var size = 4;
-    var x =cell.x - 2,
-      y = cell.y - 2;
+  Grid.prototype.getRandomCells = function (cell) {
+    var M = this.M;
+    var x = Math.floor(cell.x / M) * M,
+      y = Math.floor(cell.y / M ) * M;
 
     //console.log(cell + "   " + x + "   " + y);
     var cells = [];
-    for (var i= 0; i<size; i++) {
-      for (var j=0; j<size; j++) {
-        var cell = this.getCell(x+i, y+j);
+    for (var i = 0; i < M -1; i++) {
+      for (var j = 0; j < M -1; j++) {
+        var cell = this.getCell(x + i, y + j);
         if (Math.random() > 0.7) {
           //cell.setDirty();
           cells.push(cell);
@@ -192,19 +193,19 @@ define(['core/cell'], function(Cell) {
     return cells;
   };
 
-  Grid.prototype.setClean = function() {
+  Grid.prototype.setClean = function () {
     this.dirty = false;
   };
 
-  Grid.prototype.isDirty = function() {
+  Grid.prototype.isDirty = function () {
     return this.dirty;
   };
 
-  Grid.prototype.setDirty = function() {
+  Grid.prototype.setDirty = function () {
     this.dirty = true;
   }
 
-  Grid.prototype.setNextGeneration = function(nextGeneration) {
+  Grid.prototype.setNextGeneration = function (nextGeneration) {
     var cells = this.getCells(),
       i,
       l = cells.length;
@@ -259,7 +260,7 @@ define(['core/cell'], function(Cell) {
   };
 
   // setLivingCells sets the state of the board instantly, without ticking
-  Grid.prototype.setLivingCells = function(newCells) {
+  Grid.prototype.setLivingCells = function (newCells) {
     var i,
       cells = this.getCells(),
       j = cells.length,
@@ -276,7 +277,7 @@ define(['core/cell'], function(Cell) {
     }
   };
 
-  Grid.prototype.tick = function() {
+  Grid.prototype.tick = function () {
     var cells = this.getCells(),
       i,
       l = cells.length;
@@ -289,7 +290,7 @@ define(['core/cell'], function(Cell) {
     }
   };
 
-  Grid.prototype._buildCells = function(width, height) {
+  Grid.prototype._buildCells = function (width, height) {
     var i, j, cells = new Array(height);
 
     for (i = 0; i < height; i++) {

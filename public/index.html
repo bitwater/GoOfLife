@@ -5,7 +5,7 @@
   <meta name="description"
         content="双人对弈生命围棋">
   <div id='wx_pic' style='margin:0 auto;display:none;'>
-    <img id="logo" src="img/logo.png" />
+    <img id="logo" src="img/logo.png"/>
   </div>
   <meta name="viewport"
         content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
@@ -22,17 +22,13 @@
 <div id="timestamp-tooltip"></div>
 <div id="rules">
   <div class="rules-box">
-    <p><a href="http://wiki.swarma.net/index.php/%E7%94%9F%E5%91%BD%E6%B8%B8%E6%88%8F%E5%9B%B4%E6%A3%8B"
-          target="_blank">生命围棋Wiki</a></p>
+    <p>生命围棋<br><a href="http://wiki.swarma.net/index.php/%E7%94%9F%E5%91%BD%E6%B8%B8%E6%88%8F%E5%9B%B4%E6%A3%8B"
+          target="_blank">详情请见Wiki</a></p>
 
-    <p>Conway生命游戏规则：每个格子对应一个或生或死的细胞<br>1. 细胞周围如果少于2个或大于3个活细胞，下一代则为死细胞
-      <br>2. 死细胞周围如果有3个活细胞，下一代则为活细胞<br>3. 活细胞周围如果2或者3个活细胞，下一代仍为活细胞</p>
+    <p>在场上点击放下你的自由活细胞，宏观微观视角切换可以使你穿越在棋盘和网格之中，时间滴答一下，生命游戏演化一次，同时生成一个自由活细胞。
+      <br>快去占领二维空间吧！</p>
 
-    <p>竞争性生命游戏：遵循多数原则</p>
-
-    <p>在场上放下你的自由活细胞，有自主或随机两种方式，时间滴答一下生命游戏演化一次同时生成一个自由活细胞，快去占领地盘吧！</p>
-
-    <p>版本：V0.1.1_alpha   By 罗三水<br>正在开发迭代中...<br>根据程序质能方程：Errors = more code^2<br>如有Bug  纯属正常 :)</p>
+    <p>版本：V0.2.1_alpha By 罗三水<br>正在持续开发中...<br>根据程序质能方程：Errors = more code^2<br>如有Bug 纯属正常 :)</p>
   </div>
 </div>
 <div class="container">
@@ -64,8 +60,8 @@
     </div>
   </div>
   <div id="model" style="display: none">
-    <label><input id="double-model" name="model" type="radio" value="" />双人对弈</label>
-    <label><input id="multi-model" name="model" type="radio" value="" />多人对战</label>
+    <label><input id="double-model" name="model" type="radio" value=""/>双人对弈</label>
+    <label><input id="multi-model" name="model" type="radio" value=""/>多人对战</label>
   </div>
   <div id="stats">
     <div class="cell-count-container">
@@ -87,12 +83,12 @@
     <div id="flash-news"></div>
   </div>
   <div id="view">
-    <label><input id="big-view" name="view" type="radio" checked="true" value="" />宏观视角</label>
-    <label><input id="small-view" name="view" type="radio" value="" />微观视角</label>
+    <label><input id="big-view" name="view" type="radio"  value=""/>宏观视角</label>
+    <label><input id="small-view" name="view" type="radio" checked="true" value=""/>微观视角</label>
   </div>
   <div id="connecting">
     <div class="spinner"></div>
-    <h3>Connecting</h3>
+    <h3>连接中</h3>
   </div>
   <div id="game">
     <canvas id="tickbar"></canvas>
@@ -150,8 +146,8 @@
 <footer>
   <div>
     <p><a href="http://wiki.swarma.net/index.php/%E7%94%9F%E5%91%BD%E6%B8%B8%E6%88%8F%E5%9B%B4%E6%A3%8B"
-              target="_blank">
-    Copyright © 2015 集智百科 Go Of Life </a></p>
+          target="_blank">
+      Copyright © 2015 集智百科 Go Of Life </a></p>
   </div>
 </footer>
 </body>
