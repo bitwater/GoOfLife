@@ -27,43 +27,6 @@ define(['core/man'], function(Man) {
     return [].concat.apply([], this.mans);
   };
 
-  Board.prototype.getMansFromLivingCells = function(cells) {
-    var i, j, mark = [],
-      mans = [],
-      l = cells.length;
-
-    for (i=0; i<l; i++) {
-      var cell = cells[i];
-      var x = Math.floor(cell.x / this.M),
-        y = Math.floor(cell.y / this.M);
-
-      var man = this.getManFromCell(cell);
-      if (man) {
-        mans.push(man);
-      }
-
-      //var man = this.getMan(x, y);
-      //if (man) {
-      //  if (man.playerId) {
-      //    man.alive = cell.alive;
-      //    man.playerId = cell.playerId;
-      //  } else {
-      //    man.alive = cell.alive;
-      //    man.playerId = cell.playerId;
-      //    mans.push(man);
-      //  }
-      //}
-
-    }
-
-    // 粗粒化染色算法 - 多数原则
-    //for (j=0; j<mans.length; j++) {
-    //
-    //}
-
-    return mans;
-  };
-
   Board.prototype.getManFromCell= function (cell) {
     var x = Math.floor(cell.x / this.M),
       y = Math.floor(cell.y / this.M);

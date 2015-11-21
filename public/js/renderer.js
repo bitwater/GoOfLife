@@ -305,7 +305,7 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
 
     setTimeout(function () {
 
-      this.flashNewsEl.className = '';
+      this.flashNewsEl.className = ' ';
     }, 333);
   };
 
@@ -728,12 +728,6 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
   Renderer.prototype._handleClick = function (event) {
     var clickedCell = this.getCellFromPosition(this.lastX, this.lastY),
       clickedMan = this.board.getManFromCell(clickedCell),
-    //cells = [
-    //  {
-    //    x: clickedCell.x,
-    //    y: clickedCell.y
-    //  }
-    //],
       player = this.playerManager.getLocalPlayer();
 
     // clear hovererPlayer
@@ -746,8 +740,6 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     if (this.view == 'big') {
       var cells = this.grid.getRandomCells(clickedCell);
       this.gameClient.placeLiveCells(cells);
-      //this._drawMan(clickedMan)
-
     } else {
       if (this.randomState) {
         this.placeRandomCellsEl.style.borderColor = '#bbb';

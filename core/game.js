@@ -29,11 +29,12 @@ define(['core/grid', 'core/board'], function (Grid, Board) {
       var cell = this.grid.getCell(cells[i].x, cells[i].y);
       var man = this.board.getManFromCell(cell);
 
-      if (cell.alive) {
+      console.log(man)
+      if (man.alive) {
         return false;
       }
 
-      if (man.alive) {
+      if (cell.alive) {
         return false;
       }
     }

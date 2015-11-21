@@ -200,7 +200,7 @@ define([], function() {
         player: player.transmission()
       });
     } else {
-      console.log("no cells placed");
+      //console.log("no cells placed");
       socket.emit("no_cells_placed", {msg: "自由细胞放不下..."})
     }
   };
