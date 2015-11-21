@@ -27,8 +27,13 @@ define(['core/grid', 'core/board'], function (Grid, Board) {
 
     for (var i = 0; i < cells.length; i++) {
       var cell = this.grid.getCell(cells[i].x, cells[i].y);
+      var man = this.board.getManFromCell(cell);
 
       if (cell.alive) {
+        return false;
+      }
+
+      if (man.alive) {
         return false;
       }
     }
@@ -77,6 +82,7 @@ define(['core/grid', 'core/board'], function (Grid, Board) {
   Game.prototype.placeCells = function (player, cells) {
     for (var i = 0; i < cells.length; i++) {
       var cell = this.grid.getCell(cells[i].x, cells[i].y);
+      var man = this.board.getManFromCell(cell);
 
       if (!cell) {
         return false;
@@ -84,6 +90,9 @@ define(['core/grid', 'core/board'], function (Grid, Board) {
 
       cell.set('alive', true);
       cell.set('playerId', player.id);
+
+      man.set('alive', true);
+      man.set('playerId', player.id);
     }
 
     player.setCells(player.cells - cells.length);
@@ -94,6 +103,8 @@ define(['core/grid', 'core/board'], function (Grid, Board) {
 
     this.grid.setNextGeneration();
     this.grid.tick();
+    this.board.setMansLivingCells(this.grid.getLivingCells());
+    this.board.tick();
 
     this.nextTick += this.app.config.generationDuration;
   };

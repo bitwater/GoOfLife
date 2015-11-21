@@ -41,7 +41,7 @@ define([], function() {
     this.aliveNextGeneration = undefined;
   };
 
-  Man.prototype.addLivingCells = function(c) {
+  Man.prototype.addLivingCell = function(c) {
     this.livingCells.push(c);
   };
 

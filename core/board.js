@@ -80,8 +80,65 @@ define(['core/man'], function(Man) {
     }
   }
 
-  Board.prototype.getDominantInMan = function(man) {
+  Board.prototype.setMansLivingCells = function (livingCells) {
+    var i, j, m, mark = [],
+      mans = this.getMans(),
+      l = livingCells.length;
 
+    // clear all mans
+    for (m=0; m<mans.length; m++) {
+      mans[m].set('alive', false);
+      mans[m].set('playerId', undefined);
+      mans[m].clearLivingCells();
+    }
+
+    // group livingCells to Mans
+    for (i=0; i<l; i++) {
+      var cell = livingCells[i];
+      var x = Math.floor(cell.x / this.M),
+        y = Math.floor(cell.y / this.M);
+
+      if (this.mans[y] && this.mans[y][x]) {
+        this.mans[y][x].addLivingCell(cell);
+      }
+    }
+  }
+
+  Board.prototype.tick = function () {
+    var mans = this.getMans(),
+      i,
+      l = mans.length;
+
+    for (i = 0; i < l; i++) {
+      var livingCells = mans[i].getLivingCells();
+      if (livingCells.length > 0) {
+        mans[i].set('alive', true);
+        mans[i].set('playerId', this.getDominantPlayerIdInMan(livingCells));
+      } else {
+        mans[i].set('alive', false);
+        mans[i].set('playerId', undefined);
+      }
+
+    }
+  };
+
+  Board.prototype.getDominantPlayerIdInMan = function(livingCells) {
+    var l=livingCells.length, j, dominant, mark={}, max=0;
+    for (j = 0; j < l; j++) {
+      var cell = livingCells[j];
+      if (mark[cell.playerId] === undefined) {
+        mark[cell.playerId] = 1;
+      } else {
+        mark[cell.playerId]++;
+      }
+
+      if (mark[cell.playerId] > max) {
+        max == mark[cell.playerId];
+        dominant = cell.playerId;
+      }
+    }
+
+    return dominant;
   }
 
   Board.prototype._buildMans = function(width, height) {

@@ -71,6 +71,7 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     this.cellsOnGridStatEl = document.getElementById('cells-on-grid-stat');
     this.loginLinkContainerEl = document.getElementById('login-link-container');
     this.loginLinkEl = document.getElementById('login-link');
+    this.selectModelEl = document.getElementById('select-model');
     this.doubleModel = document.getElementById('double-model');
     this.multiModel = document.getElementById('multi-model');
     this.bigView = document.getElementById('big-view');
@@ -277,6 +278,22 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     }, 500);
   };
 
+  Renderer.prototype.hideSelectModel = function () {
+    var _this = this;
+    this.selectModelEl.parentElement.style.opacity = 0;
+    _this.selectModelEl.style.display = 'none';
+
+    //setTimeout(function () {
+    //  _this.selectModelEl.parentElement.style.display = 'none';
+    //}, 500);
+  };
+
+  Renderer.prototype.showSelectModel = function () {
+    var _this = this;
+    //this.selectModelEl.parentElement.style.opacity = 0;
+    _this.selectModelEl.style.display = 'inline-block';
+  };
+
   Renderer.prototype.newPlayerError = function (message) {
     this.newPlayerErrorEl.innerHTML = message;
     this.newPlayerErrorEl.style.display = 'block';
@@ -296,10 +313,10 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     var i,
       cells = this.grid.getCells(),
       l = cells.length,
-      mans = this.board.getMansFromLivingCells(this.grid.getLivingCells()),
+      mans = this.board.getMans(),
       m = mans.length;
 
-    console.log(mans)
+    //console.log(mans)
     this.clear();
     if (this.view === 'big') {
       this._drawBoard();
@@ -332,14 +349,10 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     if (this.view == 'big') {
       this.clear();
       this._drawBoard();
-      var mans = this.board.getMansFromLivingCells(this.grid.getLivingCells());
+      var mans = this.board.getMans();
       for (var i = 0; i < mans.length; i++) {
         this._drawMan(mans[i]);
         mans[i].setClean();
-        //if (cells[i].isDirty()) {
-        //  this._drawCell(cells[i]);
-        //  cells[i].setClean();
-        //}
       }
 
     } else {
@@ -566,8 +579,27 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
       context.fill();
       //context.fillRect(x1, y1, cellSize * M, cellSize * M);
     }
-
   }
+
+  Renderer.prototype._drawHoveredMan = function (man) {
+    if (man === undefined) {
+      return;
+    }
+
+    var context = this.context,
+      cellSize = this.cellSize,
+      spacing = this.spacing,
+      M = this.M,
+      x1 = man.x * (cellSize + spacing) + 1.5,
+      y1 = man.y * (cellSize + spacing) + 1.5;
+
+    context.fillStyle = this.playerManager.getPlayer(man.playerId).color;
+    context.beginPath();
+    //context.fillStyle = this.playerManager.getLocalPlayer().color;
+    //context.strokeStyle = this.color;
+    context.arc(x1 + (cellSize) * M/2, y1 + (cellSize) * M/2, cellSize * M /2, 0, 2 * Math.PI);
+    context.fill();
+  };
 
   Renderer.prototype._drawGrid = function () {
     var i,
@@ -576,32 +608,32 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
       cellSize = this.cellSize,
       spacing = this.spacing;
 
-    for (i = 0; i < this.height; i++) {
-      context.lineWidth = spacing;
-      context.beginPath();
-      context.moveTo(0, i * (cellSize + spacing) + 0.5);
-      context.lineTo(this.pixelWidth, i * (cellSize + spacing) + 0.5);
-      context.strokeStyle = 'rgba(0,0,0,1)';
-      context.stroke();
-    }
-
-    for (i = 0; i < this.width; i++) {
-      context.beginPath();
-      context.moveTo(i * (cellSize + spacing) + 0.5, 0);
-      context.lineTo(i * (cellSize + spacing) + 0.5, this.pixelHeight);
-      context.stroke();
-    }
+    //for (i = 0; i < this.height; i++) {
+    //  context.lineWidth = spacing;
+    //  context.beginPath();
+    //  context.moveTo(0, i * (cellSize + spacing) + 0.5);
+    //  context.lineTo(this.pixelWidth, i * (cellSize + spacing) + 0.5);
+    //  context.strokeStyle = 'rgba(0,0,0,1)';
+    //  context.stroke();
+    //}
+    //
+    //for (i = 0; i < this.width; i++) {
+    //  context.beginPath();
+    //  context.moveTo(i * (cellSize + spacing) + 0.5, 0);
+    //  context.lineTo(i * (cellSize + spacing) + 0.5, this.pixelHeight);
+    //  context.stroke();
+    //}
 
     // finish the border
-    context.beginPath();
-    context.moveTo(this.pixelWidth - 0.5, 0);
-    context.lineTo(this.pixelWidth - 0.5, this.pixelHeight);
-    context.stroke();
-
-    context.beginPath();
-    context.moveTo(0, this.pixelHeight - 0.5);
-    context.lineTo(this.pixelWidth - 0.5, this.pixelHeight - 0.5);
-    context.stroke();
+    //context.beginPath();
+    //context.moveTo(this.pixelWidth - 0.5, 0);
+    //context.lineTo(this.pixelWidth - 0.5, this.pixelHeight);
+    //context.stroke();
+    //
+    //context.beginPath();
+    //context.moveTo(0, this.pixelHeight - 0.5);
+    //context.lineTo(this.pixelWidth - 0.5, this.pixelHeight - 0.5);
+    //context.stroke();
 
     //context.strokeStyle = 'rgba(0,0,0,1)';
 
@@ -667,25 +699,6 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     }
   }
 
-  Renderer.prototype._drawHoveredMan = function (cell) {
-    if (cell === undefined) {
-      return;
-    }
-
-    var context = this.context,
-      cellSize = this.cellSize,
-      spacing = this.spacing,
-      x1 = cell.x * (cellSize + spacing) + 1.5,
-      y1 = cell.y * (cellSize + spacing) + 1.5;
-
-    context.lineWidth = 1.5;
-    context.beginPath();
-    context.strokeStyle = this.color;
-    context.arc(x1, y1, 30, 0, 2 * Math.PI);
-    context.stroke();
-    //context.strokeRect(x1 + .5, y1 + .5, cellSize - 2, cellSize - 2);
-  };
-
   Renderer.prototype._drawFramedCell = function (cell) {
     if (cell === undefined) {
       return;
@@ -733,7 +746,7 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     if (this.view == 'big') {
       var cells = this.grid.getRandomCells(clickedCell);
       this.gameClient.placeLiveCells(cells);
-      this._drawMan(clickedMan)
+      //this._drawMan(clickedMan)
 
     } else {
       if (this.randomState) {
@@ -774,21 +787,21 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
   };
 
   Renderer.prototype._handleClickDouble = function (event) {
-    //console.log("double");
+    console.log("double");
 
-    this.canvas.style.display = 'none'
-    this.statsEl.style.display = 'none'
-    this.tickBar.style.display = 'none'
-    this.controlsEl.style.display = 'none'
+    //this.canvas.style.display = 'none'
+    //this.statsEl.style.display = 'none'
+    //this.tickBar.style.display = 'none'
+    //this.controlsEl.style.display = 'none'
   };
 
   Renderer.prototype._handleClickMulti = function (event) {
-    //console.log("multi");
+    console.log("multi");
 
-    this.canvas.style.display = 'inline-block'
-    this.statsEl.style.display = 'inline-block'
-    this.tickBar.style.display = 'inline-block'
-    this.controlsEl.style.display = 'inline-block'
+    //this.canvas.style.display = 'inline-block'
+    //this.statsEl.style.display = 'inline-block'
+    //this.tickBar.style.display = 'inline-block'
+    //this.controlsEl.style.display = 'inline-block'
   };
 
   Renderer.prototype._handleClickBigView = function (event) {

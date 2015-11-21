@@ -223,6 +223,20 @@ html, body {
   transition: opacity .5s ease-in;
 }
 
+.select-model-container {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, .5);
+  -webkit-transition: opacity .5s ease-in;
+  -moz-transition: opacity .5s ease-in;
+  -o-transition: opacity .5s ease-in;
+  transition: opacity .5s ease-in;
+}
+
 #new-player {
   text-align: center;
   position: absolute;
