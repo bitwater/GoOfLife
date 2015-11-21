@@ -29,8 +29,8 @@ define(['core/grid', 'core/board'], function (Grid, Board) {
       var cell = this.grid.getCell(cells[i].x, cells[i].y);
       var man = this.board.getManFromCell(cell);
 
-      console.log(man)
-      if (man.alive) {
+      //console.log(man)
+      if (man.livingCells && man.livingCells.length > 0) {
         return false;
       }
 
