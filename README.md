@@ -52,10 +52,11 @@ npm install
 3. 目前服务器并发和同步控制还很初级；
 
 
-##注意
+## 注意
 * 在core/目录下修改代码，并使用grunt进行构建，以防代码不同步
 
-## 相关项目和文档
-* [开源项目Conway](https://github.com/drewblaisdell/conway)
+## 相关资料和文档
 * [Node.js](https://nodejs.org/en/)
+* [Grunt](http://www.gruntjs.net/)
 * [Game of Life](http://www.conwaylife.com/wiki/Conway%27s_Game_of_Life)
+* [开源项目Conway](https://github.com/drewblaisdell/conway)
