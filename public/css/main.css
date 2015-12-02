@@ -110,6 +110,12 @@ html, body {
   font-size: 18px;
 }
 
+#select-model {
+  display: none;
+  /*margin-top: 15px;*/
+  font-size: 18px;
+}
+
 #rules {
   display: none;
   opacity: 0;
@@ -224,7 +230,7 @@ html, body {
 }
 
 .select-model-container {
-  display: none;
+  display: inline-block;
   position: absolute;
   top: 0;
   left: 0;

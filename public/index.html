@@ -78,10 +78,20 @@
   <div class="flash">
     <div id="flash-news"></div>
   </div>
+  <div id="select-model">
+    <label><input id="double-model" name="view" type="radio"  value=""/>双人对弈</label>
+    <label><input id="multi-model" name="view" type="radio" checked="true" value=""/>多人对战</label>
+  </div>
   <div id="view">
     <label><input id="big-view" name="view" type="radio"  value=""/>宏观视角</label>
     <label><input id="small-view" name="view" type="radio" checked="true" value=""/>微观视角</label>
   </div>
+  <!--<div class="select-model-container">-->
+    <!--<div id="select-model">-->
+      <!--<a href="#" id="double-model" class="play">双人对弈</a>-->
+      <!--<a href="#" id="multi-model" class="play">多人对战</a>-->
+    <!--</div>-->
+  <!--</div>-->
   <div id="connecting">
     <div class="spinner"></div>
     <h3>连接中</h3>
@@ -102,12 +112,6 @@
           <a href="#" id="observe">或旁观</a>
 
           <div id="new-player-error-message"></div>
-        </div>
-      </div>
-      <div class="select-model-container">
-        <div id="select-model">
-          <a href="#" id="double-model" class="play">双人对弈</a>
-          <a href="#" id="multi-model" class="play">多人对战</a>
         </div>
       </div>
     </div>

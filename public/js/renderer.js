@@ -27,6 +27,7 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
 
     // view big-bigView small-samllView
     this.view = 'big';
+    this.model = 'multi'
 
     // random state
     this.randomState = false;
@@ -318,6 +319,11 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
 
     //console.log(mans)
     this.clear();
+    if (this.model == 'double') {
+      this._drawBoard();
+      return;
+    }
+
     if (this.view === 'big') {
       this._drawBoard();
 
@@ -345,6 +351,14 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
       onlinePlayerCount = this.playerManager.getOnlinePlayers().length,
       cellCount,
       cellsOnGrid;
+
+    //this._drawTickBar(this.game.percentageOfTick());
+
+    if (this.model == 'double') {
+      this.clear();
+      this._drawBoard();
+      return;
+    }
 
     if (this.view == 'big') {
       this.clear();
@@ -374,8 +388,6 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
       this.chat.render();
       this.lastChatMessage = this.chatManager.lastChatMessage;
     }
-
-    this._drawTickBar(this.game.percentageOfTick());
 
     if (this.onlinePlayerCount !== onlinePlayerCount) {
       // players joined/left since last render
@@ -781,17 +793,21 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
   Renderer.prototype._handleClickDouble = function (event) {
     console.log("double");
 
+    this.view = 'big';
+    this.model = 'double';
+    //this.selectModelEl.style.display = 'none';
     //this.canvas.style.display = 'none'
-    //this.statsEl.style.display = 'none'
+    this.statsEl.style.display = 'none'
     //this.tickBar.style.display = 'none'
     //this.controlsEl.style.display = 'none'
   };
 
   Renderer.prototype._handleClickMulti = function (event) {
     console.log("multi");
-
+    this.model = 'multi';
+    //this.selectModelEl.style.display = 'none';
     //this.canvas.style.display = 'inline-block'
-    //this.statsEl.style.display = 'inline-block'
+    this.statsEl.style.display = 'inline-block'
     //this.tickBar.style.display = 'inline-block'
     //this.controlsEl.style.display = 'inline-block'
   };

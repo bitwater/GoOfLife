@@ -107,7 +107,7 @@ define(['core/game', 'renderer', 'gameclient', 'core/playermanager', 'core/chatm
     this.playing = playing;
 
     if (playing) {
-      this.renderer.showSelectModel();
+      //this.renderer.showSelectModel();
       this.renderer.hideOverlay();
       this.renderer.showControls();
       this.renderer.showLeaveGameContainer();
