@@ -162,7 +162,7 @@ define(['lib/socket.io'], function (io) {
     }
 
     zhuge.identify(player.id, {
-      name: player,
+      name: player.name,
       color: player.color
     });
     this.playerManager.setLocalPlayer(player);
