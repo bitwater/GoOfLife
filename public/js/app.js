@@ -42,6 +42,7 @@ define(['core/game', 'renderer', 'gameclient', 'core/playermanager', 'core/chatm
       _this.renderer.updateLeaderboard();
       _this.renderer.updatePlayersOnline();
       _this.renderer.handleConnect();
+
       _this.run();
     });
   };

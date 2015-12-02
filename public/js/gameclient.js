@@ -130,10 +130,6 @@ define(['lib/socket.io'], function (io) {
       });
     }
 
-    zhuge.identify(playerObj.id, {
-      name: playerObj,
-      color: playerObj.color
-    });
     console.log(player.name + ' has joined.');
 
     this._testStateSync(cellCount);
@@ -165,6 +161,10 @@ define(['lib/socket.io'], function (io) {
       });
     }
 
+    zhuge.identify(player.id, {
+      name: player,
+      color: player.color
+    });
     this.playerManager.setLocalPlayer(player);
     this.app.setToken(message.token);
     this.app.setPlaying(true);
