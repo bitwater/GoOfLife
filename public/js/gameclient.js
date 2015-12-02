@@ -130,6 +130,10 @@ define(['lib/socket.io'], function (io) {
       });
     }
 
+    zhuge.identify(playerObj.id, {
+      name: playerObj,
+      color: playerObj.color
+    });
     console.log(player.name + ' has joined.');
 
     this._testStateSync(cellCount);
