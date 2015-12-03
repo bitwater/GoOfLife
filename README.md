@@ -1,11 +1,11 @@
 # Go of life (生命围棋)  Web
 双人对弈生命游戏围棋。
 
-这是我和张江在集智俱乐部，发起的生命围棋开源项目，详见[Wiki](http://wiki.swarma.net/index.php/%E7%94%9F%E5%91%BD%E6%B8%B8%E6%88%8F%E5%9B%B4%E6%A3%8B)
+这是我和张江在集智俱乐部，发起的生命围棋开源项目，[详见Wiki](http://wiki.swarma.net/index.php/%E7%94%9F%E5%91%BD%E6%B8%B8%E6%88%8F%E5%9B%B4%E6%A3%8B)
 
-[测试地址](http://123.57.154.231:3000/)
+[目前测试地址](http://123.57.154.231:3000/)
 
-Web端主要作为快速迭代和可传播的游戏原型，重点在于打磨规则，时机成熟后再开发Android和iOS App。
+Web端主要作为快速迭代和可传播的游戏原型，重点在于打磨核心规则，时机成熟后再开发Android和iOS App。
 
 目前以开源项目[Conway](https://github.com/drewblaisdell/conway)为基础。
 
@@ -17,6 +17,8 @@ Web：Node.js + Express4 + Html5 Canvas
 实时通信：Socket.io （考虑是否迁移使用LeanCloud的实时通信SDK）
 
 项目构建：Grunt
+
+模块化： require.js
 
 ## 本地运行
 
@@ -58,5 +60,5 @@ npm install
 ## 相关资料和文档
 * [Node.js](https://nodejs.org/en/)
 * [Grunt](http://www.gruntjs.net/)
-* [Game of Life](http://www.conwaylife.com/wiki/Conway%27s_Game_of_Life)
+* [Game of Life Wiki](http://www.conwaylife.com/wiki/Conway%27s_Game_of_Life)
 * [开源项目Conway](https://github.com/drewblaisdell/conway)
