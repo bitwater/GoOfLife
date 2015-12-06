@@ -30,9 +30,9 @@ define(['core/grid', 'core/board'], function (Grid, Board) {
       var man = this.board.getManFromCell(cell);
 
       //console.log(man)
-      if (man.livingCells && man.livingCells.length > 0) {
-        return false;
-      }
+      //if (man.livingCells && man.livingCells.length > 0) {
+      //  return false;
+      //}
 
       if (cell.alive) {
         return false;
