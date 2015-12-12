@@ -749,8 +749,8 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
       return false;
     }
 
-    _vds.push(['ClickCanvas','user_id', player.id]);
-    _vds.push(['ClickCanvas','user_name', player.name]);
+    //_vds.push(['setCS1','user_id', player.id]);
+    //_vds.push(['setCS2','user_name', player.name]);
 
     zhuge.track('ClickCanvas', {
         id: player.id,
