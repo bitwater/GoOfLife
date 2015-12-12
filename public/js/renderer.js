@@ -749,11 +749,14 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
       return false;
     }
 
+    _vds.push(['ClickCanvas','user_id', player.id]);
+    _vds.push(['ClickCanvas','user_name', player.name]);
+
     zhuge.track('ClickCanvas', {
         id: player.id,
         name: player.name,
         color: player.color
-      });
+    });
 
     if (this.view == 'big') {
       var cells = this.grid.getRandomCells(clickedCell);
