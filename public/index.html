@@ -18,52 +18,52 @@
   <link rel="stylesheet" href="css/main.css">
   <script src="js/lib/require.min.js" data-main="js/main.js"></script>
   <script type="text/javascript">
-    window.zhuge = window.zhuge || [];
-    window.zhuge.methods = "_init debug identify track trackLink trackForm page".split(" ");
-    window.zhuge.factory = function(b) {
-      return function() {
-        var a = Array.prototype.slice.call(arguments);
-        a.unshift(b);
-        window.zhuge.push(a);
-        return window.zhuge
-      }
-    };
-    for (var i = 0; i < window.zhuge.methods.length; i++) {
-      var key = window.zhuge.methods[i];
-      window.zhuge[key] = window.zhuge.factory(key)
-    };
-    window.zhuge.load = function(b, x) {
-      if (!document.getElementById("zhuge-js")) {
-        var a = document.createElement("script");
-        var verDate = new Date();
-        var verStr = verDate.getFullYear().toString()
-                + verDate.getMonth().toString() + verDate.getDate().toString();
-        a.type = "text/javascript";
-        a.id = "zhuge-js";
-        a.async = !0;
-        a.src = "http://sdk.zhugeio.com/zhuge-lastest.min.js?v=" + verStr;
-        var c = document.getElementsByTagName("script")[0];
-        c.parentNode.insertBefore(a, c);
-        window.zhuge._init(b, x)
-      }
-    };
-    window.zhuge.load('3e493d43b6b8434db6fab297525010d7');
+//    window.zhuge = window.zhuge || [];
+//    window.zhuge.methods = "_init debug identify track trackLink trackForm page".split(" ");
+//    window.zhuge.factory = function(b) {
+//      return function() {
+//        var a = Array.prototype.slice.call(arguments);
+//        a.unshift(b);
+//        window.zhuge.push(a);
+//        return window.zhuge
+//      }
+//    };
+//    for (var i = 0; i < window.zhuge.methods.length; i++) {
+//      var key = window.zhuge.methods[i];
+//      window.zhuge[key] = window.zhuge.factory(key)
+//    };
+//    window.zhuge.load = function(b, x) {
+//      if (!document.getElementById("zhuge-js")) {
+//        var a = document.createElement("script");
+//        var verDate = new Date();
+//        var verStr = verDate.getFullYear().toString()
+//                + verDate.getMonth().toString() + verDate.getDate().toString();
+//        a.type = "text/javascript";
+//        a.id = "zhuge-js";
+//        a.async = !0;
+//        a.src = "http://sdk.zhugeio.com/zhuge-lastest.min.js?v=" + verStr;
+//        var c = document.getElementsByTagName("script")[0];
+//        c.parentNode.insertBefore(a, c);
+//        window.zhuge._init(b, x)
+//      }
+//    };
+//    window.zhuge.load('3e493d43b6b8434db6fab297525010d7');
   </script>
   <script type='text/javascript'>
-//    var _vds = _vds || [];
-//    window._vds = _vds;
-//    (function(){
-//      _vds.push(['setAccountId', 'a2d6e101bded4107a46145e95259ab2f']);
-//      _vds.push(['setCS1','user_id', player.id]);
-//      (function() {
-//        var vds = document.createElement('script');
-//        vds.type='text/javascript';
-//        vds.async = true;
-//        vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';
-//        var s = document.getElementsByTagName('script')[0];
-//        s.parentNode.insertBefore(vds, s);
-//      })();
-//    })();
+    var _vds = _vds || [];
+    window._vds = _vds;
+    (function(){
+      _vds.push(['setAccountId', 'a2d6e101bded4107a46145e95259ab2f']);
+      _vds.push(['setCS1','user_id', player.id]);
+      (function() {
+        var vds = document.createElement('script');
+        vds.type='text/javascript';
+        vds.async = true;
+        vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(vds, s);
+      })();
+    })();
   </script>
 </head>
 <body>
