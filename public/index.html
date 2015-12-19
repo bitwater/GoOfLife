@@ -18,36 +18,36 @@
   <link rel="stylesheet" href="css/main.css">
   <script src="js/lib/require.min.js" data-main="js/main.js"></script>
   <script type="text/javascript">
-//    window.zhuge = window.zhuge || [];
-//    window.zhuge.methods = "_init debug identify track trackLink trackForm page".split(" ");
-//    window.zhuge.factory = function(b) {
-//      return function() {
-//        var a = Array.prototype.slice.call(arguments);
-//        a.unshift(b);
-//        window.zhuge.push(a);
-//        return window.zhuge
-//      }
-//    };
-//    for (var i = 0; i < window.zhuge.methods.length; i++) {
-//      var key = window.zhuge.methods[i];
-//      window.zhuge[key] = window.zhuge.factory(key)
-//    };
-//    window.zhuge.load = function(b, x) {
-//      if (!document.getElementById("zhuge-js")) {
-//        var a = document.createElement("script");
-//        var verDate = new Date();
-//        var verStr = verDate.getFullYear().toString()
-//                + verDate.getMonth().toString() + verDate.getDate().toString();
-//        a.type = "text/javascript";
-//        a.id = "zhuge-js";
-//        a.async = !0;
-//        a.src = "http://sdk.zhugeio.com/zhuge-lastest.min.js?v=" + verStr;
-//        var c = document.getElementsByTagName("script")[0];
-//        c.parentNode.insertBefore(a, c);
-//        window.zhuge._init(b, x)
-//      }
-//    };
-//    window.zhuge.load('3e493d43b6b8434db6fab297525010d7');
+    window.zhuge = window.zhuge || [];
+    window.zhuge.methods = "_init debug identify track trackLink trackForm page".split(" ");
+    window.zhuge.factory = function(b) {
+      return function() {
+        var a = Array.prototype.slice.call(arguments);
+        a.unshift(b);
+        window.zhuge.push(a);
+        return window.zhuge
+      }
+    };
+    for (var i = 0; i < window.zhuge.methods.length; i++) {
+      var key = window.zhuge.methods[i];
+      window.zhuge[key] = window.zhuge.factory(key)
+    };
+    window.zhuge.load = function(b, x) {
+      if (!document.getElementById("zhuge-js")) {
+        var a = document.createElement("script");
+        var verDate = new Date();
+        var verStr = verDate.getFullYear().toString()
+                + verDate.getMonth().toString() + verDate.getDate().toString();
+        a.type = "text/javascript";
+        a.id = "zhuge-js";
+        a.async = !0;
+        a.src = "http://sdk.zhugeio.com/zhuge-lastest.min.js?v=" + verStr;
+        var c = document.getElementsByTagName("script")[0];
+        c.parentNode.insertBefore(a, c);
+        window.zhuge._init(b, x)
+      }
+    };
+    window.zhuge.load('3e493d43b6b8434db6fab297525010d7');
   </script>
   <script type='text/javascript'>
     var _vds = _vds || [];
@@ -144,7 +144,7 @@
   <!--</div>-->
   <div id="connecting">
     <div class="spinner"></div>
-    <h3>连接中</h3>
+    <h3>正在努力加载中...</h3>
   </div>
   <div id="game">
     <canvas id="tickbar"></canvas>
