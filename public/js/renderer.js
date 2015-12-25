@@ -175,7 +175,7 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     this.gameEl.style.width = this.pixelWidth + 'px';
 
     this._drawGrid();
-    this.view = 'small';
+    this.view = 'big';
     //this._drawBoard();
 
     this.setAccentColor(this.config.defaultAccentColor);
