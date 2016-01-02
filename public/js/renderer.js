@@ -100,6 +100,8 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
 
     this.chat = new Chat(this.app);
     this.chat.init();
+    this.placeCellsEl.style.display = 'none'
+    this.placeRandomCellsEl.style.display = 'none'
 
     this.playButton = document.getElementById('new-player').querySelector('.play');
 
