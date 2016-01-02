@@ -949,6 +949,12 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     } else {
       return false;
     }
+
+    zhuge.track('自主放下点击', {
+      id: player.id,
+      name: player.name,
+      color: player.color
+    });
   };
 
   Renderer.prototype._handlePlaceRandomCells = function (event) {
@@ -961,8 +967,13 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     } else {
       this.randomState = true;
       this.placeRandomCellsEl.style.borderColor = this.color;
-
     }
+
+    zhuge.track('随机生成点击', {
+      id: player.id,
+      name: player.name,
+      color: player.color
+    });
   };
 
   Renderer.prototype._handlePlayButtonClick = function (event) {
