@@ -192,7 +192,8 @@ define([], function() {
     }
 
     console.log("_handlePlaceLiveCells" + new Date(), "remoteAddress " +
-      socket.request.connection.remoteAddress + "  OnlineIPs", this.playerManager.getOnlineIPs());
+      socket.request.connection.remoteAddress + "  OnlineIPs:", this.playerManager.getOnlineIPs(),
+    "  message: ", message);
 
     player.setLastSeen(Date.now());
 
