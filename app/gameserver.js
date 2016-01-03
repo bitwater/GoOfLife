@@ -128,8 +128,7 @@ define([], function() {
       player.setToken(token);
       player.setIP(socket.request.connection.remoteAddress);
 
-      var address = socket.handshake.address;
-      console.log("New connection from " + address.address + ":" + address.port);
+      console.log("new connection from " + socket.request.connection.remoteAddress);
 
       transmission = player.transmission();
       socket.emit('receive_new_player', { player: transmission, token: token });
@@ -140,7 +139,7 @@ define([], function() {
       socket.on('disconnect', this._handleDisconnect.bind(this, socket, player));
       socket.on('chat_message', this._handleChatMessage.bind(this));
 
-      console.log(new Date(), this.playerManager.getOnlineIPs());
+      console.log(new Date(), this.playerManager.getOnlinePlayers());
     }
   };
 
@@ -191,6 +190,9 @@ define([], function() {
     if (token !== message.token) {
       return false;
     }
+
+    console.log("_handlePlaceLiveCells" + new Date(), "remoteAddress " +
+      socket.request.connection.remoteAddress + "  OnlineIPs", this.playerManager.getOnlineIPs());
 
     player.setLastSeen(Date.now());
 
