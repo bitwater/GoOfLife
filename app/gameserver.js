@@ -191,9 +191,9 @@ define([], function() {
       return false;
     }
 
-    console.log("_handlePlaceLiveCells" + new Date(), "remoteAddress " +
-      socket.request.connection.remoteAddress + "  OnlineIPs:", this.playerManager.getOnlineIPs(),
-    "  message: ", message);
+    console.log("_handlePlaceLiveCells  " + new Date(), "remoteAddress " +
+      socket.request.connection.remoteAddress + "  OnlinePlayers:", this.playerManager.getOnlinePlayers(),
+    "  \nmessage: ", message);
 
     player.setLastSeen(Date.now());
 

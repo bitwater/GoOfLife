@@ -17,12 +17,12 @@ define([], function() {
     boardHeight: 10,
 
     // game settings
-    generationDuration: 1000,
+    generationDuration: 2000,
     giveCellsEvery: 1, // generations
     timeBetweenUpdates: 10000,
 
     // player settings
-    cellsPerPlayer: 100,
+    cellsPerPlayer: 1000,
     lastSeenTimeout: 180000,
 
     // chat settings

@@ -124,6 +124,13 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
       } else if (key === 13) {
         // enter was pressed
         _this._handleEnterPress.bind(_this)(event);
+      } else if (key === 9) {
+        //alert("  " + key + "   " +_this.view);
+        if (_this.view == 'small') {
+          _this._handleClickBigView();
+        } else if (_this.view == 'big') {
+          _this._handleClickSmallView();
+        }
       }
     });
 
