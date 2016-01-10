@@ -25,7 +25,7 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     this.lastCellCount = 0;
     this.lastChatMessage = 0;
 
-    // view big-bigView small-samllView
+    // view big-bigView small-smallView
     this.view = 'big';
     this.model = 'multi'
 
@@ -124,13 +124,18 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
       } else if (key === 13) {
         // enter was pressed
         _this._handleEnterPress.bind(_this)(event);
-      } else if (key === 9) {
-        //alert("  " + key + "   " +_this.view);
-        if (_this.view == 'small') {
+      } else if (event.shiftKey) {
+        if (_this.view === 'small') {
           _this._handleClickBigView();
-        } else if (_this.view == 'big') {
+        } else if (_this.view === 'big') {
           _this._handleClickSmallView();
         }
+      } else if (key === 70) {
+        _this._handlePlaceCells.bind(_this)(event);
+        //_this._handlePlaceCells(event);
+      } else if (event.shiftKey && key === 82) {
+        _this._handlePlaceRandomCells.bind(_this)(event);
+        //_this._handlePlaceCells(event);
       }
     });
 
@@ -838,7 +843,7 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
   };
 
   Renderer.prototype._handleClickSmallView = function (event) {
-    this.view = 'samll';
+    this.view = 'small';
     this.placeCellsEl.style.display = 'inline-block'
     this.placeRandomCellsEl.style.display = 'inline-block'
     this.render();
