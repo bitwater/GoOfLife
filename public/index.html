@@ -73,17 +73,21 @@
 <div id="rules">
   <div class="rules-box">
     <p>Go of Life，生命对弈（昵称：玩儿命）</p>
-    <p>去生活，生下来，活下去。</p>
 
-    <p>这是一个平行的二维世界，棋盘上是围棋提子规则，网格下是生命游戏演化规则，点击放下你的自由活细胞，宏观微观的视角切换（按shift快速切换），时间嘀嗒一下，生命游戏演化一代并进行提子，同时生成一个自由活细胞。
-      <br>去发现和创造属于你的二维时空吧！这也许是一场浓缩的生命对弈游戏。</p>
+    <p>这是一个平行的二维世界，棋盘上是围棋提子规则，网格下是生命游戏演化规则，点击放下你的自由活细胞，宏观微观的视角切换（按shift快速切换）
+      <br>时间嘀嗒一下，生命游戏演化一代，围棋检查气数后进行提子，同时生成一个自由活细胞。
+    </p>
+
+    <p>原力指数：影响Go of Life历史进程指数，目前每次时钟滴嗒时活细胞数进行线性叠加，后续考虑根据时间指数型衰减模型，按一定时间周期进行统计</p>
+
+    <p>去占领、发现和创造属于你的二维时空吧！这是一场浓缩的生命对弈游戏。</p>
 
     <p>版本：V0.4.1_alpha <br> By 罗三水  微信号：lm_norway <br>正在持续开发中...<br>根据程序质能方程：Errors = more code^2<br>如有Bug 纯属正常 <br>开个玩笑，欢迎各种吐槽反馈 :)</p>
   </div>
 </div>
 <div class="container">
   <h1 class="brand-name">Go of Life</h1>
-  <h3>All of life is an act of letting go.    -- Life of Pi </h3>
+  <h3>All of life is an act of letting go    -- Life of Pi </h3>
   <div class="links-outer">
     <div class="table">
       <ul class="links">
@@ -116,7 +120,7 @@
   </div>
   <div id="stats">
     <div class="cell-count-container">
-      自由活细胞：
+      我的：自由活细胞：
       <span class="cell-count"></span>
     </div>
     <div class="cells-on-grid-container">
@@ -126,7 +130,7 @@
       </span>
     </div>
     <div class="high-score-container">
-      最高分：
+      原力指数：
       <span id="high-score">0</span>
     </div>
   </div>
@@ -179,10 +183,12 @@
       </div>
     </div>
     <div class="boards">
-      <div class="leaderboard-container">
-        <h2>排行榜</h2>
+      <h3>May the force be with you    -- Star Wars </h3>
 
-        <h3>最高分</h3>
+      <div class="leaderboard-container">
+        <h3>影响Go of Life历史进程玩家排行榜</h3>
+
+        <h3>原力指数</h3>
 
         <div id="leaderboard"></div>
       </div>

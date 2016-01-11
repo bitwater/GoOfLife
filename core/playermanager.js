@@ -122,6 +122,12 @@ define(['core/player'], function(Player) {
     });
   };
 
+  PlayerManager.prototype.getPlayersByForce = function() {
+    return this.players.sort(function(a, b) {
+      return b.force - a.force;
+    });
+  };
+
   PlayerManager.prototype.getPlayerByName = function(name) {
     for (var i = 0; i < this.players.length; i++) {
       if (this.players[i].name === name) {
@@ -165,7 +171,8 @@ define(['core/player'], function(Player) {
       if (!(players[i] instanceof Player)) {
         // this lets the method handle an array of players
         // or an array of objects representing players
-        players[i] = new Player(players[i].id, players[i].name, players[i].color, players[i].cells, players[i].online, players[i].highScore, players[i].lastSeen);
+        players[i] = new Player(players[i].id, players[i].name, players[i].color, players[i].cells,
+          players[i].online, players[i].highScore, players[i].lastSeen, players[i].force);
       }
 
       var player = this.getPlayer(players[i].id);
@@ -176,7 +183,8 @@ define(['core/player'], function(Player) {
         player.setOnline(players[i].online);
         player.setHighScore(players[i].highScore);
         player.setLastSeen(players[i].lastSeen);
-        
+        player.setForce(players[i].force);
+
         if (players[i].token) {
           player.setToken(players[i].token);
         }

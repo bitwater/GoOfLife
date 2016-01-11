@@ -1,5 +1,5 @@
 define([], function() {
-  var Player = function(id, name, color, cells, online, highScore, lastSeen) {
+  var Player = function(id, name, color, cells, online, highScore, lastSeen, force) {
     this.id = id;
     this.name = name;
     this.color = color.replace('-','');
@@ -11,6 +11,7 @@ define([], function() {
     this.lastSeen = lastSeen || Date.now();
     this.token = false;
     this.ip = false;
+    this.force = force || 0;
   };
 
   Player.prototype.getIP = function() {
@@ -51,6 +52,8 @@ define([], function() {
     if (this.highScore < cellCount) {
       this.highScore = cellCount;
     }
+
+    this.force = this.force + cellCount;
   };
 
   Player.prototype.setClean = function() {
@@ -67,6 +70,10 @@ define([], function() {
 
   Player.prototype.setHighScore = function(score) {
     this.highScore = score;
+  };
+
+  Player.prototype.setForce = function(force) {
+    this.force = force;
   };
 
   Player.prototype.setIP = function(ip) {
@@ -102,7 +109,8 @@ define([], function() {
       cellsOnGrid: this.cellsOnGrid,
       highScore: this.highScore,
       online: this.online,
-      lastSeen: this.lastSeen
+      lastSeen: this.lastSeen,
+      force: this.force
     };
   };
 

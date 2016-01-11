@@ -504,7 +504,8 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
       cellCount = localPlayer.cells;
       cellsOnGrid = localPlayer.cellsOnGrid;
 
-      this.highScoreEl.innerHTML = localPlayer.highScore;
+      //this.highScoreEl.innerHTML = localPlayer.highScore;
+      this.highScoreEl.innerHTML = localPlayer.force/10000;
       this.cellCountEl.innerHTML = cellCount;
       this.cellsOnGridEl.innerHTML = cellsOnGrid;
     }

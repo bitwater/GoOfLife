@@ -12,7 +12,7 @@ define([], function() {
   };
 
   Leaderboard.prototype.render = function() {
-    var playerStats = this.playerManager.getPlayersByHighScore(),
+    var playerStats = this.playerManager.getPlayersByForce(),
       html = '';
 
     for (var i = 0; i < playerStats.length; i++) {
@@ -21,7 +21,7 @@ define([], function() {
       if (playerStats[i].highScore > 0) {
         html += '<div data-player-id="'+ stat.id +'"><div class="color" style="background: ' + stat.color + ';"></div>';
         html += '<span class="name">' + stat.name + '</span>';
-        html += '<div class="cells">' + stat.highScore + '</div></div>';
+        html += '<div class="cells">' + stat.force/10000 + '</div></div>';
       }
     }
 

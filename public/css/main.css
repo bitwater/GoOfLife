@@ -453,7 +453,7 @@ html, body {
 }
 
 .leaderboard-container h3, .players-online-container h3, .chat-container h3 {
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
   text-align: center;
   margin: 0 0 5px;
   font-size: 12px;
