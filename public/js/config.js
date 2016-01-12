@@ -3,13 +3,13 @@ define([], function() {
     // render settings
     deadCellColor: '#ffffff',
     defaultAccentColor: '#000000',
-    cellSize: 6,
+    cellSize: 3,
     cellSpacing: 1,
     tickBarHeight: 5,
 
     // grid settings
-    gridWidth: 81,
-    gridHeight: 81,
+    gridWidth: 162,
+    gridHeight: 162,
 
     M:9,
     T:3000,
@@ -17,7 +17,7 @@ define([], function() {
     boardHeight: 10,
 
     // game settings
-    generationDuration: 1000,
+    generationDuration: 500,
     giveCellsEvery: 1, // generations
     timeBetweenUpdates: 10000,
 

@@ -240,10 +240,10 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
         this.lastHighScore = localPlayer.highScore;
       }
 
-      if (this.game.isTimeToGiveNewCells() && localPlayer.cells < this.config.cellsPerPlayer) {
-        this.flashNewsEl.innerHTML += '自由活细胞 +1  ';
-        news = true;
-      }
+      //if (this.game.isTimeToGiveNewCells() && localPlayer.cells < this.config.cellsPerPlayer) {
+      //  this.flashNewsEl.innerHTML += '自由活细胞 +1  ';
+      //  news = true;
+      //}
 
       if (localPlayer.highScore > this.lastHighScore) {
         this.lastHighScore = localPlayer.highScore;
