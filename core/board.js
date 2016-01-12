@@ -80,7 +80,7 @@ define(['core/man'], function(Man) {
     // 先遍历计算出每个棋子是否存活和粗粒化颜色dominantPlayerId
     for (i = 0; i < l; i++) {
       var livingCells = mans[i].getLivingCells();
-      if (livingCells.length > 0) {
+      if (livingCells.length > 1) {
         var dominantPlayerId = this.getDominantPlayerIdInMan(livingCells);
         mans[i].set('playerId', dominantPlayerId);
         mans[i].set('alive', true);
