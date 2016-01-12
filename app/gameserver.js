@@ -197,7 +197,9 @@ define([], function() {
 
     player.setLastSeen(Date.now());
 
-    if (this.game.canPlaceLiveCells(player, cells)) {
+    var msg = this.game.canPlaceLiveCells(player, cells);
+
+    if (msg == true) {
       //console.log(cells);
       this.game.placeCells(player, cells);
       this.io.emit('cells_placed', {
@@ -207,7 +209,7 @@ define([], function() {
       });
     } else {
       //console.log("no cells placed");
-      socket.emit("no_cells_placed", {msg: "自由细胞放不下..."})
+      socket.emit("no_cells_placed", msg)
     }
   };
 

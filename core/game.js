@@ -22,7 +22,7 @@ define(['core/grid', 'core/board'], function (Grid, Board) {
 
   Game.prototype.canPlaceLiveCells = function (player, cells) {
     if (cells.length > player.cells) {
-      return false;
+      return {msg: '自由活细胞数量不够...'};
     }
 
     for (var i = 0; i < cells.length; i++) {
@@ -35,7 +35,7 @@ define(['core/grid', 'core/board'], function (Grid, Board) {
       //}
 
       if (cell.alive) {
-        return false;
+        return {msg: '自由活细胞放不下...'};
       }
     }
 
