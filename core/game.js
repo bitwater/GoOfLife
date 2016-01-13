@@ -133,7 +133,7 @@ define(['core/grid', 'core/board'], function (Grid, Board) {
     }
 
     var ml = mans.length;
-    console.log("click-----------", "map:", map, "mans.length:" + ml)
+    //console.log("click-----------", "map:", map, "mans.length:" + ml)
     // 落子执行提子规则
     this.board.checkCapturing(mans);
 
