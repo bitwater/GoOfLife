@@ -21,7 +21,7 @@ define([], function() {
       if (stat.force > 0) {
         html += '<div data-player-id="'+ stat.id +'"><div class="color" style="background: ' + stat.color + ';"></div>';
         html += '<span class="name">' + stat.name + '</span>';
-        html += '<div class="cells">' + stat.force/10000 + '</div></div>';
+        html += '<div class="cells">' + (stat.force/10000).toFixed(2) + '</div></div>';
       }
     }
 

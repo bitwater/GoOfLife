@@ -510,7 +510,7 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
       //this.highScoreEl.style.color = this.color;
       //this.cellCountEl.style.color = this.color;
       //this.cellsOnGridEl.style.color = this.color;
-      this.highScoreEl.innerHTML = localPlayer.force/10000;
+      this.highScoreEl.innerHTML = (localPlayer.force/10000).toFixed(2);
       this.cellCountEl.innerHTML = cellCount;
       this.cellsOnGridEl.innerHTML = cellsOnGrid;
     }
