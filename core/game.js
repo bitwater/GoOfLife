@@ -54,9 +54,16 @@ define(['core/grid', 'core/board'], function (Grid, Board) {
     var players = this.playerManager.getPlayers();
 
     for (var i = 0; i < players.length; i++) {
+      var player = players[i];
+
       // give each player another cell if they don't already have the max
-      if (players[i].cells < this.config.cellsPerPlayer) {
-        players[i].cells++;
+      if (player.cells < this.config.cellsPerPlayer) {
+        var newCells = Math.round(200 * Math.pow(player.cellsOnGrid, -0.75));
+        player.cells +=  newCells;
+        if (this.app.renderer) {
+          var msg = '自由活细胞 +' + newCells;
+          this.app.renderer.flashMsg(msg);
+        }
       }
     }
   };

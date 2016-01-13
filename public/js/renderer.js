@@ -262,6 +262,17 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     }
   };
 
+  Renderer.prototype.flashMsg = function (message) {
+    console.log("msg:" + message)
+    var _this = this;
+    this.flashNewsEl.innerHTML += message;
+    this.flashNewsEl.className = 'active';
+
+    setTimeout(function () {
+      _this.flashNewsEl.className = '';
+    }, 500);
+  };
+
   Renderer.prototype.handleConnect = function () {
     var _this = this;
 
@@ -314,16 +325,6 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     this.newPlayerErrorEl.style.display = 'block';
   };
 
-  Renderer.prototype.flashMsg = function (message) {
-    this.flashNewsEl.innerHTML += message;
-    this.flashNewsEl.className = 'active';
-
-    setTimeout(function () {
-
-      this.flashNewsEl.className = ' ';
-    }, 333);
-  };
-
   Renderer.prototype.render = function () {
     var i,
       cells = this.grid.getCells(),
@@ -366,7 +367,7 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
       cellCount,
       cellsOnGrid;
 
-    //this._drawTickBar(this.game.percentageOfTick());
+    this._drawTickBar(this.game.percentageOfTick());
 
     if (this.model == 'double') {
       this.clear();

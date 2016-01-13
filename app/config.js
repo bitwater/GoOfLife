@@ -15,7 +15,7 @@ define([], function() {
     boardHeight: 10,
 
     // game settings
-    generationDuration: 2000,
+    generationDuration: 3000,
     giveCellsEvery: 1, // generations
     
     // player settings

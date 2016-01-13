@@ -184,7 +184,7 @@ define(['core/cell'], function (Cell) {
     for (var i = 0; i < M -1; i++) {
       for (var j = 0; j < M -1; j++) {
         var cell = this.getCell(x + i, y + j);
-        if (Math.random() > 0.7) {
+        if (Math.random() > 0.75) {
           //cell.setDirty();
           cells.push(cell);
         }
