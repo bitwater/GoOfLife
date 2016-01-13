@@ -58,7 +58,7 @@ define(['core/grid', 'core/board'], function (Grid, Board) {
 
       // give each player another cell if they don't already have the max
       if (player.cells < this.config.cellsPerPlayer) {
-        var newCells = Math.round(200 * Math.pow(player.cellsOnGrid, -0.75));
+        var newCells = Math.round(100 * Math.pow(player.cellsOnGrid, -0.75));
         player.cells +=  newCells;
         if (this.app.renderer) {
           var msg = '自由活细胞 +' + newCells;
