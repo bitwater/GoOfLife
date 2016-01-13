@@ -778,16 +778,21 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
         color: player.color
     });
 
+    // 宏观视角点击
     if (this.view == 'big') {
       var cells = this.grid.getRandomCells(clickedCell);
       this.gameClient.placeLiveCells(cells);
     } else {
+
+      // 随机放下
       if (this.randomState) {
         this.placeRandomCellsEl.style.borderColor = '#bbb';
         var cells = this.grid.getRandomCells(clickedCell);
         this.gameClient.placeLiveCells(cells);
         this.randomState = false;
       } else {
+
+        // 自主放置
         // if it isn't a flagged cell, and you have cells left to place
         if (!this._isFlaggedCell(clickedCell) && (player.cells - this.flaggedCells.length > 0)) {
           // flag it

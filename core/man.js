@@ -49,6 +49,10 @@ define([], function() {
     return this.livingCells;
   };
 
+  Man.prototype.getLivingCellsCount = function() {
+    return this.livingCells.length;
+  };
+
   Man.prototype.clearLivingCells = function() {
     this.livingCells = [];
   };

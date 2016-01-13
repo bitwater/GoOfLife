@@ -39,8 +39,8 @@ define(['core/man'], function(Man) {
     //console.log("cell: " + cell.x + cell.y + "  man: " + x + "  " + y +cell.alive)
     if (this.mans[y] && this.mans[y][x]){
       var man = this.mans[y][x];
-      man.alive = cell.alive;
-      man.playerId = cell.playerId;
+      //man.alive = cell.alive;
+      //man.playerId = cell.playerId;
 
       return man;
     } else {
@@ -51,13 +51,16 @@ define(['core/man'], function(Man) {
   Board.prototype.setMansLivingCells = function (livingCells) {
     var i, j, m, mark = [],
       mans = this.getMans(),
+      ml = mans.length,
       l = livingCells.length;
 
     // clear all mans
-    for (m=0; m<mans.length; m++) {
+    for (m=0; m<ml; m++) {
       mans[m].set('alive', false);
       mans[m].set('playerId', undefined);
       mans[m].clearLivingCells();
+      mans[m].set('latest', false);
+
     }
 
     // group livingCells to Mans
@@ -73,15 +76,23 @@ define(['core/man'], function(Man) {
   }
 
   Board.prototype.tick = function () {
-    var mans = this.getMans(),
-      i,
-      l = mans.length, liberties, captured;
+    this.checkCapturing(this.getMans());
+  };
 
-    // 先遍历计算出每个棋子是否存活和粗粒化颜色dominantPlayerId
+  Board.prototype.checkCapturing = function (mans) {
+    var i, l = mans.length, liberties, captured;
+
+    // 先遍历计算出每个棋子是否存活和粗粒化领主颜色dominantPlayerId
     for (i = 0; i < l; i++) {
+      //if (!mans[i])
+      //  continue;
+
       var livingCells = mans[i].getLivingCells();
-      if (livingCells.length > 1) {
+      if (mans[i].latest === true || livingCells.length > 1) {
         var dominantPlayerId = this.getDominantPlayerIdInMan(livingCells);
+        //if (l < this.getMans().length) {
+        //  console.log("mans: ", dominantPlayerId, mans[i]);
+        //}
         mans[i].set('playerId', dominantPlayerId);
         mans[i].set('alive', true);
 
@@ -91,9 +102,9 @@ define(['core/man'], function(Man) {
       }
     }
 
-    // 再遍历实现围棋的提子规则
+    // 再次遍历实现围棋的提子
     for (i = 0; i < l; i++) {
-      if (mans[i].alive == true) {
+      if (mans[i].alive == true && !mans[i].latest) {
         var checkeds = this.createCheckedArray(this.width, this.height);
         liberties = this.checkLiberties(mans[i], mans[i].playerId, checkeds);
         //console.log("------------liberties:", liberties);
@@ -102,18 +113,12 @@ define(['core/man'], function(Man) {
           this.doCapture(mans[i], mans[i].playerId);
         }
       }
-
     }
-
-  };
-
-  Board.prototype.checkCapturing = function (man) {
-    var captured = [], checkeds = this.createCheckedArray(this.width, this.height);
-    if (!this.checkLiberties(man, man.playerId, checkeds)) {
-      this.doCapture(man);
-    }
-
-    return captured;
+    //var captured = [], checkeds = this.createCheckedArray(this.width, this.height);
+    //if (!this.checkLiberties(man, man.playerId, checkeds)) {
+    //  this.doCapture(man);
+    //}
+    //return captured;
   }
 
   Board.prototype.doCapture = function (man, id) {
@@ -182,6 +187,10 @@ define(['core/man'], function(Man) {
 
     //console.log(livingCells, mark)
     return dominant;
+  }
+  Board.prototype.getManNeighbour = function(man) {
+    var x = man.x, y = man.y, neighbours=[];
+
   }
 
   Board.prototype._buildMans = function(width, height) {

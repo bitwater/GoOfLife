@@ -88,9 +88,12 @@ define(['core/grid', 'core/board'], function (Grid, Board) {
   };
 
   Game.prototype.placeCells = function (player, cells) {
-    for (var i = 0; i < cells.length; i++) {
+    var mans = [], map = {}, cl=cells.length;
+
+    for (var i = 0; i < cl; i++) {
       var cell = this.grid.getCell(cells[i].x, cells[i].y);
-      var man = this.board.getManFromCell(cell);
+      var man = this.board.getManFromCell(cell), x = man.x, y = man.y,
+        para = this.config.gridWidth;
 
       if (!cell) {
         return false;
@@ -99,9 +102,40 @@ define(['core/grid', 'core/board'], function (Grid, Board) {
       cell.set('alive', true);
       cell.set('playerId', player.id);
 
-      man.set('alive', true);
-      man.set('playerId', player.id);
+      man.addLivingCell(cell);
+      //console.log("getLivingCellsCount:" + man.getLivingCellsCount(), map);
+      // 落子及其邻近需进行提子判断，push in mans[]
+      if (! map[x*para+y]) {
+        map[x * para + y] = true;
+        man.latest = true;
+        mans.push(man);
+
+        if (x > 0) {
+          map[(x - 1) * para + y] = true;
+          mans.push(this.board.getMan(x - 1, y))
+        }
+
+        if (x < this.board.width-1) {
+          map[(x + 1) * para + y] = true;
+          mans.push(this.board.getMan(x + 1, y));
+        }
+
+        if (y > 0) {
+          map[x * para + (y - 1)] = true;
+          mans.push(this.board.getMan(x, y - 1));
+        }
+
+        if (y < this.board.height-1) {
+          map[x * para + (y + 1)] = true;
+          mans.push(this.board.getMan(x, y + 1));
+        }
+      }
     }
+
+    var ml = mans.length;
+    console.log("click-----------", "map:", map, "mans.length:" + ml)
+    // 落子执行提子规则
+    this.board.checkCapturing(mans);
 
     player.setCells(player.cells - cells.length);
   };
