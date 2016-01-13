@@ -83,6 +83,7 @@ define(['lib/socket.io'], function (io) {
 
   GameClient.prototype._handleNoCellsPlaced = function (message) {
     this.app.renderer.flashMsg(message.msg);
+    //alert(message.msg);
   }
 
   GameClient.prototype._handleChatMessage = function (message) {
