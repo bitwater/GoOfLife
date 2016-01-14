@@ -46,14 +46,15 @@ define([], function() {
     this.cells = cells;
   };
 
-  Player.prototype.setCellsOnGrid = function(cellCount) {
+  Player.prototype.updatePlayerKPI = function(cellCount, onlinePlayersNum) {
     this.cellsOnGrid = cellCount;
 
     if (this.highScore < cellCount) {
       this.highScore = cellCount;
     }
 
-    this.force = this.force + cellCount;
+    //console.log("原力指数 +" + cellCount * onlinePlayersNum/2);
+    this.force = this.force + cellCount * onlinePlayersNum/2;
   };
 
   Player.prototype.setClean = function() {

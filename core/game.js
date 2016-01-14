@@ -60,8 +60,8 @@ define(['core/grid', 'core/board'], function (Grid, Board) {
       if (player.cells < this.config.cellsPerPlayer) {
         var newCells = Math.round(200 * Math.pow(player.cellsOnGrid, -0.6));
         player.cells +=  newCells;
-        if (this.app.renderer) {
-          var msg = '自由活细胞 +' + newCells;
+        if (this.app.renderer && player.id == this.playerManager.getLocalPlayer().id) {
+          var msg = '自由活细胞 +' + newCells + "   ";
           this.app.renderer.flashMsg(msg);
         }
       }
@@ -160,6 +160,7 @@ define(['core/grid', 'core/board'], function (Grid, Board) {
     var cells = this.grid.getCells(),
       playerIds,
       players = this.playerManager.getPlayers(),
+      onlinePlayersNum = this.playerManager.getOnlinePlayers().length || 0,
       playerCells = {};
 
     for (var i = 0; i < cells.length; i++) {
@@ -176,7 +177,7 @@ define(['core/grid', 'core/board'], function (Grid, Board) {
     for (var i = 0; i < players.length; i++) {
       var player = players[i];
       if (playerCells[player.id]) {
-        player.setCellsOnGrid(playerCells[player.id]);
+        player.updatePlayerKPI(playerCells[player.id], onlinePlayersNum);
 
         this.playerStats.push({
           id: player.id,
@@ -185,7 +186,7 @@ define(['core/grid', 'core/board'], function (Grid, Board) {
           cellsOnGrid: player.cellsOnGrid
         });
       } else {
-        player.setCellsOnGrid(0);
+        player.updatePlayerKPI(0, 0);
       }
     }
   };
