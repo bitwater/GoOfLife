@@ -67,7 +67,6 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     this.leaveGameContainerEl = document.getElementById('leave-game-container');
     this.newCellMessageEl = document.getElementById('new-cell-message');
     this.newHighScoreMessageEl = document.getElementById('new-high-score-message');
-    this.flashNewsEl = document.getElementById('flash-news');
     this.observeLinkEl = document.getElementById('observe');
     this.cellsOnGridStatEl = document.getElementById('cells-on-grid-stat');
     this.loginLinkContainerEl = document.getElementById('login-link-container');
@@ -77,6 +76,12 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     this.multiModel = document.getElementById('multi-model');
     this.bigView = document.getElementById('big-view');
     this.smallView = document.getElementById('small-view');
+
+    this.flashNewsEl = document.getElementById('flash-news');
+    //this.flashNewsEl.style.left=(document.body.clientWidth-this.flashNewsEl.clientWidth)/2;
+    this.flashNewsEl.style.left=(document.body.clientWidth-this.flashNewsEl.clientWidth)/2+document.body.scrollLeft;
+    this.flashNewsEl.style.top=(document.body.clientHeight-this.flashNewsEl.clientHeight)/2+document.body.scrollTop;
+    //this.flashNewsEl.style.top=(document.body.clientHeight-this.flashNewsEl.clientHeight)/2;
 
     this.doubleModel.addEventListener('click', this._handleClickDouble.bind(this), false);
     this.multiModel.addEventListener('click', this._handleClickMulti.bind(this), false);
@@ -233,7 +238,9 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
       localPlayer = this.playerManager.getLocalPlayer();
 
     this.flashNewsEl.style.color = this.color;
-    this.flashNewsEl.innerHTML = '';
+    //this.flashNewsEl.style.top=(document.body.clientHeight-this.flashNewsEl.clientHeight)/2+document.body.scrollTop;
+    //this.flashNewsEl.style.left = (document.body.clientWidth-this.flashNewsEl.clientWidth)/2+document.body.scrollLeft;
+    //this.flashNewsEl.innerHTML = '';
 
     if (localPlayer) {
       if (this.lastHighScore === false) {
@@ -267,10 +274,14 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     var _this = this;
     this.flashNewsEl.innerHTML += message;
     this.flashNewsEl.className = 'active';
+    this.flashNewsEl.style.left = (document.body.clientWidth-this.flashNewsEl.clientWidth)/2+document.body.scrollLeft + 'px';
+    this.flashNewsEl.style.top = (document.body.clientHeight-this.flashNewsEl.clientHeight)/2+document.body.scrollTop + 'px';
+    console.log("flashNewsEl: ", this.flashNewsEl)
 
     setTimeout(function () {
       _this.flashNewsEl.className = '';
-    }, 500);
+      _this.flashNewsEl.innerHTML = '';
+    }, 800);
   };
 
   Renderer.prototype.handleConnect = function () {
