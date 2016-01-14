@@ -274,14 +274,13 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     var _this = this;
     this.flashNewsEl.innerHTML += message;
     this.flashNewsEl.className = 'active';
-    this.flashNewsEl.style.left = (document.body.clientWidth-this.flashNewsEl.clientWidth)/2+document.body.scrollLeft + 'px';
-    this.flashNewsEl.style.top = (document.body.clientHeight-this.flashNewsEl.clientHeight)/2+document.body.scrollTop + 'px';
-    console.log("flashNewsEl: ", this.flashNewsEl)
+    //this.flashNewsEl.style.left = (document.body.clientWidth-this.flashNewsEl.clientWidth)/2 + document.body.scrollLeft + 'px';
+    //this.flashNewsEl.style.top = (document.body.clientHeight)/2 + document.body.scrollTop + 'px';
 
     setTimeout(function () {
       _this.flashNewsEl.className = '';
       _this.flashNewsEl.innerHTML = '';
-    }, 800);
+    }, 1000);
   };
 
   Renderer.prototype.handleConnect = function () {
