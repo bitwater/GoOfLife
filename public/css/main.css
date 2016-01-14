@@ -452,7 +452,7 @@ html, body {
 }
 
 .leaderboard-container h2, .players-online-container h2, .chat-container h2 {
-  margin-bottom: 1px;
+  margin-bottom: 6px;
 }
 
 .leaderboard-container h3, .players-online-container h3, .chat-container h3 {
