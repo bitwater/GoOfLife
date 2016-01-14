@@ -314,7 +314,7 @@ html, body {
 
 .boards {
   margin-top: 25px;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
   text-align: center;
 }
 
@@ -424,7 +424,7 @@ html, body {
 #leaderboard, #players-online, #chat {
   height: 200px;
   overflow-y: auto;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
   border-top: solid 1px #DDD;
   padding-top: 10px;
 }
@@ -515,7 +515,7 @@ html, body {
 .flash {
   /*position: relative;*/
   height: 6px;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
   z-index: 100;
   text-align: center;
 }
@@ -524,8 +524,8 @@ footer {
   clear: both;
   border-top: solid 1px #ddd;
   text-align: center;
-  padding-top: 10px;
-  padding-bottom: 8px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 footer a {
