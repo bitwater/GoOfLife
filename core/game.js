@@ -61,8 +61,7 @@ define(['core/grid', 'core/board'], function (Grid, Board) {
         var newCells = Math.round(200 * Math.pow(player.cellsOnGrid, -0.6));
         player.cells +=  newCells;
         if (this.app.renderer && player.id == this.playerManager.getLocalPlayer().id) {
-          var msg = '自由活细胞 +' + newCells + "   ";
-          this.app.renderer.flashMsg(msg);
+          this.app.renderer.newCell = newCells;
         }
       }
     }
@@ -158,6 +157,7 @@ define(['core/grid', 'core/board'], function (Grid, Board) {
 
   Game.prototype.updatePlayerStats = function () {
     var cells = this.grid.getCells(),
+      localPlayer = this.playerManager.getLocalPlayer(),
       playerIds,
       players = this.playerManager.getPlayers(),
       onlinePlayersNum = this.playerManager.getOnlinePlayers().length || 0,
@@ -175,15 +175,27 @@ define(['core/grid', 'core/board'], function (Grid, Board) {
 
     this.playerStats = [];
     for (var i = 0; i < players.length; i++) {
-      var player = players[i];
-      if (playerCells[player.id]) {
-        player.updatePlayerKPI(playerCells[player.id], onlinePlayersNum);
+      var player = players[i], cellCount = playerCells[player.id];
+      if (cellCount) {
+        player.cellsOnGrid = cellCount;
 
+        if (player.highScore < cellCount) {
+          player.highScore = cellCount;
+        }
+
+        //player.updatePlayerKPI(playerCells[player.id], onlinePlayersNum);
+        //console.log("原力指数 +" + cellCount * onlinePlayersNum/2);
+        var newForce = cellCount * onlinePlayersNum/2;
+        player.force = player.force + newForce;
+        if (this.app.renderer && localPlayer && player.id == localPlayer.id) {
+          this.app.renderer.newForce = newForce;
+        }
         this.playerStats.push({
           id: player.id,
           name: player.name,
           color: player.color,
-          cellsOnGrid: player.cellsOnGrid
+          cellsOnGrid: player.cellsOnGrid,
+          force: player.force
         });
       } else {
         player.updatePlayerKPI(0, 0);

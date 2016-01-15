@@ -24,6 +24,8 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     this.lastCellsOnGrid = 0;
     this.lastCellCount = 0;
     this.lastChatMessage = 0;
+    this.newCell = 0;
+    this.newForce = 0;
 
     // view big-bigView small-smallView
     this.view = 'big';
@@ -240,7 +242,7 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     this.flashNewsEl.style.color = this.color;
     //this.flashNewsEl.style.top=(document.body.clientHeight-this.flashNewsEl.clientHeight)/2+document.body.scrollTop;
     //this.flashNewsEl.style.left = (document.body.clientWidth-this.flashNewsEl.clientWidth)/2+document.body.scrollLeft;
-    //this.flashNewsEl.innerHTML = '';
+    this.flashNewsEl.innerHTML = '';
 
     if (localPlayer) {
       if (this.lastHighScore === false) {
@@ -252,19 +254,31 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
       //  news = true;
       //}
 
-      if (localPlayer.highScore > this.lastHighScore) {
-        this.lastHighScore = localPlayer.highScore;
-
-        this.flashNewsEl.innerHTML += '历史最高！';
+      if (this.newCell) {
+        this.flashNewsEl.innerHTML += '自由活细胞 + ' + this.newCell + '   ';
         news = true;
+        this.newCell = 0;
       }
+
+      if (this.newForce) {
+        this.flashNewsEl.innerHTML += '原力指数 + ' + this.newForce + ' ! ';
+        news = true;
+        this.newForce = 0;
+      }
+
+      //if (localPlayer.highScore > this.lastHighScore) {
+      //  this.lastHighScore = localPlayer.highScore;
+      //
+      //  this.flashNewsEl.innerHTML += '历史最高！';
+      //  news = true;
+      //}
 
       if (news) {
         _this.flashNewsEl.className = 'active';
 
         setTimeout(function () {
           _this.flashNewsEl.className = '';
-        }, 800);
+        }, 1000);
       }
     }
   };
@@ -278,9 +292,9 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     //this.flashNewsEl.style.top = (document.body.clientHeight)/2 + document.body.scrollTop + 'px';
 
     setTimeout(function () {
-      _this.flashNewsEl.className = '';
       _this.flashNewsEl.innerHTML = '';
-    }, 1000);
+      _this.flashNewsEl.className = '';
+    }, 800);
   };
 
   Renderer.prototype.handleConnect = function () {
