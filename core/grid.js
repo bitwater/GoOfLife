@@ -272,8 +272,10 @@ define(['core/cell'], function (Cell) {
 
     for (i = 0; i < l; i++) {
       var cell = this.getCell(newCells[i].x, newCells[i].y);
-      cell.set('alive', newCells[i].alive);
-      cell.set('playerId', newCells[i].playerId);
+      if (cell) {
+        cell.set('alive', newCells[i].alive);
+        cell.set('playerId', newCells[i].playerId);
+      }
     }
   };
 
