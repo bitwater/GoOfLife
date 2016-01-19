@@ -13,6 +13,8 @@ define(['core/game', 'renderer', 'gameclient', 'core/playermanager', 'core/chatm
 
     this.width = width;
     this.height = height;
+    this.fps = 0;
+    this.lastCalledTime = Date.now();
 
     this.playing = false;
 
@@ -48,10 +50,16 @@ define(['core/game', 'renderer', 'gameclient', 'core/playermanager', 'core/chatm
   };
 
   App.prototype.run = function() {
-    var _this = this;
+    var _this = this, delta;
 
     // "the loop"
     requestAnimationFrame(function() {
+      // calculate fps
+      delta = (new Date().getTime() - this.lastCalledTime)/1000;
+      this.lastCalledTime = Date.now();
+      this.fps = 1/delta;
+      console.log("FPS:" + this.fps);
+
       // go to next generation
       if (_this.game.isTimeToTick()) {
         _this.game.tick();
