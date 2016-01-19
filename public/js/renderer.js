@@ -137,7 +137,7 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
         } else if (_this.view === 'big') {
           _this._handleClickSmallView();
         }
-      } else if (key === 70) {
+      } else if (key === 32) {
         _this._handlePlaceCells.bind(_this)(event);
         //_this._handlePlaceCells(event);
       } else if (event.shiftKey && key === 82) {
@@ -243,6 +243,7 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     //this.flashNewsEl.style.top=(document.body.clientHeight-this.flashNewsEl.clientHeight)/2+document.body.scrollTop;
     //this.flashNewsEl.style.left = (document.body.clientWidth-this.flashNewsEl.clientWidth)/2+document.body.scrollLeft;
     this.flashNewsEl.innerHTML = '';
+    this.placeRandomCellsEl.style.borderColor = '#bbb';
 
     if (localPlayer) {
       if (this.lastHighScore === false) {
@@ -799,10 +800,13 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     zhuge.track('ClickCanvas', {
         id: player.id,
         name: player.name,
-        color: player.color
+        color: player.color,
+        cellsOnGrid: player.cellsOnGrid,
+        ip: player.ip,
+        force: player.force
     });
 
-    // 宏观视角点击
+    // 宏观视角
     if (this.view == 'big') {
       var cells = this.grid.getRandomCells(clickedCell);
       this.gameClient.placeLiveCells(cells);
@@ -1008,13 +1012,17 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     var player = this.playerManager.getLocalPlayer();
     event.preventDefault();
 
-    if (this.randomState) {
-      this.placeRandomCellsEl.style.borderColor = '#bbb';
-      this.randomState = false;
-    } else {
-      this.randomState = true;
-      this.placeRandomCellsEl.style.borderColor = this.color;
-    }
+    //if (this.randomState) {
+    //  this.placeRandomCellsEl.style.borderColor = '#bbb';
+    //  this.randomState = false;
+    //} else {
+    //  this.randomState = true;
+    //  this.placeRandomCellsEl.style.borderColor = this.color;
+    //}
+
+    this.placeRandomCellsEl.style.borderColor = this.color;
+    var cells = this.grid.getRandomCellsInGrid();
+    this.gameClient.placeLiveCells(cells);
 
     zhuge.track('随机生成点击', {
       id: player.id,

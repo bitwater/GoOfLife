@@ -193,6 +193,16 @@ define(['core/cell'], function (Cell) {
     return cells;
   };
 
+  Grid.prototype.getRandomCellsInGrid = function () {
+    var cells = [];
+    for (var i = 0; i < 20; i++) {
+      var cell = this.getRandomCell();
+      cells.push(cell);
+    }
+
+    return cells;
+  };
+
   Grid.prototype.setClean = function () {
     this.dirty = false;
   };
