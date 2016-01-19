@@ -1,9 +1,13 @@
-define(['core/game', 'renderer', 'gameclient', 'core/playermanager', 'core/chatmanager'], function(Game, Renderer, GameClient, PlayerManager, ChatManager) {
-  var App = function(config) {
+define(['core/game', 'renderer', 'gameclient', 'core/playermanager', 'core/chatmanager'], function (Game, Renderer, GameClient, PlayerManager, ChatManager) {
+  var fps = 0, maxFps = 25,
+    lastCalledTime = Date.now(),
+    now, elapsed;
+
+  var App = function (config) {
     this.config = config;
   };
 
-  App.prototype.init = function(width, height) {
+  App.prototype.init = function (width, height) {
     var token,
       _this = this;
 
@@ -13,8 +17,8 @@ define(['core/game', 'renderer', 'gameclient', 'core/playermanager', 'core/chatm
 
     this.width = width;
     this.height = height;
-    this.fps = 0;
-    this.lastCalledTime = Date.now();
+    //this.fps = 0;
+    //this.lastCalledTime = Date.now();
 
     this.playing = false;
 
@@ -30,11 +34,11 @@ define(['core/game', 'renderer', 'gameclient', 'core/playermanager', 'core/chatm
     this.renderer = new Renderer(this);
     this.renderer.init();
 
-    this.gameClient.init(function() {
+    this.gameClient.init(function () {
       // this callback is executed once the gameClient receives the state
 
       token = _this.getToken()
-      
+
       if (token) {
         _this.gameClient.requestPlayer(token);
       }
@@ -49,16 +53,19 @@ define(['core/game', 'renderer', 'gameclient', 'core/playermanager', 'core/chatm
     });
   };
 
-  App.prototype.run = function() {
+  App.prototype.run = function () {
     var _this = this, delta;
+    now = Date.now();
+    elapsed = now - lastCalledTime;
 
     // "the loop"
-    requestAnimationFrame(function() {
+    requestAnimationFrame(function () {
       // calculate fps
-      delta = (new Date().getTime() - this.lastCalledTime)/1000;
-      this.lastCalledTime = Date.now();
-      this.fps = 1/delta;
-      console.log("FPS:" + this.fps);
+      delta = (new Date().getTime() - lastCalledTime) / 1000;
+      lastCalledTime = Date.now();
+      elapsed = 0;
+      fps = 1 / delta;
+      //console.log("FPS:" + fps);
 
       // go to next generation
       if (_this.game.isTimeToTick()) {
@@ -79,14 +86,17 @@ define(['core/game', 'renderer', 'gameclient', 'core/playermanager', 'core/chatm
       if (!_this.game.isBehindOnTicks()) {
         _this.renderer.renderChanges();
       }
-      
-      _this.run();
+
+      setTimeout(function(){
+        _this.run();
+
+      }, 1000/maxFps)
     });
 
   };
 
-  App.prototype.getState = function() {
-    var livingCells = this.game.grid.getLivingCells().map(function(cell) {
+  App.prototype.getState = function () {
+    var livingCells = this.game.grid.getLivingCells().map(function (cell) {
         return {
           x: cell.x,
           y: cell.y,
@@ -94,7 +104,7 @@ define(['core/game', 'renderer', 'gameclient', 'core/playermanager', 'core/chatm
           playerId: cell.playerId
         };
       }),
-      players = this.playerManager.getPlayers().map(function(player) {
+      players = this.playerManager.getPlayers().map(function (player) {
         return player.transmission();
       }),
       generation = this.game.generation,
@@ -108,11 +118,11 @@ define(['core/game', 'renderer', 'gameclient', 'core/playermanager', 'core/chatm
     };
   };
 
-  App.prototype.isPlaying = function() {
+  App.prototype.isPlaying = function () {
     return this.playing;
   };
 
-  App.prototype.setPlaying = function(playing) {
+  App.prototype.setPlaying = function (playing) {
     this.playing = playing;
 
     if (playing) {
@@ -131,12 +141,12 @@ define(['core/game', 'renderer', 'gameclient', 'core/playermanager', 'core/chatm
     this.renderer.setFaviconColor(this.playerManager.getLocalPlayer().color);
   };
 
-  App.prototype.setToken = function(token) {
+  App.prototype.setToken = function (token) {
     localStorage.setItem('token', token);
     return token;
   };
 
-  App.prototype.setTokenFromURL = function() {
+  App.prototype.setTokenFromURL = function () {
     var urlArgs = window.location.href.split('?token=');
     if (urlArgs.length === 2) {
       this.setToken(urlArgs[1]);
@@ -146,16 +156,16 @@ define(['core/game', 'renderer', 'gameclient', 'core/playermanager', 'core/chatm
     }
   };
 
-  App.prototype.getToken = function() {
+  App.prototype.getToken = function () {
     var token = localStorage.getItem('token');
     return (token) ? token : false;
   };
 
-  App.prototype.deleteToken = function() {
+  App.prototype.deleteToken = function () {
     delete localStorage.token;
   };
 
-  App.prototype.updateState = function(state) {
+  App.prototype.updateState = function (state) {
     this.game.generation = state.generation;
     this.game.nextTick = Date.now() + state.timeBeforeTick;
     this.game.grid.setLivingCells(state.livingCells);

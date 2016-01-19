@@ -392,7 +392,7 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
       cellCount,
       cellsOnGrid;
 
-    this._drawTickBar(this.game.percentageOfTick());
+    //this._drawTickBar(this.game.percentageOfTick());
 
     if (this.model == 'double') {
       this.clear();
