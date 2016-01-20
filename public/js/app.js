@@ -1,4 +1,5 @@
-define(['core/game', 'renderer', 'gameclient', 'core/playermanager', 'core/chatmanager'], function (Game, Renderer, GameClient, PlayerManager, ChatManager) {
+define(['core/game', 'renderer', 'gameclient', 'core/playermanager', 'core/chatmanager', 'jquery'],
+  function (Game, Renderer, GameClient, PlayerManager, ChatManager, $) {
   var fps = 0, maxFps = 25,
     lastCalledTime = Date.now();
 

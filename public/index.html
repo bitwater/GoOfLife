@@ -7,10 +7,10 @@
   <meta name="keywords"
         content="游戏,生命,自由,涌现,弈,对弈,元胞自动机,生命游戏,棋类游戏,围棋,五子棋,黑白棋,奥赛罗,沙盒">
   <div id='wx_pic' style='margin:0 auto; display:none;'>
-    <img id="logo" src="img/logo.png"/>
+    <img id="logo" src="favicon.ico"/>
   </div>
-  <meta name="viewport"
-        content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=yes;">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=yes;">-->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="format-detection" content="telephone=no">
@@ -18,11 +18,11 @@
   <link rel="shortcut icon" type="image/x-icon" id="favicon">
   <link rel="stylesheet" href="css/transitions.css">
   <link rel="stylesheet" href="css/main.css">
+  <script src="js/lib/require.min.js" data-main="js/main.js"></script>
   <!-- 新 Bootstrap 核心 CSS 文件 -->
   <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <!--<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>-->
   <!--<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
-  <script src="js/lib/require.min.js" data-main="js/main.js"></script>
   <script type="text/javascript">
     window.zhuge = window.zhuge || [];
     window.zhuge.methods = "_init debug identify track trackLink trackForm page".split(" ");
@@ -142,15 +142,17 @@
     <label><input id="double-model" name="view" type="radio"  value=""/>双人对弈</label>
     <label><input id="multi-model" name="view" type="radio" checked="true" value=""/>多人舞台</label>
   </div>
-  <div id="view">
-    <label><input id="big-view" name="view" type="radio" checked="true" value=""/>宏观视角</label>
-    <label><input id="small-view" name="view" type="radio" value=""/>微观视角</label>
+  <div id="view" class="btn-group" data-toggle="buttons">
+    <label class="btn btn-primary btn-lg">
+      <input type="radio" name="views" id="big-view" autocomplete="off"> 宏观视角
+    </label>
+    <label class="btn btn-primary btn-lg">
+      <input type="radio" name="views" id="small-view" autocomplete="off"> 微观视角
+    </label>
   </div>
-  <!--<div class="select-model-container">-->
-    <!--<div id="select-model">-->
-      <!--<a href="#" id="double-model" class="play">双人对弈</a>-->
-      <!--<a href="#" id="multi-model" class="play">zx</a>-->
-    <!--</div>-->
+  <!--<div id="view">-->
+    <!--<label><input id="big-view" name="view" type="radio" checked="true" value=""/>宏观视角</label>-->
+    <!--<label><input id="small-view" name="view" type="radio" value=""/>微观视角</label>-->
   <!--</div>-->
   <div id="connecting">
     <div class="spinner"></div>
@@ -253,5 +255,25 @@
   </div>
 
 </footer>
+<!--<script>-->
+  <!--$(function() {-->
+<!--//    $('#big-view').on('toggle', function () {-->
+<!--//      alert("hello")-->
+<!--//      $(this).button('complete') // button text will be "finished!"-->
+<!--//    })-->
+
+    <!--$('#small-view').on('click', function () {-->
+      <!--alert("small")-->
+      <!--$(this).button('complete') // button text will be "finished!"-->
+    <!--})-->
+  <!--});-->
+
+  <!--$(function () {-->
+    <!--$("#big-view").click(function(){-->
+      <!--alert("hello")-->
+      <!--$(this).button('toggle');-->
+    <!--});-->
+  <!--});-->
+<!--</script>-->
 </body>
 </html>

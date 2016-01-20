@@ -1,4 +1,4 @@
-define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorpicker, Leaderboard, PlayersOnline, Chat) {
+define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], function (Colorpicker, Leaderboard, PlayersOnline, Chat, $) {
   var Renderer = function (app) {
     this.app = app;
     this.game = app.game;
@@ -76,8 +76,6 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     this.selectModelEl = document.getElementById('select-model');
     this.doubleModel = document.getElementById('double-model');
     this.multiModel = document.getElementById('multi-model');
-    this.bigView = document.getElementById('big-view');
-    this.smallView = document.getElementById('small-view');
 
     this.flashNewsEl = document.getElementById('flash-news');
     //this.flashNewsEl.style.left=(document.body.clientWidth-this.flashNewsEl.clientWidth)/2;
@@ -88,9 +86,7 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     this.doubleModel.addEventListener('click', this._handleClickDouble.bind(this), false);
     this.multiModel.addEventListener('click', this._handleClickMulti.bind(this), false);
 
-    this.bigView.addEventListener('click', this._handleClickBigView.bind(this), false);
-    this.smallView.addEventListener('click', this._handleClickSmallView.bind(this), false);
-
+    this.initUI();
 
     this.colorpicker = new Colorpicker(this.app);
     this.colorpicker.init();
@@ -203,18 +199,23 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat'], function (Colorp
     this.setFaviconColor(this.config.defaultAccentColor);
   };
 
-  Renderer.prototype.getManFromPosition = function (x, y) {
-    var cellSize = this.cellSize,
-      spacing = this.spacing,
-      boardX = Math.floor((x - 1) / (cellSize + spacing) / this.M),
-      boardY = Math.floor((y - 1) / (cellSize + spacing) / this.M );
+  Renderer.prototype.initUI = function () {
+    var _this = this;
 
-    if (boardY === this.config.gridHeight) {
-      boardY--;
-    }
+    $(function(){
+      console.log("initUI.");
 
-    //console.log(" " + boardX + " " + boardY + this.board)
-    return this.board.getMan(boardX, boardY);
+      $('#small-view').on('click', function () {
+        _this._handleClickSmallView();
+      })
+    });
+
+    $(function () {
+      $("#big-view").click(function(){
+        _this._handleClickBigView();
+      });
+    });
+
   };
 
   Renderer.prototype.getCellFromPosition = function (x, y) {
