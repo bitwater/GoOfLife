@@ -1,0 +1,35 @@
+{
+  "name": "GoofLife",
+  "description": "All of life is an act of letting go.",
+  "main": "app.js",
+  "authors": [
+    "Luo Miao"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "go",
+    "life",
+    "game",
+    "node",
+    "express",
+    "socket.io",
+    "requirejs",
+    "canvas"
+  ],
+  "homepage": "https://github.com/luomiao3/GoOfLife",
+  "moduleType": [
+    "globals"
+  ],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "3.3.5",
+    "jquery": "2.1.4"
+  }
+}

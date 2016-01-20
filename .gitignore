@@ -11,6 +11,8 @@ start.sh
 
 .DS_Store
 node_modules
+bower_components
+test
 app/core
 public/js/core
 public/js/main-built.js
