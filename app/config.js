@@ -6,10 +6,10 @@ define([], function() {
     cellSpacing: 1,
 
     // grid settings
-    gridWidth: 300,
-    gridHeight: 300,
+    gridWidth: 192,
+    gridHeight: 192,
 
-    M:25,
+    M:16,
     T:2000,
     boardWidth: 5,
     boardHeight: 10,
@@ -19,7 +19,7 @@ define([], function() {
     giveCellsEvery: 1, // generations
     
     // player settings
-    cellsPerPlayer: 1000,
+    cellsPerPlayer: 600,
     defaultPlayerColor: '#00aaff',
     lastSeenTimeout: 180000,
 

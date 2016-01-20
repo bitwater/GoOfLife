@@ -8,10 +8,10 @@ define([], function() {
     tickBarHeight: 5,
 
     // grid settings
-    gridWidth: 300,
-    gridHeight: 300,
+    gridWidth: 192,
+    gridHeight: 192,
 
-    M:25,
+    M:16,
     T:2000,
     boardWidth: 5,
     boardHeight: 10,
@@ -22,7 +22,7 @@ define([], function() {
     timeBetweenUpdates: 10000,
 
     // player settings
-    cellsPerPlayer: 1000,
+    cellsPerPlayer: 600,
     lastSeenTimeout: 180000,
 
     // chat settings
