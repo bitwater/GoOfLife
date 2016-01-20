@@ -1,0 +1,9 @@
+{
+    "gooflife": {
+        "db": "mongodb://localhost/gooflife",
+	"es":{
+		 "host": "localhost",
+		 "port": "9200"
+    }
+    }
+}
