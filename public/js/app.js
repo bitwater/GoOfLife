@@ -1,7 +1,6 @@
 define(['core/game', 'renderer', 'gameclient', 'core/playermanager', 'core/chatmanager'], function (Game, Renderer, GameClient, PlayerManager, ChatManager) {
   var fps = 0, maxFps = 25,
-    lastCalledTime = Date.now(),
-    now, elapsed;
+    lastCalledTime = Date.now();
 
   var App = function (config) {
     this.config = config;
@@ -55,15 +54,12 @@ define(['core/game', 'renderer', 'gameclient', 'core/playermanager', 'core/chatm
 
   App.prototype.run = function () {
     var _this = this, delta;
-    now = Date.now();
-    elapsed = now - lastCalledTime;
 
     // "the loop"
     requestAnimationFrame(function () {
       // calculate fps
       delta = (new Date().getTime() - lastCalledTime) / 1000;
       lastCalledTime = Date.now();
-      elapsed = 0;
       fps = 1 / delta;
       //console.log("FPS:" + fps);
 

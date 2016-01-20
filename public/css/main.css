@@ -85,10 +85,10 @@ html, body {
   font-weight: 600;
 }
 
-.links li a:hover {
-  color: blue;
-  text-decoration: underline;
-}
+/*.links li a:hover {*/
+  /*color: blue;*/
+  /*text-decoration: underline;*/
+/*}*/
 
 #stats {
   display: none;

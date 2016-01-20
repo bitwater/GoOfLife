@@ -5,7 +5,7 @@
   <meta name="description"
         content="Go of Life，生命对弈，生命游戏与棋类游戏在二维世界的结合与涌现">
   <meta name="keywords"
-        content="游戏,生命,涌现,弈,对弈,元胞自动机,生命游戏,棋类游戏,围棋,五子棋,黑白棋,奥赛罗,沙盒,自由">
+        content="游戏,生命,自由,涌现,弈,对弈,元胞自动机,生命游戏,棋类游戏,围棋,五子棋,黑白棋,奥赛罗,沙盒">
   <div id='wx_pic' style='margin:0 auto; display:none;'>
     <img id="logo" src="img/logo.png"/>
   </div>
@@ -18,6 +18,10 @@
   <link rel="shortcut icon" type="image/x-icon" id="favicon">
   <link rel="stylesheet" href="css/transitions.css">
   <link rel="stylesheet" href="css/main.css">
+  <!-- 新 Bootstrap 核心 CSS 文件 -->
+  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <!--<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>-->
+  <!--<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
   <script src="js/lib/require.min.js" data-main="js/main.js"></script>
   <script type="text/javascript">
     window.zhuge = window.zhuge || [];
@@ -82,12 +86,12 @@
 
     <p>去占领、发现和创造属于你的二维时空吧！这是一场浓缩的生命对弈游戏。</p>
 
-    <p>版本：V0.4.1_alpha <br> By 罗三水  微信号：lm_norway <br>正在持续开发中...<br>根据程序质能方程：Errors = more code^2<br>如有Bug 纯属正常 <br>开个玩笑，欢迎各种吐槽反馈 :)</p>
+    <p>版本：V0.5.1_alpha <br> By 罗三水  微信号：lm_norway <br>正在持续开发中...<br>根据程序质能方程：Errors = more code^2<br>如有Bug 纯属正常 <br>开个玩笑，欢迎各种吐槽反馈 :)</p>
   </div>
 </div>
 <div class="container">
   <h1 class="brand-name">Go of Life</h1>
-  <h2>All of life is an act of letting go    -- Life of Pi </h2>
+  <h3>All of life is an act of letting go    -- Life of Pi </h3>
   <div class="links-outer">
     <div class="table">
       <ul class="links">
@@ -150,13 +154,17 @@
   <!--</div>-->
   <div id="connecting">
     <div class="spinner"></div>
-    <h3>正在努力加载中...</h3>
+    <h3>努力加载中...</h3>
   </div>
   <div class="flash">
     <div id="flash-news"></div>
   </div>
   <div id="game">
     <canvas id="tickbar"></canvas>
+    <!--<div class="alert alert-warning alert-dismissible" role="alert">-->
+      <!--<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+      <!--<strong>Warning!</strong> Better check yourself, you're not looking too good.-->
+    <!--</div>-->
     <div class="canvas-container">
       <canvas id="c"></canvas>
       <div class="new-player-container">
