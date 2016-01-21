@@ -1,5 +1,5 @@
 requirejs.config({
-  baseUrl: 'js',
+  baseUrl: '/js',
   paths: {
     "jquery": "//cdn.bootcss.com/jquery/1.11.3/jquery.min",
     "bootstrap": "//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min"

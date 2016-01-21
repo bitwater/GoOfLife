@@ -16,9 +16,9 @@
   <meta name="format-detection" content="telephone=no">
   <title>Go of Life · 生命对弈</title>
   <link rel="shortcut icon" type="image/x-icon" id="favicon">
-  <link rel="stylesheet" href="css/transitions.css">
-  <link rel="stylesheet" href="css/main.css">
-  <script src="js/lib/require.min.js" data-main="js/main.js"></script>
+  <link rel="stylesheet" href="/css/transitions.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <script src="/js/lib/require.min.js" data-main="/js/main.js"></script>
   <!-- 新 Bootstrap 核心 CSS 文件 -->
   <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <!--<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>-->
@@ -155,8 +155,8 @@
     <!--<div class="btn btn-success btn-lg" id="double-go" >双人对弈</div>-->
   </div>
   <!--<div id="view">-->
-    <!--<label><input id="big-view" name="view" type="radio" checked="true" value=""/>宏观视角</label>-->
-    <!--<label><input id="small-view" name="view" type="radio" value=""/>微观视角</label>-->
+  <!--<label><input id="big-view" name="view" type="radio" checked="true" value=""/>宏观视角</label>-->
+  <!--<label><input id="small-view" name="view" type="radio" value=""/>微观视角</label>-->
   <!--</div>-->
   <div id="connecting">
     <div class="spinner"></div>
@@ -168,8 +168,8 @@
   <div id="game">
     <canvas id="tickbar"></canvas>
     <!--<div class="alert alert-warning alert-dismissible" role="alert">-->
-      <!--<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
-      <!--<strong>Warning!</strong> Better check yourself, you're not looking too good.-->
+    <!--<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+    <!--<strong>Warning!</strong> Better check yourself, you're not looking too good.-->
     <!--</div>-->
     <div class="canvas-container">
       <canvas id="c"></canvas>
@@ -254,10 +254,15 @@
 <footer>
   <div>
     <p style="font-size: 14px; font-weight: bold"><a href="http://wiki.swarma.net/index.php/%E7%94%9F%E5%91%BD%E6%B8%B8%E6%88%8F%E5%9B%B4%E6%A3%8B"
-          target="_blank">
+                                                     target="_blank">
       Copyright 集智百科 ©2015 Go Of Life · 生命对弈</a><br>京ICP备16001286号</p>
   </div>
 
 </footer>
+
+<div class="content">
+    {{{body}}}
+</div>
+
 </body>
 </html>

@@ -111,8 +111,14 @@ html, body {
 
 #view {
   margin-top: 5px;
-  font-size: 18px;
+  font-size: 16px;
 }
+
+/*#double-go {*/
+  /*display: inline-block;*/
+  /*margin-left: 30px;*/
+  /*font-size: 18px;*/
+/*}*/
 
 #select-model {
   display: none;
