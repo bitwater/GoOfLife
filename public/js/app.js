@@ -7,7 +7,7 @@ define(['core/game', 'renderer', 'gameclient', 'core/playermanager', 'core/chatm
     this.config = config;
   };
 
-  App.prototype.init = function (width, height) {
+  App.prototype.init = function () {
     var token,
       _this = this;
 
@@ -15,8 +15,6 @@ define(['core/game', 'renderer', 'gameclient', 'core/playermanager', 'core/chatm
       window.location.href = '/';
     }
 
-    this.width = width;
-    this.height = height;
     //this.fps = 0;
     //this.lastCalledTime = Date.now();
 
@@ -27,9 +25,22 @@ define(['core/game', 'renderer', 'gameclient', 'core/playermanager', 'core/chatm
     this.chatManager = new ChatManager(this);
 
     this.game = new Game(this);
-    this.game.init(width, height);
+    this.game.initMainGame(this.config.gridWidth, this.config.gridHeight);
 
     this.gameClient = new GameClient(this, this.game, this.playerManager);
+
+    if($('#room').length) {
+      //alert('hello room!');
+      /*
+       * Initialize a new game
+       */
+      var pgnEl = $('#pgn');
+      var token = $("#board").data('id');
+      var side = $("#board").data('side');
+      var opponentSide = side === "black" ? "white" : "black";
+
+      this.inRoom = true;
+    }
 
     this.renderer = new Renderer(this);
     this.renderer.init();

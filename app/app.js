@@ -1,20 +1,18 @@
-define(['core/game', 'core/playermanager', 'core/chatmanager', 'gameserver'], function(Game, PlayerManager, ChatManager, GameServer) {
+define(['core/game', 'core/playermanager', 'core/chatmanager', 'gameserver', 'core/gamemanager'], function(Game, PlayerManager, ChatManager, GameServer, GameManager) {
   var App = function(config, fs, io) {
     this.config = config;
     this.fs = fs;
     this.io = io;
   };
 
-  App.prototype.init = function(width, height) {
-    this.width = width;
-    this.height = height;
-
+  App.prototype.init = function() {
     this.playerManager = new PlayerManager(this);
 
     this.chatManager = new ChatManager(this);
 
+    this.gameManager = new GameManager(this);
     this.game = new Game(this);
-    this.game.init(width, height);
+    this.game.initMainGame(this.config.gridWidth, this.config.gridHeight);
 
     this.gameServer = new GameServer(this, this.io);
     this.gameServer.init();
@@ -66,6 +64,7 @@ define(['core/game', 'core/playermanager', 'core/chatmanager', 'gameserver'], fu
   App.prototype.getServerState = function() {
     var state = this.getState();
 
+    state.games = this.gameManager.getGames();
     state.players = this.playerManager.getPlayers();
     state.tokens = this.gameServer.getTokens();
 

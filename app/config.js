@@ -26,7 +26,7 @@ define([], function() {
     // server settings
     timeBetweenStateUpdates: 10000,
     secretToken: "secret witch's brew",
-    lowestHighScore: 200,
+    lowestHighScore: 100,
     chatLogLength: 175,
     chatMessageLength: 140,
     timeBetweenLatencyTests: 10000

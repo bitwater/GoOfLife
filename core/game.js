@@ -1,21 +1,32 @@
 define(['core/grid', 'core/board'], function (Grid, Board) {
-  var Game = function (app) {
+  var Game = function (app, id, title, width, height) {
     this.app = app;
     this.config = app.config;
     this.playerManager = app.playerManager;
 
+    this.id = id;
+    this.title = title;
+    this.width = width;
+    this.height = height;
     this.generation = 0;
     this.playerStats = [];
 
     this.nextTick = Date.now();
     this.gameStart = Date.now();
     this.updating = false;
+    this.state = 0; //0-停止；1-开始；2-等待
+
+    //this.grid = new Grid(this.app);
+    //this.grid.init(width, height);
+    //
+    //this.board = new Board(this.app);
+    //this.board.init(width / this.config.M, height / this.config.M);
   };
 
-  Game.prototype.init = function (width, height) {
+  Game.prototype.initMainGame = function (width, height) {
     this.grid = new Grid(this.app);
     this.grid.init(width, height);
-
+    //
     this.board = new Board(this.app);
     this.board.init(width / this.config.M, height / this.config.M)
   };

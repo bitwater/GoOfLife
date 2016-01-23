@@ -42,7 +42,7 @@ define(['lib/socket.io'], function (io) {
   };
 
   GameClient.prototype.sendChatMessage = function (message) {
-    var player = this.playerManager.getLocalPlayer()
+    var player = this.playerManager.getLocalPlayer(),
     playerId = player.id,
       token = this.app.getToken();
 
@@ -164,7 +164,10 @@ define(['lib/socket.io'], function (io) {
 
     zhuge.identify(player.id, {
       name: player.name,
-      color: player.color
+      color: player.color,
+      cellsOnGrid: player.cellsOnGrid || 0,
+      force: player.force || 0,
+      ip: player.ip || ''
     });
     this.playerManager.setLocalPlayer(player);
     this.app.setToken(message.token);
@@ -172,7 +175,9 @@ define(['lib/socket.io'], function (io) {
   };
 
   GameClient.prototype._handleState = function (message) {
-    this.app.updateState(message);
+    if (!app.inRoom)
+      this.app.updateState(message);
+    
     this.outOfSync = false;
 
     if (typeof this.callback === 'function') {

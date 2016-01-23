@@ -14,7 +14,7 @@ var flash = require('connect-flash');
 var app = express();
 
 // configure database
-require('./config/database')(app, mongoose);
+//require('./config/database')(app, mongoose);
 
 // 设置 view 引擎
 app.use(express.static('public'));
@@ -88,7 +88,11 @@ http.listen(app.get('port'), function() {
 
 requirejs.config({
   baseUrl: './app',
-  name: 'main'
+  name: 'main',
+  //Pass the top-level main.js/index.js require
+  //function to requirejs so that node modules
+  //are loaded relative to the top-level JS file.
+  nodeRequire: require
 });
 
 // requirejs加载主程序

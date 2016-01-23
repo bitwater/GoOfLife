@@ -235,6 +235,7 @@ define([], function() {
     };
 
     socket.emit('latency', socket._latency.value);
+    console.log('latency', socket._latency.value);
 
     setTimeout(function() {
       // wait and try again

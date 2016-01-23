@@ -11,10 +11,10 @@ requirejs.config({
   }
 });
 
-requirejs(['app', 'config'], function(App, Config) {
+requirejs(['app', 'config'], function(App, Config, $) {
   var app = new App(Config);
 
-  app.init(Config.gridWidth, Config.gridHeight);
+  app.init();
 
   // for testing, remove before production
   window.app = app;

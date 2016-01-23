@@ -9,8 +9,8 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
     this.grid = app.game.grid;
     this.board = app.game.board;
     this.M = this.config.M;
-    this.width = app.width;
-    this.height = app.height;
+    this.width = app.config.gridWidth;
+    this.height = app.config.gridHeight;
     this.boardWidth = this.width / this.M,
     this.boardHeight = this.height / this.M,
     this.cellSize = this.config.cellSize;
@@ -189,6 +189,7 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
     this.tickBar.width = this.pixelWidth;
     this.tickBar.height = this.tickBarHeight;
 
+    console.log(this.canvas);
     this.gameEl.style.width = this.pixelWidth + 'px';
 
     this._drawGrid();
