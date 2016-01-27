@@ -35,9 +35,10 @@ define(['core/game', 'renderer', 'gameclient', 'core/playermanager', 'core/chatm
        * Initialize a new game
        */
       var pgnEl = $('#pgn');
-      var token = $("#board").data('id');
-      var side = $("#board").data('side');
+      var id = $("#room").data('id');
+      var side = $("#room").data('side');
       var opponentSide = side === "black" ? "white" : "black";
+      console.log("id:" + id);
 
       this.inRoom = true;
     }

@@ -19,22 +19,19 @@ define(['core/Game'], function(Game) {
     }
   };
 
-  GameManager.prototype.createNewGame = function(options) {
+  GameManager.prototype.createNewGame = function(gameAttr) {
     var newGame,
-      id = options.id,
-      title = options.title,
-      width = options.width,
-      height = options.height;
+      id = gameAttr.id;
 
     if (id === undefined) {
       if (this.games.length > 0) {
-        id = this.games[this.games.length - 1].id + 1;
+        gameAttr.id = this.games[this.games.length - 1].id + 100000;
       } else {
-        id = 1;
+        gameAttr.id = 100000;
       }
     }
 
-    newGame = new Game(this.app, id, title, width, height);
+    newGame = new Game(this.app, gameAttr);
 
     this.addGame(newGame);
 

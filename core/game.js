@@ -1,13 +1,16 @@
 define(['core/grid', 'core/board'], function (Grid, Board) {
-  var Game = function (app, id, title, width, height) {
+  var Game = function (app, gameAttr) {
     this.app = app;
     this.config = app.config;
     this.playerManager = app.playerManager;
 
-    this.id = id;
-    this.title = title;
-    this.width = width;
-    this.height = height;
+    if (gameAttr) {
+      this.id = gameAttr.id || 0;
+      this.title = gameAttr.title || '';
+      this.width = gameAttr.width || 0;
+      this.height = gameAttr.height || 0;
+    }
+
     this.generation = 0;
     this.playerStats = [];
 

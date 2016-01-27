@@ -9,6 +9,7 @@ var mongoose = require('mongoose');
 var requirejs = require('requirejs');
 var fs = require('fs');
 var flash = require('connect-flash');
+var router = require('./app/router');
 //var errorhandler = require('errorhandler');
 
 var app = express();
@@ -23,6 +24,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+router(app);
 
 // 未处理异常捕获 middleware
 app.use(function(req, res, next) {
@@ -71,10 +73,6 @@ app.use(function(req, res, next) {
 //    error: {}
 //  });
 //});
-
-var room = require('./routes/room');
-
-app.use('/room', room);
 
 
 var http = require('http').Server(app);

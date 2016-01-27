@@ -1,5 +1,5 @@
 var express = require('express');
-var util = require('../config/util.js');
+var util = require('./util.js');
 var router = express.Router();
 
 router.get('/', function(req, res) {
@@ -24,7 +24,7 @@ router.get('/:id', function(req, res) {
     var side = 'life';
 
     res.render('partials/room', {
-        title: 'Go of life · 双人对弈' + id,
+        title: 'Go of Life · 双人对弈' + id,
         user: req.user,
         isPlayPage: true,
         token: id,
