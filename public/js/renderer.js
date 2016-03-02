@@ -189,7 +189,7 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
     this.tickBar.width = this.pixelWidth;
     this.tickBar.height = this.tickBarHeight;
 
-    console.log(this.canvas);
+    //console.log(this.canvas);
     this.gameEl.style.width = this.pixelWidth + 'px';
 
     this._drawGrid();

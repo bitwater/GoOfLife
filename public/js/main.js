@@ -11,11 +11,13 @@ requirejs.config({
   }
 });
 
-requirejs(['app', 'config'], function(App, Config, $) {
-  var app = new App(Config);
+requirejs(['app', 'config', 'jquery', 'roomApp'], function(App, Config, $, roomApp) {
+  if($('#room').length) {
+    var app = new roomApp(Config);
+  } else {
+    var app = new App(Config);
+  }
 
   app.init();
-
-  // for testing, remove before production
   window.app = app;
 });

@@ -1,4 +1,4 @@
-define(['core/game', 'renderer', 'gameclient', 'core/playermanager', 'core/chatmanager', 'jquery'],
+define(['core/game', 'roomRenderer', 'gameclient', 'core/playermanager', 'core/chatmanager', 'jquery'],
   function (Game, Renderer, GameClient, PlayerManager, ChatManager, $) {
   var fps = 0, maxFps = 25,
     lastCalledTime = Date.now();
@@ -18,6 +18,15 @@ define(['core/game', 'renderer', 'gameclient', 'core/playermanager', 'core/chatm
     //this.fps = 0;
     //this.lastCalledTime = Date.now();
 
+    var pgnEl = $('#pgn');
+    var roomId = $("#room").data('id');
+    var side = $("#room").data('side');
+    var opponentSide = side === "black" ? "white" : "black";
+    console.log("id:  " + roomId);
+
+    this.inRoom = true;
+    this.roomId = roomId;
+
     this.playing = false;
 
     this.playerManager = new PlayerManager(this);
@@ -25,7 +34,7 @@ define(['core/game', 'renderer', 'gameclient', 'core/playermanager', 'core/chatm
     this.chatManager = new ChatManager(this);
 
     this.game = new Game(this);
-    this.game.initMainGame(this.config.gridWidth, this.config.gridHeight);
+    this.game.initGame(this.config.gridWidth, this.config.gridHeight);
 
     this.gameClient = new GameClient(this, this.game, this.playerManager);
 
@@ -42,16 +51,12 @@ define(['core/game', 'renderer', 'gameclient', 'core/playermanager', 'core/chatm
       }
 
       _this.renderer.handleConnect();
-
-      if (_this.inRoom) {
-        _this.gameClient.joinRoom(id, id);
-      } else {
-        _this.game.updatePlayerStats();
-        _this.renderer.updateControls();
-        _this.renderer.updateLeaderboard();
-        _this.renderer.updatePlayersOnline();
-        _this.run();
-      }
+      _this.game.updatePlayerStats();
+      _this.gameClient.joinRoom(roomId, '1');
+      _this.renderer.updateControls();
+      //_this.renderer.updateLeaderboard();
+      //_this.renderer.updatePlayersOnline();
+      _this.run();
 
     });
   };
@@ -78,8 +83,8 @@ define(['core/game', 'renderer', 'gameclient', 'core/playermanager', 'core/chatm
         _this.playerManager.updateOnlinePlayers();
         _this.game.updatePlayerStats();
         _this.renderer.updateControls();
-        _this.renderer.updateLeaderboard();
-        _this.renderer.updatePlayersOnline();
+        //_this.renderer.updateLeaderboard();
+        //_this.renderer.updatePlayersOnline();
         _this.renderer.flashNews();
       }
 
@@ -170,7 +175,7 @@ define(['core/game', 'renderer', 'gameclient', 'core/playermanager', 'core/chatm
     this.game.nextTick = Date.now() + state.timeBeforeTick;
     this.game.grid.setLivingCells(state.livingCells);
     this.playerManager.updatePlayers(state.players);
-    this.chatManager.updateMessages(state.messages);
+    //this.chatManager.updateMessages(state.messages);
   };
 
   return App;

@@ -12,7 +12,7 @@ define(['core/game', 'core/playermanager', 'core/chatmanager', 'gameserver', 'co
 
     this.gameManager = new GameManager(this);
     this.game = new Game(this);
-    this.game.initMainGame(this.config.gridWidth, this.config.gridHeight);
+    this.game.initGame(this.config.gridWidth, this.config.gridHeight);
 
     this.gameServer = new GameServer(this, this.io);
     this.gameServer.init();
@@ -61,10 +61,49 @@ define(['core/game', 'core/playermanager', 'core/chatmanager', 'gameserver', 'co
     return state;
   };
 
+  App.prototype.getRoomMinState = function(roomId) {
+    var game = this.gameManager.getGame(roomId);
+    if (!game)
+      game = this.gameManager.createNewGame(roomId);
+
+    var livingCells = game.grid.getLivingCells().map(function(cell) {
+        return {
+          x: cell.x,
+          y: cell.y,
+          alive: cell.alive,
+          playerId: cell.playerId
+        };
+      }),
+      players = this.playerManager.getPlayers().map(function(player) {
+        return player.transmission();
+      }),
+      messages = this.chatManager.getMessages(),
+      generation = game.generation,
+      timeBeforeTick = (game.nextTick - Date.now());
+
+    console.log('666666666: ', {
+      livingCells: livingCells,
+      players: players,
+      messages: messages,
+      generation: generation,
+      timeBeforeTick: timeBeforeTick
+    })
+
+
+    return {
+      livingCells: livingCells,
+      players: players,
+      messages: messages,
+      generation: generation,
+      timeBeforeTick: timeBeforeTick
+    };
+
+  };
+
   App.prototype.getServerState = function() {
     var state = this.getState();
 
-    state.games = this.gameManager.getGames();
+    //state.games = this.gameManager.getGames();
     state.players = this.playerManager.getPlayers();
     state.tokens = this.gameServer.getTokens();
 

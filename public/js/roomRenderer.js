@@ -47,6 +47,7 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
       cells = this.grid.getCells(),
       _this = this;
 
+    console.log("init room render...")
     this.canvas = document.getElementById('c');
     this.context = this.canvas.getContext('2d');
 
@@ -79,8 +80,6 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
 
     this.flashNewsEl = document.getElementById('flash-news');
     //this.flashNewsEl.style.left=(document.body.clientWidth-this.flashNewsEl.clientWidth)/2;
-    this.flashNewsEl.style.left=(document.body.clientWidth-this.flashNewsEl.clientWidth)/2+document.body.scrollLeft;
-    this.flashNewsEl.style.top=(document.body.clientHeight-this.flashNewsEl.clientHeight)/2+document.body.scrollTop;
     //this.flashNewsEl.style.top=(document.body.clientHeight-this.flashNewsEl.clientHeight)/2;
 
     this.doubleModel.addEventListener('click', this._handleClickDouble.bind(this), false);
@@ -91,15 +90,11 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
     this.colorpicker = new Colorpicker(this.app);
     this.colorpicker.init();
 
-    this.leaderboard = new Leaderboard(this.app);
-    this.leaderboard.init();
-    this.leaderboard.el.addEventListener('mouseover', this._handleMouseOverPlayers.bind(this), false);
-    this.leaderboard.el.addEventListener('mouseleave', this._handleMouseLeavePlayers.bind(this), false);
-
     this.playersOnline = new PlayersOnline(this.app);
     this.playersOnline.init();
-    this.playersOnline.el.addEventListener('mouseover', this._handleMouseOverPlayers.bind(this), false);
-    this.playersOnline.el.addEventListener('mouseleave', this._handleMouseLeavePlayers.bind(this), false);
+    //this.playersOnline.el.addEventListener('mouseover', this._handleMouseOverPlayers.bind(this), false);
+    //this.playersOnline.el.addEventListener('mouseleave', this._handleMouseLeavePlayers.bind(this), false);
+
 
     this.chat = new Chat(this.app);
     this.chat.init();
@@ -109,10 +104,6 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
     this.playButton = document.getElementById('new-player').querySelector('.play');
 
     this.observeLinkEl.addEventListener('click', this._handleClickObserve.bind(this), false);
-
-    // highlight the current player's cells when hovering over the stats
-    this.cellsOnGridStatEl.addEventListener('mouseover', this._handleMouseOverCellsOnGridStat.bind(this), false);
-    this.cellsOnGridStatEl.addEventListener('mouseleave', this._handleMouseLeaveCellsOnGridStat.bind(this), false);
 
     // request a new player when the play button is clicked
     this.playButton.addEventListener('click', this._handlePlayButtonClick.bind(this), false);
@@ -447,7 +438,6 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
         this.cellsOnGrid = cellsOnGrid;
 
         this.updateStats();
-        this.updateLeaderboard();
       }
     }
 
@@ -541,10 +531,6 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
       this.cellCountEl.innerHTML = cellCount;
       this.cellsOnGridEl.innerHTML = cellsOnGrid;
     }
-  };
-
-  Renderer.prototype.updateLeaderboard = function () {
-    this.leaderboard.render();
   };
 
   Renderer.prototype.updatePlayersOnline = function () {

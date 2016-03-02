@@ -30,6 +30,10 @@ define(['lib/socket.io'], function (io) {
     this.socket.on('player_disconnect', this._handlePlayerDisconnect.bind(this));
     this.socket.on('new_player_error', this._handleNewPlayerError.bind(this));
     this.socket.on('chat_message', this._handleChatMessage.bind(this));
+
+    this.socket.on('room_state', this._handleJoinRoomState.bind(this));
+
+    this._requestState();
   };
 
   GameClient.prototype.requestPlayer = function (token) {
@@ -79,6 +83,15 @@ define(['lib/socket.io'], function (io) {
     player.setLastSeen(Date.now());
 
     this._testStateSync(cellCount);
+  };
+
+  GameClient.prototype.joinRoom = function (roomId, playerId) {
+    this.socket.emit('join_room', {'roomId': roomId, 'playerId': playerId});
+    //console.log('playerId:' + playerId + ' join room ' + roomId);
+  };
+
+  GameClient.prototype._handleJoinRoomState = function (data) {
+    console.log('_handleJoinRoom:', data, data.game);
   };
 
   GameClient.prototype._handleNoCellsPlaced = function (message) {
@@ -175,8 +188,9 @@ define(['lib/socket.io'], function (io) {
   };
 
   GameClient.prototype._handleState = function (message) {
-    if (!app.inRoom)
-      this.app.updateState(message);
+    console.log("###_handleState: ", message);
+
+    this.app.updateState(message);
     
     this.outOfSync = false;
 
@@ -202,10 +216,12 @@ define(['lib/socket.io'], function (io) {
     var player = this.playerManager.getLocalPlayer();
     if (player) {
       player.setOnline(true);
-      this.socket.emit('request_state', {playerId: this.playerManager.getLocalPlayer().id});
+      this.socket.emit('request_state',
+        {playerId: this.playerManager.getLocalPlayer().id,
+          roomId: this.app.roomId});
     } else {
       // "observe mode" state request
-      this.socket.emit('request_state', {playerId: ""});
+      this.socket.emit('request_state', {playerId: "", roomId: this.app.roomId});
     }
 
   };
@@ -230,6 +246,7 @@ define(['lib/socket.io'], function (io) {
       localPlayer = this.playerManager.getLocalPlayer(),
       message = {
         cells: cells,
+        roomId: this.app.roomId,
         playerId: localPlayer.id,
         token: this.app.getToken()
       };

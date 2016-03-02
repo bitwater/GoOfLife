@@ -26,12 +26,13 @@ define(['core/grid', 'core/board'], function (Grid, Board) {
     //this.board.init(width / this.config.M, height / this.config.M);
   };
 
-  Game.prototype.initMainGame = function (width, height) {
+  Game.prototype.initGame = function (width, height) {
     this.grid = new Grid(this.app);
     this.grid.init(width, height);
-    //
+    this.livingCells = this.grid.getLivingCells();
+
     this.board = new Board(this.app);
-    this.board.init(width / this.config.M, height / this.config.M)
+    this.board.init(width / this.config.M, height / this.config.M);
   };
 
   Game.prototype.canPlaceLiveCells = function (player, cells) {
@@ -219,6 +220,19 @@ define(['core/grid', 'core/board'], function (Grid, Board) {
         player.updatePlayerKPI(0, 0);
       }
     }
+  };
+
+  Game.prototype.transmission = function() {
+    return {
+      id: this.id,
+      title: this.title,
+      width: this.width,
+      height: this.height,
+      nextTick: this.nextTick,
+      livingCells: this.grid.getLivingCells(),
+      generation: this.generation,
+      state: this.state
+    };
   };
 
   return Game;

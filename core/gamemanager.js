@@ -19,22 +19,28 @@ define(['core/Game'], function(Game) {
     }
   };
 
-  GameManager.prototype.createNewGame = function(gameAttr) {
-    var newGame,
-      id = gameAttr.id;
+  GameManager.prototype.createNewGame = function(id) {
+    var newGame, gameAttr={};
 
-    if (id === undefined) {
-      if (this.games.length > 0) {
-        gameAttr.id = this.games[this.games.length - 1].id + 100000;
-      } else {
-        gameAttr.id = 100000;
-      }
-    }
+    //if (id === undefined) {
+    //  if (this.games.length > 0) {
+    //    gameAttr.id = this.games[this.games.length - 1].id + 100000;
+    //  } else {
+    //    gameAttr.id = 100000;
+    //  }
+    //}
 
+    //gameAttr.width = this.app.config.gridWidth;
+    //gameAttr.height = this.app.config.gridHeight;
+
+    gameAttr.id = id;
+    gameAttr.title = "hello world";
     newGame = new Game(this.app, gameAttr);
+    newGame.initGame(this.app.config.gridWidth, this.app.config.gridHeight);
 
     this.addGame(newGame);
 
+    console.log("newGame:", newGame.transmission(), "  games:", this.games.length)
     return newGame;
   };
 
@@ -75,14 +81,17 @@ define(['core/Game'], function(Game) {
   };
 
   GameManager.prototype.getGame = function(id) {
+    console.log("id: ", id, " games: ", this.games.length)
+
     if (typeof id !== 'number') {
       return false;
     }
 
     for (var i = 0; i < this.games.length; i++) {
-      var player = this.games[i];
-      if (player.id === id) {
-        return player;
+      var game = this.games[i];
+      console.log(game.transmission());
+      if (game.id === id) {
+        return game;
       }
     }
 

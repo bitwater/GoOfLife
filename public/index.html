@@ -18,59 +18,10 @@
   <link rel="shortcut icon" type="image/x-icon" id="favicon">
   <link rel="stylesheet" href="css/transitions.css">
   <link rel="stylesheet" href="css/main.css">
-  <script src="js/lib/require.min.js" data-main="js/main.js"></script>
   <!-- 新 Bootstrap 核心 CSS 文件 -->
   <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <!--<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>-->
   <!--<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
-  <script type="text/javascript">
-    window.zhuge = window.zhuge || [];
-    window.zhuge.methods = "_init debug identify track trackLink trackForm page".split(" ");
-    window.zhuge.factory = function(b) {
-      return function() {
-        var a = Array.prototype.slice.call(arguments);
-        a.unshift(b);
-        window.zhuge.push(a);
-        return window.zhuge
-      }
-    };
-    for (var i = 0; i < window.zhuge.methods.length; i++) {
-      var key = window.zhuge.methods[i];
-      window.zhuge[key] = window.zhuge.factory(key)
-    };
-    window.zhuge.load = function(b, x) {
-      if (!document.getElementById("zhuge-js")) {
-        var a = document.createElement("script");
-        var verDate = new Date();
-        var verStr = verDate.getFullYear().toString()
-                + verDate.getMonth().toString() + verDate.getDate().toString();
-        a.type = "text/javascript";
-        a.id = "zhuge-js";
-        a.async = !0;
-        a.src = "http://sdk.zhugeio.com/zhuge-lastest.min.js?v=" + verStr;
-        var c = document.getElementsByTagName("script")[0];
-        c.parentNode.insertBefore(a, c);
-        window.zhuge._init(b, x)
-      }
-    };
-    window.zhuge.load('3e493d43b6b8434db6fab297525010d7');
-  </script>
-  <script type='text/javascript'>
-    var _vds = _vds || [];
-    window._vds = _vds;
-    (function(){
-      _vds.push(['setAccountId', 'a2d6e101bded4107a46145e95259ab2f']);
-//      _vds.push(['setCS1','user_id', player.id]);
-      (function() {
-        var vds = document.createElement('script');
-        vds.type='text/javascript';
-        vds.async = true;
-        vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(vds, s);
-      })();
-    })();
-  </script>
 </head>
 <body>
 <div id="timestamp-tooltip"></div>
@@ -100,7 +51,7 @@
         </li>
         <li>
           <a href="http://wiki.swarma.net/index.php/%E7%94%9F%E5%91%BD%E6%B8%B8%E6%88%8F%E5%9B%B4%E6%A3%8B" target="_blank">
-            Wiki
+            集智Wiki
           </a>
         </li>
         <li>
@@ -223,7 +174,7 @@
     </div>
     <p><br></p>
     <div class="span4 header-banner-area" style="display: inline-block; text-align: center;">
-      <!--  -->
+      <!-- 时钟 -->
       <div style="width:300px; height:120px;  margin: 0 auto; overflow: hidden;">
         <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0" width="300" height="150">
           <param name="movie" value="http://www.wsjz8.com/shizhong.swf">
@@ -238,6 +189,57 @@
     <div class="ds-thread" data-thread-key="1" data-title="Go of Life · 生命对弈" data-url="gooflife.com"></div>
   </div>
 </div>
+
+<script src="js/lib/require.min.js" data-main="js/main.js"></script>
+<script type="text/javascript">
+  window.zhuge = window.zhuge || [];
+  window.zhuge.methods = "_init debug identify track trackLink trackForm page".split(" ");
+  window.zhuge.factory = function(b) {
+    return function() {
+      var a = Array.prototype.slice.call(arguments);
+      a.unshift(b);
+      window.zhuge.push(a);
+      return window.zhuge
+    }
+  };
+  for (var i = 0; i < window.zhuge.methods.length; i++) {
+    var key = window.zhuge.methods[i];
+    window.zhuge[key] = window.zhuge.factory(key)
+  };
+  window.zhuge.load = function(b, x) {
+    if (!document.getElementById("zhuge-js")) {
+      var a = document.createElement("script");
+      var verDate = new Date();
+      var verStr = verDate.getFullYear().toString()
+              + verDate.getMonth().toString() + verDate.getDate().toString();
+      a.type = "text/javascript";
+      a.id = "zhuge-js";
+      a.async = !0;
+      a.src = "http://sdk.zhugeio.com/zhuge-lastest.min.js?v=" + verStr;
+      var c = document.getElementsByTagName("script")[0];
+      c.parentNode.insertBefore(a, c);
+      window.zhuge._init(b, x)
+    }
+  };
+  window.zhuge.load('3e493d43b6b8434db6fab297525010d7');
+</script>
+<script type='text/javascript'>
+  var _vds = _vds || [];
+  window._vds = _vds;
+  (function(){
+    _vds.push(['setAccountId', 'a2d6e101bded4107a46145e95259ab2f']);
+//      _vds.push(['setCS1','user_id', player.id]);
+    (function() {
+      var vds = document.createElement('script');
+      vds.type='text/javascript';
+      vds.async = true;
+      vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(vds, s);
+    })();
+  })();
+</script>
+
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
   var duoshuoQuery = {short_name:"gooflife"};
@@ -255,7 +257,7 @@
   <div>
     <p style="font-size: 14px; font-weight: bold"><a href="http://wiki.swarma.net/index.php/%E7%94%9F%E5%91%BD%E6%B8%B8%E6%88%8F%E5%9B%B4%E6%A3%8B"
           target="_blank">
-      Copyright 集智百科 ©2015 Go Of Life · 生命对弈</a><br>京ICP备16001286号</p>
+      © 2015 集智百科 Go Of Life · 生命对弈</a><br>京ICP备16001286号</p>
   </div>
 
 </footer>

@@ -4,6 +4,7 @@ define([], function() {
     this.game = app.game;
     this.playerManager = app.playerManager;
     this.chatManager = app.chatManager;
+    this.gameManager = app.gameManager;
     this.config = app.config;
     this.io = io;
     this.sockets = {};
@@ -87,12 +88,15 @@ define([], function() {
 
   GameServer.prototype._handleConnect = function(socket) {
     var state = this.app.getMinimumState();
-
     socket._latency = {};
 
+    // 延迟参数
     socket.on('latency_echo', this._receiveLatencyEcho.bind(this, socket));
+    // 应用数据
     socket.on('request_state', this._handleStateRequest.bind(this, socket));
+    // 用户登录连接
     socket.on('request_player', this._handleRequestPlayer.bind(this, socket));
+    // 创建新用户
     socket.on('request_new_player', this._handleRequestNewPlayer.bind(this, socket));
 
     socket.emit('state', state);
@@ -108,6 +112,7 @@ define([], function() {
     console.log(player.name, 'left.', this.playerManager.getOnlinePlayers().length, 'player(s) online.');
   };
 
+  // 处理登录事件
   GameServer.prototype._handleRequestPlayer = function(socket, message) {
     var transmission,
       token = message['token'],
@@ -135,13 +140,38 @@ define([], function() {
 
       this._broadcastPlayerConnect(socket, player);
 
+      // 点击事件
       socket.on('place_live_cells', this._handlePlaceLiveCells.bind(this, socket));
+      // 下线断开连接
       socket.on('disconnect', this._handleDisconnect.bind(this, socket, player));
+      // 聊天
       socket.on('chat_message', this._handleChatMessage.bind(this));
+      //加入房间
+      socket.on("join_room", this.onJoinRoom.bind(this, socket));
+      //离开房间
+      socket.on("leave_room", this.onLeaveRoom.bind(this, socket));
+      //准备
+      socket.on("ready", this.onReady.bind(this, socket));
 
       console.log(new Date(), this.playerManager.getOnlinePlayers());
     }
   };
+
+  GameServer.prototype.onJoinRoom = function(socket, data) {
+    var roomId = data.roomId
+    console.log('onJoinRoom:', data, "  game:");
+    //Todo 在点击链接创建游戏
+    //var game = this.gameManager.createNewGame({id: roomId});
+    //socket.emit('state', {game: game.transmission()});
+  };
+
+  GameServer.prototype.onLeaveRoom = function(socket, data) {
+
+  };
+
+  GameServer.prototype.onReady = function(socket, data) {
+  };
+
 
   GameServer.prototype._handleRequestNewPlayer = function(socket, message) {
     var name = message.name.trim(),
@@ -183,7 +213,7 @@ define([], function() {
   };
 
   GameServer.prototype._handlePlaceLiveCells = function(socket, message) {
-    var cells = message.cells,
+    var cells = message.cells, game,
       player = this.playerManager.getPlayer(message.playerId),
       token = player.getToken();
 
@@ -195,16 +225,21 @@ define([], function() {
       socket.request.connection.remoteAddress + "  OnlinePlayers:", this.playerManager.getOnlinePlayers(),
     "  \nmessage: ", message);
 
+    if (message.roomId)
+      game = this.gameManager.getGame(message.roomId);
+    else
+      game = this.game;
+
     player.setLastSeen(Date.now());
 
-    var msg = this.game.canPlaceLiveCells(player, cells);
+    var msg = game.canPlaceLiveCells(player, cells);
 
     if (msg == true) {
       //console.log(cells);
-      this.game.placeCells(player, cells);
+      game.placeCells(player, cells);
       this.io.emit('cells_placed', {
         cells: cells,
-        cellCount: this.game.grid.getLivingCellCount(),
+        cellCount: game.grid.getLivingCellCount(),
         player: player.transmission()
       });
     } else {
@@ -214,14 +249,23 @@ define([], function() {
   };
 
   GameServer.prototype._handleStateRequest = function(socket, message) {
-    var playerId = message.playerId,
-      player = this.playerManager.getPlayer(playerId);
+    var state,
+      player = this.playerManager.getPlayer(message.playerId);
+
+    console.log("_handleStateRequest: ", message);
 
     if (player) {
       player.setOnline(true);
     }
 
-    this.sendStateToSocket(socket);
+    if (message.roomId) {
+      state = this.app.getRoomMinState(message.roomId);
+    } else {
+      state = this.app.getMinimumState();
+    }
+
+    socket.emit('state', state);
+    //this.sendStateToSocket(socket);
   };
 
   GameServer.prototype._receiveLatencyEcho = function(socket, message) {
@@ -235,7 +279,7 @@ define([], function() {
     };
 
     socket.emit('latency', socket._latency.value);
-    console.log('latency', socket._latency.value);
+    //console.log('latency', socket._latency.value);
 
     setTimeout(function() {
       // wait and try again
