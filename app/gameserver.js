@@ -244,7 +244,7 @@ define([], function() {
       });
     } else {
       //console.log("no cells placed");
-      socket.emit("no_cells_placed", msg)
+      socket.emit("no_cells_placed", msg);
     }
   };
 

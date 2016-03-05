@@ -25,6 +25,7 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
     this.lastCellCount = 0;
     this.lastChatMessage = 0;
     this.newCell = 0;
+    this.myTurn = true;
     this.newForce = 0;
 
     // view big-bigView small-smallView
@@ -200,13 +201,14 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
       $('#small-view').on('click', function () {
         _this._handleClickSmallView();
       })
-    });
 
-    $(function () {
       $("#big-view").click(function(){
         _this._handleClickBigView();
       });
+
     });
+
+
 
   };
 
@@ -259,13 +261,6 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
         news = true;
         this.newForce = 0;
       }
-
-      //if (localPlayer.highScore > this.lastHighScore) {
-      //  this.lastHighScore = localPlayer.highScore;
-      //
-      //  this.flashNewsEl.innerHTML += '历史最高！';
-      //  news = true;
-      //}
 
       if (news) {
         _this.flashNewsEl.className = 'active';
@@ -386,6 +381,12 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
       cellsOnGrid;
 
     //this._drawTickBar(this.game.percentageOfTick());
+
+    if (this.myTurn) {
+      $("#c").css("cursor", "pointer");
+    } else {
+      $("#c").css("cursor", "no-drop");
+    }
 
     if (this.model == 'double') {
       this.clear();
@@ -781,6 +782,9 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
     if (!app.isPlaying()) {
       return false;
     }
+
+    if (! this.myTurn)
+      return false;
 
     //_vds.push(['setCS1','user_id', player.id]);
     //_vds.push(['setCS2','user_name', player.name]);

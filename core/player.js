@@ -12,6 +12,8 @@ define([], function() {
     this.token = false;
     this.ip = false;
     this.force = force || 0;
+    this.roomId = -1;
+    this.posIdx = 0;    //in room: 0-黑方（先手）;1-白方；2-观众
   };
 
   Player.prototype.getIP = function() {
@@ -111,7 +113,9 @@ define([], function() {
       highScore: this.highScore,
       online: this.online,
       lastSeen: this.lastSeen,
-      force: this.force
+      force: this.force,
+      roomId: this.roomId,
+      posIdx: this.posIdx
     };
   };
 

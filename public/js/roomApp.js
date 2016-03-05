@@ -1,4 +1,4 @@
-define(['core/game', 'roomRenderer', 'gameclient', 'core/playermanager', 'core/chatmanager', 'jquery'],
+define(['core/gogame', 'roomRenderer', 'gameclient', 'core/playermanager', 'core/chatmanager', 'jquery'],
   function (Game, Renderer, GameClient, PlayerManager, ChatManager, $) {
   var fps = 0, maxFps = 25,
     lastCalledTime = Date.now();
@@ -34,7 +34,7 @@ define(['core/game', 'roomRenderer', 'gameclient', 'core/playermanager', 'core/c
     this.chatManager = new ChatManager(this);
 
     this.game = new Game(this);
-    this.game.initGame(this.config.gridWidth, this.config.gridHeight);
+    this.game.init(this.config.gridWidth, this.config.gridHeight);
 
     this.gameClient = new GameClient(this, this.game, this.playerManager);
 
@@ -71,14 +71,11 @@ define(['core/game', 'roomRenderer', 'gameclient', 'core/playermanager', 'core/c
       lastCalledTime = Date.now();
       fps = 1 / delta;
       //console.log("FPS:" + fps);
+      //console.count();
 
       // go to next generation
       if (_this.game.isTimeToTick()) {
         _this.game.tick();
-
-        if (_this.game.isTimeToGiveNewCells()) {
-          _this.game.giveNewCells();
-        }
 
         _this.playerManager.updateOnlinePlayers();
         _this.game.updatePlayerStats();

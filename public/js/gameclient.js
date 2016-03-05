@@ -79,10 +79,9 @@ define(['lib/socket.io'], function (io) {
     this.game.placeCells(player, cells);
     this.game.updatePlayerStats();
     this.playerManager.updatePlayer(message.player);
-    this.app.renderer.flashMsg("玩家" + player.name + "放下" + cells.length + "个自由活细胞...");
     player.setLastSeen(Date.now());
 
-    this._testStateSync(cellCount);
+    //this._testStateSync(cellCount);
   };
 
   GameClient.prototype.joinRoom = function (roomId, playerId) {

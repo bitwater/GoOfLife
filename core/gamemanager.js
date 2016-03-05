@@ -1,4 +1,4 @@
-define(['core/Game'], function(Game) {
+define(['core/gogame'], function(Game) {
   var GameManager = function(app) {
     this.app = app;
     this.games = [];
@@ -36,7 +36,7 @@ define(['core/Game'], function(Game) {
     gameAttr.id = id;
     gameAttr.title = "hello world";
     newGame = new Game(this.app, gameAttr);
-    newGame.initGame(this.app.config.gridWidth, this.app.config.gridHeight);
+    newGame.init(this.app.config.gridWidth, this.app.config.gridHeight);
 
     this.addGame(newGame);
 
