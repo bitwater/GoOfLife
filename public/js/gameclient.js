@@ -81,7 +81,7 @@ define(['lib/socket.io'], function (io) {
     this.playerManager.updatePlayer(message.player);
     player.setLastSeen(Date.now());
 
-    //this._testStateSync(cellCount);
+    this._testStateSync(cellCount);
   };
 
   GameClient.prototype.joinRoom = function (roomId, playerId) {

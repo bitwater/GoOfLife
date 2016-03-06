@@ -48,7 +48,6 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
       cells = this.grid.getCells(),
       _this = this;
 
-    console.log("init room render...")
     this.canvas = document.getElementById('c');
     this.context = this.canvas.getContext('2d');
 
@@ -202,8 +201,6 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
       });
 
     });
-
-
 
   };
 
@@ -765,12 +762,14 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
     // clear hovererPlayer
     this.hoveredPlayer = false;
 
-    if (!app.isPlaying()) {
+    if (! this.app.isPlaying()) {
       return false;
     }
 
-    if (! this.myTurn)
+    if (! this.myTurn) {
+      console.log("is not my turn")
       return false;
+    }
 
     //_vds.push(['setCS1','user_id', player.id]);
     //_vds.push(['setCS2','user_name', player.name]);

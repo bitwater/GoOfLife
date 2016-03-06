@@ -22,7 +22,7 @@ define(['core/gogame', 'roomRenderer', 'gameclient', 'core/playermanager', 'core
     var roomId = $("#room").data('id');
     var side = $("#room").data('side');
     var opponentSide = side === "black" ? "white" : "black";
-    console.log("id:  " + roomId);
+    console.log("------id----:  " + roomId);
 
     this.inRoom = true;
     this.roomId = roomId;
@@ -54,7 +54,6 @@ define(['core/gogame', 'roomRenderer', 'gameclient', 'core/playermanager', 'core
       _this.game.updatePlayerStats();
       _this.gameClient.joinRoom(roomId, '1');
       _this.renderer.updateControls();
-      //_this.renderer.updateLeaderboard();
       //_this.renderer.updatePlayersOnline();
       _this.run();
 

@@ -81,8 +81,9 @@ define(['core/game', 'core/playermanager', 'core/chatmanager', 'gameserver', 'co
       generation = game.generation,
       timeBeforeTick = (game.nextTick - Date.now());
 
-    console.log('666666666: ', {
-      livingCells: livingCells,
+    console.log('getRoomMinState: ', {
+      roomId: roomId,
+      //livingCells: livingCells,
       players: players,
       messages: messages,
       generation: generation,
@@ -91,6 +92,7 @@ define(['core/game', 'core/playermanager', 'core/chatmanager', 'gameserver', 'co
 
 
     return {
+      roomId: roomId,
       livingCells: livingCells,
       players: players,
       messages: messages,
@@ -165,9 +167,9 @@ define(['core/game', 'core/playermanager', 'core/chatmanager', 'gameserver', 'co
       this.fs.writeFileSync('db/last_state', '');
     }
 
-    if (!this.fs.existsSync('public/last_state')) {
-      this.fs.writeFileSync('public/last_state', '');
-    }
+    //if (!this.fs.existsSync('public/last_state')) {
+    //  this.fs.writeFileSync('public/last_state', '');
+    //}
   };
 
   App.prototype._loadState = function() {
@@ -184,7 +186,7 @@ define(['core/game', 'core/playermanager', 'core/chatmanager', 'gameserver', 'co
   App.prototype._saveState = function() {
     var options = { encoding: 'utf-8'};
     this.fs.writeFileSync('db/last_state', JSON.stringify(this.getServerState()), options);
-    this.fs.writeFileSync('public/last_state', JSON.stringify(this.getMinimumState()), options);
+    //this.fs.writeFileSync('public/last_state', JSON.stringify(this.getMinimumState()), options);
   };
 
   return App;
