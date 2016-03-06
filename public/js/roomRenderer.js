@@ -64,8 +64,8 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
     this.placeCellsEl = this.controlsEl.querySelector('.place-cells');
     this.statsEl = document.getElementById('stats');
     this.placeRandomCellsEl = document.getElementById('place-random-cells');
-    this.highScoreEl = document.getElementById('high-score');
-    this.cellCountEl = this.statsEl.querySelector('.cell-count');
+    //this.highScoreEl = document.getElementById('high-score');
+    //this.cellCountEl = this.statsEl.querySelector('.cell-count');
     this.cellsOnGridEl = this.statsEl.querySelector('.cells-on-grid');
     this.rulesEl = document.getElementById('rules');
     this.leaveGameContainerEl = document.getElementById('leave-game-container');
@@ -76,15 +76,10 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
     this.loginLinkContainerEl = document.getElementById('login-link-container');
     this.loginLinkEl = document.getElementById('login-link');
     this.selectModelEl = document.getElementById('select-model');
-    this.doubleModel = document.getElementById('double-model');
-    this.multiModel = document.getElementById('multi-model');
 
     this.flashNewsEl = document.getElementById('flash-news');
     //this.flashNewsEl.style.left=(document.body.clientWidth-this.flashNewsEl.clientWidth)/2;
     //this.flashNewsEl.style.top=(document.body.clientHeight-this.flashNewsEl.clientHeight)/2;
-
-    this.doubleModel.addEventListener('click', this._handleClickDouble.bind(this), false);
-    this.multiModel.addEventListener('click', this._handleClickMulti.bind(this), false);
 
     this.initUI();
 
@@ -347,10 +342,6 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
 
     //console.log(mans)
     this.clear();
-    if (this.model == 'double') {
-      this._drawBoard();
-      return;
-    }
 
     if (this.view === 'big') {
       this._drawBoard();
@@ -388,11 +379,6 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
       $("#c").css("cursor", "no-drop");
     }
 
-    if (this.model == 'double') {
-      this.clear();
-      this._drawBoard();
-      return;
-    }
 
     if (this.view == 'big') {
       this.clear();
@@ -528,8 +514,8 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
       //this.highScoreEl.style.color = this.color;
       //this.cellCountEl.style.color = this.color;
       //this.cellsOnGridEl.style.color = this.color;
-      this.highScoreEl.innerHTML = (localPlayer.force/10000).toFixed(2);
-      this.cellCountEl.innerHTML = cellCount;
+      //this.highScoreEl.innerHTML = (localPlayer.force/10000).toFixed(2);
+      //this.cellCountEl.innerHTML = cellCount;
       this.cellsOnGridEl.innerHTML = cellsOnGrid;
     }
   };
@@ -842,28 +828,6 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
     var x1 = Math.floor(x/this.M) * this.M;
 
     return this.grid.getCellFromPosition();
-  };
-
-  Renderer.prototype._handleClickDouble = function (event) {
-    console.log("double");
-
-    this.view = 'big';
-    this.model = 'double';
-    //this.selectModelEl.style.display = 'none';
-    //this.canvas.style.display = 'none'
-    this.statsEl.style.display = 'none'
-    //this.tickBar.style.display = 'none'
-    //this.controlsEl.style.display = 'none'
-  };
-
-  Renderer.prototype._handleClickMulti = function (event) {
-    console.log("multi");
-    this.model = 'multi';
-    //this.selectModelEl.style.display = 'none';
-    //this.canvas.style.display = 'inline-block'
-    this.statsEl.style.display = 'inline-block'
-    //this.tickBar.style.display = 'inline-block'
-    //this.controlsEl.style.display = 'inline-block'
   };
 
   Renderer.prototype._handleClickBigView = function (event) {
