@@ -213,14 +213,16 @@ define(['lib/socket.io'], function (io) {
     console.log('--- REQUESTING STATE ---');
 
     var player = this.playerManager.getLocalPlayer();
+    var roomId = this.app.roomId || '';
+
     if (player) {
       player.setOnline(true);
       this.socket.emit('request_state',
         {playerId: this.playerManager.getLocalPlayer().id,
-          roomId: this.app.roomId});
+          roomId: roomId});
     } else {
       // "observe mode" state request
-      this.socket.emit('request_state', {playerId: "", roomId: this.app.roomId});
+      this.socket.emit('request_state', {playerId: "", roomId: roomId});
     }
 
   };
@@ -230,12 +232,12 @@ define(['lib/socket.io'], function (io) {
 
     if (serverCellCount !== localCellCount) {
       this.outOfSync = true;
-      console.log('--- OUT OF SYNC ---');
+      console.log('--- OUT OF SYNC ---', " serverCellCount: " + serverCellCount + "   localCellCount:" + localCellCount);
 
       if (!this.hidden) {
         // request the state if the client is out of sync but the
         // window is visible
-        this._requestState();
+        //this._requestState();
       }
     }
   };
@@ -245,7 +247,7 @@ define(['lib/socket.io'], function (io) {
       localPlayer = this.playerManager.getLocalPlayer(),
       message = {
         cells: cells,
-        roomId: this.app.roomId,
+        roomId: this.app.roomId || '',
         playerId: localPlayer.id,
         token: this.app.getToken()
       };

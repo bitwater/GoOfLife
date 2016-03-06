@@ -29,6 +29,7 @@ define(['core/game', 'core/playermanager', 'core/chatmanager', 'gameserver', 'co
     setTimeout(function() {
       if (_this.game.isTimeToTick()) {
         _this.game.tick();
+
         _this.playerManager.updateOnlinePlayers();
         _this.game.updatePlayerStats();
         
@@ -84,8 +85,8 @@ define(['core/game', 'core/playermanager', 'core/chatmanager', 'gameserver', 'co
     console.log('getRoomMinState: ', {
       roomId: roomId,
       //livingCells: livingCells,
-      players: players,
-      messages: messages,
+      //players: players,
+      //messages: messages,
       generation: generation,
       timeBeforeTick: timeBeforeTick
     })

@@ -140,7 +140,7 @@ define([], function() {
 
       this._broadcastPlayerConnect(socket, player);
 
-      // 点击事件
+      // 放下活细胞
       socket.on('place_live_cells', this._handlePlaceLiveCells.bind(this, socket));
       // 下线断开连接
       socket.on('disconnect', this._handleDisconnect.bind(this, socket, player));

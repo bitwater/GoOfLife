@@ -11,6 +11,7 @@ define([], function() {
 
     M:18,
     T:2000,
+    probability: 0.3,
 
     // game settings
     generationDuration: 5000,

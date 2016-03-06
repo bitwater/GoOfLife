@@ -181,10 +181,12 @@ define(['core/cell'], function (Cell) {
 
     //console.log(cell + "   " + x + "   " + y);
     var cells = [];
-    for (var i = 0; i < M -1; i++) {
-      for (var j = 0; j < M -1; j++) {
+    var l = Math.round(M * 0.6);
+
+    for (var i = 0; i < l; i++) {
+      for (var j = 0; j < l; j++) {
         var cell = this.getCell(x + i, y + j);
-        if (Math.random() > 0.75) {
+        if (Math.random() < this.app.config.probability) {
           //cell.setDirty();
           cells.push(cell);
         }

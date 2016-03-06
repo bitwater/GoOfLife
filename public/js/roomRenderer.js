@@ -767,7 +767,7 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
     }
 
     if (! this.myTurn) {
-      console.log("is not my turn")
+      console.log("not my turn")
       return false;
     }
 
