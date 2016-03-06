@@ -11,13 +11,13 @@
   ],
   "keywords": [
     "go",
-    "life",
+    "game of life",
     "game",
+    "canvas",
     "node",
     "express",
     "socket.io",
-    "requirejs",
-    "canvas"
+    "requirejs"
   ],
   "license": "MIT",
   "homepage": "https://github.com/bitwater/GoOfLife",

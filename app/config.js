@@ -2,20 +2,18 @@ define([], function() {
   return {
     // render settings
     deadCellColor: '#ffffff',
-    cellSize: 3,
-    cellSpacing: 1,
+    //cellSize: 3,
+    //cellSpacing: 1,
 
     // grid settings
-    gridWidth: 192,
-    gridHeight: 192,
+    gridWidth: 144,
+    gridHeight: 144,
 
     M:16,
     T:2000,
-    boardWidth: 5,
-    boardHeight: 10,
 
     // game settings
-    generationDuration: 2000,
+    generationDuration: 5000,
     giveCellsEvery: 1, // generations
     
     // player settings
