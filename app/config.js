@@ -6,10 +6,10 @@ define([], function() {
     //cellSpacing: 1,
 
     // grid settings
-    gridWidth: 144,
-    gridHeight: 144,
+    gridWidth: 162,
+    gridHeight: 162,
 
-    M:16,
+    M:18,
     T:2000,
 
     // game settings
