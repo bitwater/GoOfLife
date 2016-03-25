@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <!--<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>-->
   <!--<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
+  <script src="js/lib/require.min.js" data-main="js/main.js"></script>
 </head>
 <body>
 <div id="timestamp-tooltip"></div>
@@ -73,6 +74,7 @@
         <li id="leave-game-container">
           <a href="#" id="leave-game">退出</a>
         </li>
+        <button onclick="TogetherJS(this); return false;">Start TogetherJS</button>
       </ul>
     </div>
   </div>
@@ -190,7 +192,6 @@
   </div>
 </div>
 
-<script src="js/lib/require.min.js" data-main="js/main.js"></script>
 <script type="text/javascript">
   window.zhuge = window.zhuge || [];
   window.zhuge.methods = "_init debug identify track trackLink trackForm page".split(" ");
@@ -239,6 +240,8 @@
     })();
   })();
 </script>
+
+<script src="https://togetherjs.com/togetherjs-min.js"></script>
 
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
