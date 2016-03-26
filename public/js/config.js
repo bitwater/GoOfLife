@@ -16,7 +16,7 @@ define([], function() {
     probability: 0.3,
 
     // game settings
-    generationDuration: 5000,
+    generationDuration: 3000,
     giveCellsEvery: 1, // generations
     timeBetweenUpdates: 10000,
 
