@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script src="jsnetworkx.js"></script>
+  <script>
+    // This creates a new empty, undirected graph
+    var G = new jsnx.Graph();
+
+    // Generates a complete graph with six nodes
+    var G = jsnx.completeGraph(6);
+    console.log(G)
+    // Generates a random graph with six nodes and
+    // an edge between each node is created with a probability of 0.3
+    // var G = jsnx.binomialGraph(6, 0.3);
+
+    var G = new jsnx.Graph();
+
+    G.addWeightedEdgesFrom([[2, 3, 10]]);
+    G.addStar([3, 4, 5, 6], {weight: 5});
+    G.addStar([2, 1, 0, -1], {weight: 3});
+
+    jsnx.draw(G, {
+      element: '#canvas',
+      weighted: true,
+      edgeStyle: {
+        'stroke-width': 10
+      }
+    });
+  </script>
+</head>
+<body>
+<div id="canvas"></div>
+
+<div id="footer"></div>
+</body>
+</html>
