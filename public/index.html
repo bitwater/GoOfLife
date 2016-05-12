@@ -17,9 +17,9 @@
   <title>Go of Life · 生命围棋</title>
   <link rel="shortcut icon" type="image/x-icon" id="favicon">
   <!-- 新 Bootstrap 核心 CSS 文件 -->
+  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/transitions.css">
   <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <!--<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>-->
   <!--<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
   <script src="js/lib/require.min.js" data-main="js/main.js"></script>
@@ -101,20 +101,18 @@
     <label><input id="multi-model" name="view" type="radio" checked="true" value=""/>多人舞台</label>
   </div>
   <!--<div id="view">-->
-    <!--<ul>-->
-      <!--<li><a id="big-view" style="color: #333333;text-decoration: none;">宏观视角</a></li>-->
-      <!--<li id="small-view" class="li active"><a style="color: #ffffff;text-decoration: none;">微观视角</a></li>-->
-    <!--</ul>-->
+      <!--<li id="big-view" class="li active"><a>宏观视角</a></li>-->
+      <!--<li id="small-view" class="li"><a>微观视角</a></li>-->
   <!--</div>-->
-  <!--<div id="view" class="btn-group" data-toggle="buttons">-->
-    <!--<label class="btn btn-primary btn-lg">-->
-      <!--<input type="radio" name="views" id="big-view" autocomplete="off"> 宏观视角-->
-    <!--</label>-->
-    <!--<label class="btn btn-primary btn-lg">-->
-      <!--<input type="radio" name="views" id="small-view" autocomplete="off"> 微观视角-->
-    <!--</label>-->
-    <!--<!--<div class="btn btn-success btn-lg" id="double-go" >双人对弈</div>-->-->
-  <!--</div>-->
+  <div id="view" class="btn-group" data-toggle="buttons">
+    <label class="btn btn-primary btn-lg">
+      <input type="radio" name="views" id="big-view" autocomplete="off"> 宏观视角
+    </label>
+    <label class="btn btn-primary btn-lg">
+      <input type="radio" name="views" id="small-view" autocomplete="off"> 微观视角
+    </label>
+    <!--<div class="btn btn-success btn-lg" id="double-go" >双人对弈</div>-->
+  </div>
   <!--<div id="view">-->
     <!--<label><input id="big-view" name="view" type="radio" checked="true" value=""/>宏观视角</label>-->
     <!--<label><input id="small-view" name="view" type="radio" value=""/>微观视角</label>-->
@@ -246,22 +244,22 @@
   };
   window.zhuge.load('3e493d43b6b8434db6fab297525010d7');
 </script>
-<script type='text/javascript'>
-  var _vds = _vds || [];
-  window._vds = _vds;
-  (function(){
-    _vds.push(['setAccountId', 'a2d6e101bded4107a46145e95259ab2f']);
-//      _vds.push(['setCS1','user_id', player.id]);
-    (function() {
-      var vds = document.createElement('script');
-      vds.type='text/javascript';
-      vds.async = true;
-      vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';
-      var s = document.getElementsByTagName('script')[0];
-      s.parentNode.insertBefore(vds, s);
-    })();
-  })();
-</script>
+<!--<script type='text/javascript'>-->
+  <!--var _vds = _vds || [];-->
+  <!--window._vds = _vds;-->
+  <!--(function(){-->
+    <!--_vds.push(['setAccountId', 'a2d6e101bded4107a46145e95259ab2f']);-->
+<!--//      _vds.push(['setCS1','user_id', player.id]);-->
+    <!--(function() {-->
+      <!--var vds = document.createElement('script');-->
+      <!--vds.type='text/javascript';-->
+      <!--vds.async = true;-->
+      <!--vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';-->
+      <!--var s = document.getElementsByTagName('script')[0];-->
+      <!--s.parentNode.insertBefore(vds, s);-->
+    <!--})();-->
+  <!--})();-->
+<!--</script>-->
 
 <!--<script src="https://togetherjs.com/togetherjs-min.js"></script>-->
 

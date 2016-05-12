@@ -16,9 +16,7 @@ h1, h2, h3, h4, h5, h6, #chat {
 
 
 a {
-  color: #000;
   text-decoration: none;
-  font-weight: bold;
 }
 
 #chat a {
@@ -325,39 +323,30 @@ html, body {
 }
 
 #view {
-  display: block;
   margin-top: 5px;
   font-size: 16px;
   opacity: 0.8;
-  width: 320px;
-  opacity: 0.8;
   font-size: 16px;
-  margin-left: -160px;
+  text-align: center;
 }
 
-#tabs {
-  position: absolute;
-  top: 77px;
-  left: 50%;
-  width: 320px;
-  opacity: 0.8;
-  /*z-index: 5000;*/
+#view .btn-lg {
   font-size: 16px;
-  font-family: "Pictos";
-  margin-left: -160px;
+  padding: 4px 10px;
 }
 
 #view li {
   float: left;
-  padding: 3.6px;
-  width: 150px;
+  padding: 4px;
+  width: 112px;
   text-align: center;
   height: 30px;
   /*line-height: 20px;*/
   vertical-align: middle;
   background: white;
   border:1px solid #ddd;
-  color: #333333;
+  /*color: #333333;*/
+  color: #ffffff;
   cursor: pointer;
 }
 
@@ -386,7 +375,15 @@ html, body {
 #view li.active {
   background: rgb(82, 178, 131);
   border: 1px solid rgb(82, 178, 131);
-  color: white;
+}
+
+#view li a {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+#view li.active a {
+  color: #ffffff;
 }
 
 .boards {

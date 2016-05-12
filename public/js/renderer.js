@@ -76,8 +76,8 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
     this.selectModelEl = document.getElementById('select-model');
     this.doubleModel = document.getElementById('double-model');
     this.multiModel = document.getElementById('multi-model');
-
     this.flashNewsEl = document.getElementById('flash-news');
+
     //this.flashNewsEl.style.left=(document.body.clientWidth-this.flashNewsEl.clientWidth)/2;
     this.flashNewsEl.style.left=(document.body.clientWidth-this.flashNewsEl.clientWidth)/2+document.body.scrollLeft;
     this.flashNewsEl.style.top=(document.body.clientHeight-this.flashNewsEl.clientHeight)/2+document.body.scrollTop;
@@ -208,12 +208,17 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
 
       $('#small-view').on('click', function () {
         _this._handleClickSmallView();
+        $('#small-view').addClass('active');
+        $('#big-view').removeClass('active');
       })
     });
 
     $(function () {
       $("#big-view").click(function(){
         _this._handleClickBigView();
+        $('#small-view').removeClass('active');
+        $('#big-view').addClass('active');
+
       });
     });
 
