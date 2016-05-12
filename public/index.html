@@ -23,6 +23,7 @@
   <!--<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>-->
   <!--<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
   <script src="js/lib/require.min.js" data-main="js/main.js"></script>
+  <script src="js/qarticles.min.js"></script>
 </head>
 <body>
 <div id="timestamp-tooltip"></div>
@@ -41,6 +42,21 @@
     <p>版本：V0.6.1_alpha <br> By 罗三水  微信号：lm_norway <br>正在持续开发中...<br>根据程序质能方程：Errors = more code^2<br>如有Bug 纯属正常 <br>开个玩笑，欢迎各种吐槽反馈 :)</p>
   </div>
 </div>
+<canvas id="cov"></canvas>
+<script>
+  (function (global) {
+    let speed = 30
+    if ( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+      speed = 100
+    }
+    const options = {
+      speed: speed,
+      count: 16,
+      linkCount: 4
+    }
+    var qarticles = new Qarticles(document.getElementById('cov'), options)
+  })(window);
+</script>
 <div class="container">
   <h1 class="brand-name">Go of Life</h1>
   <h3>All of life is an act of letting go    -- Life of Pi </h3>
