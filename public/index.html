@@ -16,9 +16,9 @@
   <meta name="format-detection" content="telephone=no">
   <title>Go of Life · 生命围棋</title>
   <link rel="shortcut icon" type="image/x-icon" id="favicon">
+  <!-- 新 Bootstrap 核心 CSS 文件 -->
   <link rel="stylesheet" href="css/transitions.css">
   <link rel="stylesheet" href="css/main.css">
-  <!-- 新 Bootstrap 核心 CSS 文件 -->
   <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <!--<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>-->
   <!--<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
@@ -43,25 +43,11 @@
   </div>
 </div>
 <canvas id="cov"></canvas>
-<script>
-  (function (global) {
-    let speed = 30
-    if ( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
-      speed = 100
-    }
-    const options = {
-      speed: speed,
-      count: 16,
-      linkCount: 4
-    }
-    var qarticles = new Qarticles(document.getElementById('cov'), options)
-  })(window);
-</script>
 <div class="container">
   <h1 class="brand-name">Go of Life</h1>
   <h3>All of life is an act of letting go    -- Life of Pi </h3>
   <div class="links-outer">
-    <div class="table">
+    <div class="tablelink">
       <ul class="links">
         <li>
           <a href="#" id="rules-link">简介</a>
@@ -114,15 +100,21 @@
     <label><input id="double-model" name="view" type="radio"  value=""/>双人对弈</label>
     <label><input id="multi-model" name="view" type="radio" checked="true" value=""/>多人舞台</label>
   </div>
-  <div id="view" class="btn-group" data-toggle="buttons">
-    <label class="btn btn-primary btn-lg">
-      <input type="radio" name="views" id="big-view" autocomplete="off"> 宏观视角
-    </label>
-    <label class="btn btn-primary btn-lg">
-      <input type="radio" name="views" id="small-view" autocomplete="off"> 微观视角
-    </label>
-    <!--<div class="btn btn-success btn-lg" id="double-go" >双人对弈</div>-->
-  </div>
+  <!--<div id="view">-->
+    <!--<ul>-->
+      <!--<li><a id="big-view" style="color: #333333;text-decoration: none;">宏观视角</a></li>-->
+      <!--<li id="small-view" class="li active"><a style="color: #ffffff;text-decoration: none;">微观视角</a></li>-->
+    <!--</ul>-->
+  <!--</div>-->
+  <!--<div id="view" class="btn-group" data-toggle="buttons">-->
+    <!--<label class="btn btn-primary btn-lg">-->
+      <!--<input type="radio" name="views" id="big-view" autocomplete="off"> 宏观视角-->
+    <!--</label>-->
+    <!--<label class="btn btn-primary btn-lg">-->
+      <!--<input type="radio" name="views" id="small-view" autocomplete="off"> 微观视角-->
+    <!--</label>-->
+    <!--<!--<div class="btn btn-success btn-lg" id="double-go" >双人对弈</div>-->-->
+  <!--</div>-->
   <!--<div id="view">-->
     <!--<label><input id="big-view" name="view" type="radio" checked="true" value=""/>宏观视角</label>-->
     <!--<label><input id="small-view" name="view" type="radio" value=""/>微观视角</label>-->
@@ -207,6 +199,20 @@
     <div class="ds-thread" data-thread-key="1" data-title="Go of Life · 生命对弈" data-url="gooflife.com"></div>
   </div>
 </div>
+<script>
+  (function (global) {
+//    if ( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+//      speed = 100
+//    }
+    const options = {
+      count: 16,
+      linkCount: 4
+    }
+    var qarticles = new Qarticles(document.getElementById('cov'), options)
+
+
+  })(window);
+</script>
 
 <script type="text/javascript">
   window.zhuge = window.zhuge || [];

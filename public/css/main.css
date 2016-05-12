@@ -42,12 +42,14 @@ html, body {
   width: 100%;
   left: 0;
   opacity: 0.36;
+  z-index: -9999;
 }
 
 .container {
   min-height: 100%;
   margin: 0 auto;
-  /*width: 100%;*/
+  width: 100%;
+  z-index: 999;
 }
 
 #connecting {
@@ -59,9 +61,10 @@ html, body {
   text-align: center;
 }
 
-.table {
-  display: table;
-  margin: 0 auto;
+.tablelink {
+  /*display: table;*/
+  /*margin: 0 auto;*/
+  margin-bottom: 10px;
 }
 
 .links {
@@ -90,7 +93,7 @@ html, body {
 
 .links li a {
   /*color: deepskyblue;*/
-  font-weight: 600;
+  /*font-weight: 600;*/
 }
 
 /*.links li a:hover {*/
@@ -115,12 +118,6 @@ html, body {
 
 #cells-on-grid-stat:hover {
   font-weight: bold;
-}
-
-#view {
-  margin-top: 5px;
-  font-size: 16px;
-  opacity: 0.8;
 }
 
 /*#double-go {*/
@@ -325,6 +322,71 @@ html, body {
   -ms-transform: scale(0.9, 0.9);
   -o-transform: scale(0.9, 0.9);
   transform: scale(0.9, 0.9);
+}
+
+#view {
+  display: block;
+  margin-top: 5px;
+  font-size: 16px;
+  opacity: 0.8;
+  width: 320px;
+  opacity: 0.8;
+  font-size: 16px;
+  margin-left: -160px;
+}
+
+#tabs {
+  position: absolute;
+  top: 77px;
+  left: 50%;
+  width: 320px;
+  opacity: 0.8;
+  /*z-index: 5000;*/
+  font-size: 16px;
+  font-family: "Pictos";
+  margin-left: -160px;
+}
+
+#view li {
+  float: left;
+  padding: 3.6px;
+  width: 150px;
+  text-align: center;
+  height: 30px;
+  /*line-height: 20px;*/
+  vertical-align: middle;
+  background: white;
+  border:1px solid #ddd;
+  color: #333333;
+  cursor: pointer;
+}
+
+#view ul>li:first-of-type{
+  border-bottom-left-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-top-left-radius: 5px;
+  -webkit-border-top-left-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  border-right:0;
+  /*border-left:1px solid #ddd;*/
+}
+
+#view ul>li:last-of-type{
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -moz-border-radius-bottomright: 5px;
+  -moz-border-radius-topright: 5px;
+  border-left:0;
+  /*border-right:1px solid #ddd;*/
+}
+
+#view li.active {
+  background: rgb(82, 178, 131);
+  border: 1px solid rgb(82, 178, 131);
+  color: white;
 }
 
 .boards {
