@@ -44,14 +44,18 @@ define(['core/grid', 'core/board'], function (Grid, Board) {
       var cell = this.grid.getCell(cells[i].x, cells[i].y);
       var man = this.board.getManFromCell(cell);
 
-      //console.log(man)
-      //if (man.livingCells && man.livingCells.length > 0) {
-      //  return false;
+      console.log(man)
+      if (man.livingCells && man.livingCells.length > 0) {
+        return {msg: '已有落子...'};
+      }
+      //if (cell.alive) {
+      //  return {msg: '已经有自由活细胞放不下...'};
       //}
 
-      if (cell.alive) {
-        return {msg: '自由活细胞放不下...'};
+      if (!this.board.checkLiberties(man, cell.playerId, this.board.createCheckedArray(this.board.width, this.board.height))) {
+        return {msg: '无气，无法落子...'};
       }
+
     }
 
     return true;

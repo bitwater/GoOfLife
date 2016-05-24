@@ -82,14 +82,11 @@ define(['core/gogame'], function(Game) {
 
   GameManager.prototype.getGame = function(id) {
     console.log("id: ", id, " games: ", this.games.length)
-
-    if (typeof id !== 'number') {
-      return false;
-    }
+    id = parseInt(id);
 
     for (var i = 0; i < this.games.length; i++) {
       var game = this.games[i];
-      console.log(game.transmission());
+      //console.log("game.transmission", game.transmission());
       if (game.id === id) {
         return game;
       }
