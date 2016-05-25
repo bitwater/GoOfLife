@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>Nets</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+<canvas id="cas"></canvas>
+</body>
+<script>
+  var cas = document.getElementById("cas");
+  var ctx = cas.getContext("2d");
+
+  resize();
+  window.onrerize = resize();
+
+  function resize() {
+    cas.width = document.innerWidth || document.documentElement.clientWidth ||
+    document.body.clientWidth;
+    cas.height = document.innerHeight || document.documentElement.clientHeight ||
+    document.body.clientHeight;
+  }
+
+  var RAF = (function () {
+    return window.requestAnimationFrame || window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame
+            || function (callback) {
+              window.setTimeout(callback, 1000 / 60);
+            }
+  })();
+
+  var cursor = {x: null, y: null, max: 20000}
+
+  window.onmousemove = function (e) {
+    e = e || window.event
+    cursor.x = e.clientX;
+    cursor.y = e.clientY;
+  }
+  window.onmouseout = function (e) {
+    cursor.x = null;
+    cursor.y = null;
+  }
+
+  var dots = [];
+  for (var i = 0; i < 199; i++) {
+    var x = Math.random() * cas.width;
+    var y = Math.random() * cas.height;
+    var xa = Math.random() * 2 - 1;
+    var ya = Math.random() * 2 - 1;
+
+    dots.push({
+      x: x,
+      y: y,
+      xa: xa,
+      ya: ya,
+      max: 6000
+    })
+  }
+
+  setTimeout(function () {
+    animate();
+  }, 100)
+
+  // 每一帧循环的逻辑
+  function animate() {
+    ctx.clearRect(0, 0, cas.width, cas.height);
+
+    var ndots = [cursor].concat(dots);
+
+    dots.forEach(function (dot) {
+      dot.x += dot.xa;
+      dot.y += dot.ya;
+
+      dot.xa *= (dot.x > cas.width || dot.x < 0) ? -1 : 1;
+      dot.ya *= (dot.y > cas.height || dot.y < 0) ? -1 : 1;
+
+      ctx.fillRect(dot.x - 0.5, dot.y - 0.5, 3, 3);
+//      ctx.arc(dot.x - 0.5, dot.y - 0.5, 10, 0, 2*Math.PI);
+
+
+      for (var i = 0; i <ndots.length; i++) {
+//        console.log(ndots.length)
+        var d2 = ndots[i];
+
+        if (dot === d2 || d2.x == null || d2.y == null) continue;
+
+        var xc = dot.x - d2.x;
+        var yc = dot.y - d2.y;
+        var dis = xc * xc + yc * yc;
+        var ratio;
+
+        if (dis < d2.max) {
+          if (d2 == cursor && dis > (d2.max / 2)) {
+            dot.x -= xc * 0.03;
+            dot.y -= yc * 0.03;
+          }
+
+          ratio = (d2.max - dis) / d2.max;
+
+          ctx.beginPath();
+          ctx.lineWidth = ratio / 2;
+          ctx.strokeStyle = 'rgba(0,0,0,' + (ratio + 0.2) + ")";
+          ctx.moveTo(dot.x, dot.y);
+          ctx.lineTo(d2.x, d2.y);
+          ctx.stroke();
+        }
+      }
+
+      ndots.splice(ndots.indexOf(dot), 1);
+    });
+
+    RAF(animate);
+  }
+</script>
+</html>
