@@ -15,9 +15,17 @@
 <body>
 <canvas id="cas"></canvas>
 </body>
+<!--<script src="/js/stats.min.js"></script>-->
+
 <script>
   var cas = document.getElementById("cas");
   var ctx = cas.getContext("2d");
+  var stats = new Stats();
+//  stats.setMode(0);
+//  stats.domElement.style.position = 'absolute';
+//  stats.domElement.style.right = '0px';
+//  stats.domElement.style.top = '0px';
+//  document.body.appendChild(stats.domElement);
 
   resize();
   window.onrerize = resize();
@@ -117,6 +125,7 @@
       ndots.splice(ndots.indexOf(dot), 1);
     });
 
+//    stats.update();
     RAF(animate);
   }
 </script>
