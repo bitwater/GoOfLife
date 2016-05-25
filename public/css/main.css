@@ -594,6 +594,20 @@ html, body {
   text-align: center;
 }
 
+#play-more {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+@media (min-width: 768px) {
+  #play-more {
+    position: absolute;
+    right: 60px;
+    top: 30px;
+  }
+}
+
 footer {
   clear: both;
   border-top: solid 1px #ddd;
