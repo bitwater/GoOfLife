@@ -69,9 +69,16 @@
     cursor.y = null;
   }
 
+  function touchStart(event) {
+//    event.preventDefault();
+    if (!event.touches.length) return;
+    var touch = event.touches[0];
+    cursor.x = touch.pageX;
+    cursor.y = touch.pageY;
+  }
+
   function touchMove(event) {
-    console.log("touchMove");
-    event.preventDefault();
+//    event.preventDefault();
     if (!event.touches.length) return;
     var touch = event.touches[0];
     cursor.x = touch.pageX;
@@ -79,11 +86,12 @@
   }
 
   function touchEnd(event) {
-    event.preventDefault();
+//    event.preventDefault();
     cursor.x = null;
     cursor.y = null;
   }
 
+  cas.addEventListener("touchstart", touchStart, false);
   cas.addEventListener("touchmove", touchMove, false);
   cas.addEventListener("touchend", touchEnd, false);
 
