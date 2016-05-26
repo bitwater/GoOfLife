@@ -14,18 +14,11 @@
   BH_SIZE = 15;
   var psNum = 1000;
 
-  document.body.appendChild(stats.domElement);
-
   canvas = document.getElementById('cas');
-
   ctx = canvas.getContext("2d");
-
   bufferCanvas = document.createElement("canvas");
-
   bufferCtx = bufferCanvas.getContext("2d");
-
   bufferCanvas.width = canvas.width = document.body.offsetWidth;
-
   bufferCanvas.height = canvas.height = document.body.offsetHeight;
 
   window.onresize = function() {
@@ -42,12 +35,13 @@
   if (mobilecheck()) {
     isMobile = true;
     psNum = 256;
-  } {
+  } else {
     stats = new Stats();
     stats.setMode(0);
     stats.domElement.style.position = 'absolute';
     stats.domElement.style.right = '0px';
     stats.domElement.style.top = '0px';
+    document.body.appendChild(stats.domElement);
   }
 
   function mobilecheck() {
