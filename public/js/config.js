@@ -3,15 +3,15 @@ define([], function() {
     // render settings
     deadCellColor: '#ffffff',
     defaultAccentColor: '#000000',
-    cellSize: 3,
+    cellSize: 6,
     cellSpacing: 1,
     tickBarHeight: 5,
 
     // grid settings
-    gridWidth: 162,
-    gridHeight: 162,
+    gridWidth: 108,
+    gridHeight: 108,
 
-    M:18,
+    M:12,
     T:2000,
     probability: 0.3,
 

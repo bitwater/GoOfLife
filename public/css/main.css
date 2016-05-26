@@ -595,8 +595,8 @@ html, body {
 
 #play-more {
   position: absolute;
-  right: 0px;
-  left: 0px;
+  right: 2px;
+  left: 2px;
 }
 
 @media (min-width: 768px) {

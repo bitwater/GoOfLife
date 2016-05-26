@@ -6,10 +6,10 @@ define([], function() {
     //cellSpacing: 1,
 
     // grid settings
-    gridWidth: 162,
-    gridHeight: 162,
+    gridWidth: 108,
+    gridHeight: 108,
 
-    M:18,
+    M:12,
     T:2000,
     probability: 0.3,
 
