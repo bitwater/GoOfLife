@@ -211,14 +211,11 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
         $('#small-view').addClass('active');
         $('#big-view').removeClass('active');
       })
-    });
 
-    $(function () {
       $("#big-view").click(function(){
         _this._handleClickBigView();
         $('#small-view').removeClass('active');
         $('#big-view').addClass('active');
-
       });
     });
 
@@ -883,16 +880,24 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
 
   Renderer.prototype._handleClickBigView = function (event) {
     this.view = 'big';
-    this.placeCellsEl.style.display = 'none'
-    this.placeRandomCellsEl.style.display = 'none'
+    this.placeCellsEl.style.display = 'none';
+    this.placeRandomCellsEl.style.display = 'none';
+    //$("#bigview").attr('checked', 'checked');
+    //$("#bigview").removeAttr('checked');
+    $("#bigview").prop("checked", true);
+    //$("#smallview").prop("checked", false);
     this.render();
   };
 
   Renderer.prototype._handleClickSmallView = function (event) {
     this.view = 'small';
-    this.placeCellsEl.style.display = 'inline-block'
-    this.placeRandomCellsEl.style.display = 'inline-block'
+    this.placeCellsEl.style.display = 'inline-block';
+    this.placeRandomCellsEl.style.display = 'inline-block';
+    //$("#bigview").prop("checked", false);
+    $("#smallview").prop("checked", true);
+    //$("#smallview").attr('checked', 'checked');
     this.render();
+    //console.log("checked:", $('input[name=view]:checked').val());
   };
 
   Renderer.prototype._handleClickObserve = function (event) {
