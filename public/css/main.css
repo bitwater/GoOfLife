@@ -586,9 +586,11 @@ html, body {
 }
 
 .flash {
-  /*position: relative;*/
-  height: 6px;
-  margin-bottom: 5px;
+  position: fixed;
+  left: 50px;
+  top: 50%;
+  height: 30px;
+  max-width: 300px;
   z-index: 100;
   text-align: center;
 }
