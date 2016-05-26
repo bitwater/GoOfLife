@@ -93,7 +93,7 @@ $(function() {
         // 0.12
       // ).edges();
       // var edges = jsnx.binomialGraph(4, 0.5).edges();
-      var edges = jsnx.fastGnpRandomGraph(23, 0.1).edges();
+      var edges = jsnx.fastGnpRandomGraph(23, 0.2).edges();
       // var edges = jsnx.completeGraph(6).edges();
 
       G = new jsnx.Graph();
@@ -102,7 +102,7 @@ $(function() {
       (function t() {
         if (edges.length) {
           G.addEdge.apply(G, edges.shift());
-          tick = setTimeout(t, 500);
+          tick = setTimeout(t, 800);
           // console.log(edges)
         } else {
           G.addEdge(2, 10);
