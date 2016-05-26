@@ -17,7 +17,8 @@
   <title>Go of Life · 生命围棋</title>
   <link rel="shortcut icon" type="image/x-icon" id="favicon">
   <!-- 新 Bootstrap 核心 CSS 文件 -->
-  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <!--<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">-->
+  <link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" href="css/transitions.css">
   <link rel="stylesheet" href="css/main.css">
   <!--<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>-->
@@ -29,11 +30,11 @@
 <div id="play-more" class="btn-group">
   <button type="button" class="btn btn-primary dropdown-toggle"
           data-toggle="dropdown">
-    Play More <span class="caret"></span>
+    ••• <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" role="menu">
     <li><a href="/copylife">Copy's Life</a></li>
-    <li><a href="/nets">Random Nets</a></li>
+    <li><a href="/nets">Nets</a></li>
     <li><a href="/networkx">Networkx</a></li>
     <!--<li class="divider"></li>-->
     <!--<li><a href="#">分离的链接</a></li>-->
@@ -117,19 +118,19 @@
       <!--<li id="big-view" class="li active"><a>宏观视角</a></li>-->
       <!--<li id="small-view" class="li"><a>微观视角</a></li>-->
   <!--</div>-->
-  <div id="view" class="btn-group" data-toggle="buttons">
-    <label class="btn btn-primary btn-lg">
-      <input type="radio" name="views" id="big-view" autocomplete="off"> 宏观视角
-    </label>
-    <label class="btn btn-primary btn-lg">
-      <input type="radio" name="views" id="small-view" autocomplete="off"> 微观视角
-    </label>
-    <!--<div class="btn btn-success btn-lg" id="double-go" >双人对弈</div>-->
-  </div>
-  <!--<div id="view">-->
-    <!--<label><input id="big-view" name="view" type="radio" checked="true" value=""/>宏观视角</label>-->
-    <!--<label><input id="small-view" name="view" type="radio" value=""/>微观视角</label>-->
+  <!--<div id="view" class="btn-group" data-toggle="buttons">-->
+    <!--<label class="btn btn-primary btn-lg">-->
+      <!--<input type="radio" name="views" id="big-view" autocomplete="off"> 宏观视角-->
+    <!--</label>-->
+    <!--<label class="btn btn-primary btn-lg">-->
+      <!--<input type="radio" name="views" id="small-view" autocomplete="off"> 微观视角-->
+    <!--</label>-->
+    <!--&lt;!&ndash;<div class="btn btn-success btn-lg" id="double-go" >双人对弈</div>&ndash;&gt;-->
   <!--</div>-->
+  <div id="view">
+    <label><input id="big-view" name="view" type="radio" checked="true" value=""/>宏观视角</label>
+    <label><input id="small-view" name="view" type="radio" value=""/>微观视角</label>
+  </div>
   <div id="connecting">
     <div class="spinner"></div>
     <h3>努力加载中...</h3>
@@ -171,7 +172,7 @@
     <h3>May the force be with you    -- Star Wars </h3>
     <div class="boards">
       <div class="leaderboard-container">
-        <h3>影响Go of Life历史进程玩家排行榜</h3>
+        <h3>玩家排行榜<br>影响Go of Life历史进程</h3>
 
         <h3>原力指数</h3>
 
@@ -210,7 +211,7 @@
     <!--<div class="ds-thread" data-thread-key="1" data-title="Go of Life · 生命对弈" data-url="gooflife.com"></div>-->
   </div>
 </div>
-<script src="/js/stats.min.js"></script>
+<!--<script src="/js/stats.min.js"></script>-->
 <script>
   (function (global) {
 //    if ( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
@@ -288,12 +289,12 @@
     <!--|| document.getElementsByTagName('body')[0]).appendChild(ds);-->
   <!--})();-->
 <!--</script>-->
-<!-- 多说公共JS代码 end -->
+<!-- 多说公共JS代码 end &nbsp;&nbsp;&nbsp; 京ICP备16001286号 -->
 <footer>
   <div>
     <p style="font-size: 14px; font-weight: bold"><a href="http://wiki.swarma.net/index.php/%E7%94%9F%E5%91%BD%E6%B8%B8%E6%88%8F%E5%9B%B4%E6%A3%8B"
           target="_blank">
-      © 2015 集智百科 Go Of Life · 生命围棋</a>&nbsp;&nbsp;&nbsp; 京ICP备16001286号</p>
+      © 2015 集智百科 Go Of Life · 生命围棋</a></p>
   </div>
 
 </footer>

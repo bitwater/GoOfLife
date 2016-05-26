@@ -14,7 +14,7 @@ define([], function() {
     probability: 0.3,
 
     // game settings
-    generationDuration: 3000,
+    generationDuration: 2000,
     giveCellsEvery: 1, // generations
     
     // player settings

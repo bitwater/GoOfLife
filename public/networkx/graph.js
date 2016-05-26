@@ -62,7 +62,7 @@ $(function() {
               },
               nodeStyle: {
                 fill: function(d) {
-                  console.log(G.nodes(), G.edges());
+                  //console.log(G.nodes(), G.edges());
                   // console.log(d);
                   return color(d.node % 4);
                 },
