@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="description"
-        content="Go of Life，生命对弈，生命游戏与棋类游戏在二维世界的结合与涌现">
+        content="Go of Life，生命围棋，生命游戏与围棋在二维世界的结合与涌现">
   <meta name="keywords"
-        content="游戏,生命,自由,涌现,弈,对弈,元胞自动机,生命游戏,棋类游戏,围棋,沙盒">
+        content="生命,游戏,网络,复杂,自由,涌现,弈,对弈,元胞自动机,细胞自动机,生命游戏,棋类游戏,围棋,沙盒,GameOfLife,GameOfGo">
   <div id='wx_pic' style='margin:0 auto; display:none;'>
     <img id="logo" src="favicon.ico"/>
   </div>
@@ -43,7 +43,7 @@
 <div id="timestamp-tooltip"></div>
 <div id="rules">
   <div class="rules-box">
-    <p>Go of Life，生命围棋（昵称：玩儿命）</p>
+    <p>Go of Life - 生命围棋（昵称：玩儿命）</p>
 
     <p>这是一个平行的二维世界，高层的棋盘上是围棋对弈规则，底层网格的下是生命游戏演化规则，点击即可放下你的自由活细胞，宏观微观的视角切换（按shift快速切换）
       <br>时间嘀嗒一下，生命游戏演化一代，围棋检查气数后进行提子，同时生成一个自由活细胞。
@@ -53,7 +53,7 @@
 
     <p>去占领、发现和创造属于你的二维时空吧！这是一场浓缩的生命对弈游戏。</p>
 
-    <p>版本：V0.6.1_alpha <br> By 罗三水  微信号：lm_norway <br>正在持续开发中...<br>根据程序质能方程：Errors = more code^2<br>如有Bug 纯属正常 <br>开个玩笑，欢迎各种吐槽反馈 :)</p>
+    <p>版本：V0.7.1_alpha <br> By 罗三水  微信号：lm_norway <br>正在持续开发中...<br>根据程序质能方程：Errors = more code^2<br>如有Bug 纯属正常 <br>开个玩笑，欢迎各种吐槽反馈 :)</p>
   </div>
 </div>
 <canvas id="cov"></canvas>
@@ -219,6 +219,7 @@
 //      speed = 100
 //    }
     const options = {
+      speed: 32,
       count: 16,
       linkCount: 3
     }

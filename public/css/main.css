@@ -590,8 +590,9 @@ html, body {
   left: 50px;
   top: 50%;
   height: 30px;
-  max-width: 300px;
-  z-index: 100;
+  max-width: 120px;
+  z-index: 9999;
+  opacity: 0.9;
   text-align: center;
 }
 
