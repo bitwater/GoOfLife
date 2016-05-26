@@ -5,14 +5,48 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>GoOfLife - NetworkX</title>
+  <style>
+    /*#canvas-bg {*/
+      /*position: fixed;*/
+      /*right: 0%;*/
+      /*top: 0%;*/
+      /*opacity: 0.3;*/
+      /*height: 100%;*/
+      /*width: 100%;*/
+      /*z-index: -999;*/
+    /*}*/
+
+    #main {
+      margin: auto;
+      text-align: center;
+    }
+
+    #canvas2 {
+      margin: auto;
+      width: 500px;
+    }
+
+    #canvas3 {
+      margin: auto;
+      width: 500px;
+    }
+
+    #canvas4 {
+      margin: auto;
+      width: 500px;
+      /*height: 100%;*/
+    }
+
+  </style>
 </head>
 <body>
+<div id="canvas-bg"></div>
 
-<div id="main" style="margin: 0 auto">
-  <!-- <div id="canvas"></div> -->
+<div id="main">
+  <!--<div id="canvas1"></div>-->
   <div id="canvas2"></div>
   <div id="canvas3"></div>
-  <div id="gridCanvas"></div>
+  <div id="canvas4"></div>
 </div>
 </body>
 <script src="d3.v3.min.js"></script>
@@ -21,60 +55,6 @@
 <script src="graph.js"></script>
 <!-- <script src="2dgrid.js"></script> -->
 <script>
-  $(function () {
-    // Generates a complete graph with six nodes
-    var G1 = jsnx.completeGraph(6);
-    // Generates a random graph with six nodes and
-    // an edge between each node is created with a probability of 0.3
-    // var G = jsnx.binomialGraph(100, 0.3);
-
-    // var G = new jsnx.Graph();
-    // G.addWeightedEdgesFrom([[2,3,10]]);
-    // G.addStar([3,4,5,6], {weight: 5});
-    // G.addStar([2,1,0,-1], {weight: 3});
-
-    // jsnx.draw(G1, {
-    //   element: '#canvas',
-    //   edgeStyle: {
-    //     'stroke-width': 3
-    //   }
-    // });
-
-    var G2 = new jsnx.Graph();
-
-  G2.addNodesFrom([1, 2, 3, 4], {group: 0});
-  G2.addNodesFrom([5, 6, 7], {group: 1});
-  G2.addNodesFrom([8, 9, 10, 11], {group: 2});
-
-  G2.addPath([1, 2, 5, 6, 7, 8, 11]);
-  G2.addEdgesFrom([[1, 3], [1, 4], [3, 4], [2, 3], [2, 4], [8, 9], [8, 10], [9, 10], [11, 10], [11, 9]]);
-
-  var color = d3.scale.category20();
-  jsnx.draw(G2, {
-    element: '#canvas2',
-    layoutAttr: {
-      charge: -120,
-      linkDistance: 20
-    },
-    nodeAttr: {
-      r: 5,
-      title: function (d) {
-        return d.label;
-      }
-    },
-    nodeStyle: {
-      fill: function (d) {
-        return color(d.data.group);
-      },
-      stroke: 'none'
-    },
-    edgeStyle: {
-      fill: '#999'
-    }
-  });
-  })
-  
-
 </script>
 
 </html>
