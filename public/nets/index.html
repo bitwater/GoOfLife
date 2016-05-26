@@ -59,6 +59,23 @@
     cursor.y = null;
   }
 
+  function touchMove(event) {
+    event.preventDefault();
+    if (!event.touches.length) return;
+    var touch = event.touches[0];
+            cursor.x = touch.pageX,
+            cursor.y = touch.pageY;
+  }
+
+  function touchEnd(event) {
+    event.preventDefault();
+    cursor.x = null;
+    cursor.y = null;
+  }
+
+  cas.addEventListener("touchend", touchEnd, false);
+  cas.addEventListener("touchmove", touchMove, false);
+
   var dots = [];
   for (var i = 0; i < 199; i++) {
     var x = Math.random() * cas.width;
