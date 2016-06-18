@@ -813,6 +813,17 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
     // 宏观视角
     if (this.view == 'big') {
       var cells = this.grid.getRandomCells(clickedCell);
+      var man = this.board.getManFromCell(cells[0]);
+      man.alive = true;
+      man.playerId = player.id;
+      //console.log("########", man);
+      if (! this.board.checkLiberties(man, player.id, this.board.createCheckedArray(this.boardWidth, this.boardHeight))) {
+        this.flashMsg("无法落子...");
+        man.alive = false;
+        man.playId = '';
+        return
+      }
+
       this.gameClient.placeLiveCells(cells);
     } else {
 

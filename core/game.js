@@ -42,13 +42,16 @@ define(['core/grid', 'core/board'], function (Grid, Board) {
 
     for (var i = 0; i < cells.length; i++) {
       var cell = this.grid.getCell(cells[i].x, cells[i].y);
-      var man = this.board.getManFromCell(cell);
+      //var man = this.board.getManFromCell(cell);
 
       //console.log(man)
       //if (man.livingCells && man.livingCells.length > 0) {
       //  return false;
       //}
+      // 禁着点
+      //if (this.board.checkLiberties(man, ))
 
+      // cell重叠
       if (cell.alive) {
         return {msg: '自由活细胞放不下...'};
       }
