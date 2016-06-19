@@ -36,7 +36,7 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
 };
 
 //HTMLActuator.prototype.tileHTML = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "win"];
-HTMLActuator.prototype.tileHTML = ["单分子", "多分子", "DNA", "单细胞", "多细胞", "个体", "群落", "语言", "文化", "科学", "工业", "互联网", "超AI"];
+HTMLActuator.prototype.tileHTML = ["原子", "分子", "DNA", "单细胞", "多细胞", "个体", "群落", "语言", "文化", "科学", "工业", "互联网", "全球脑", "宏量子"];
 
 // Continues the game (both restart and keep playing)
 HTMLActuator.prototype.continueGame = function () {
