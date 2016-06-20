@@ -36,7 +36,8 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
 };
 
 //HTMLActuator.prototype.tileHTML = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "win"];
-HTMLActuator.prototype.tileHTML = ["原子", "分子", "DNA", "单细胞", "多细胞", "个体", "群落", "语言", "文化", "科学", "工业", "互联网", "全球脑", "宏量子"];
+//HTMLActuator.prototype.tileHTML = ["2", "4", "8", "16", "32", "64", "128", "256", "512", "1024", "2048", "4096", "8192"];
+HTMLActuator.prototype.tileHTML = ["原子", "分子", "基因", "细胞", "个体", "群落", "语言", "文化", "科学", "工业", "互联网", "全球脑", "宏量子", "我"];
 
 // Continues the game (both restart and keep playing)
 HTMLActuator.prototype.continueGame = function () {
@@ -130,7 +131,7 @@ HTMLActuator.prototype.updateBestScore = function (bestScore) {
 
 HTMLActuator.prototype.message = function (won) {
   var type    = won ? "game-won" : "game-over";
-  var message = won ? "走进2050！" : "Game over!";
+  var message = won ? "走进2050！" : "Game Over!";
 
   this.messageContainer.classList.add(type);
   this.messageContainer.getElementsByTagName("p")[0].textContent = message;

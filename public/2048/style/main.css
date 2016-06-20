@@ -516,7 +516,8 @@ hr {
 
 .game-intro {
   float: left;
-  line-height: 42px;
+  line-height: 40px;
+  font-size: 30px;
   margin-bottom: 0; }
 
 .restart-button {
@@ -544,8 +545,8 @@ hr {
     padding: 0 20px; }
 
   h1.title {
-    font-size: 27px;
-    margin-top: 15px; }
+    font-size: 32px;
+    margin-top: 8px; }
 
   .container {
     width: 280px;
@@ -563,11 +564,13 @@ hr {
     width: 55%;
     display: block;
     box-sizing: border-box;
-    line-height: 1.65; }
+    font-size: 20px;
+    line-height: 2; }
 
   .restart-button {
     width: 42%;
     padding: 0;
+    font-size: 16px;
     display: block;
     box-sizing: border-box;
     margin-top: 2px; }
