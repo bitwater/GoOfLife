@@ -388,7 +388,9 @@ hr {
         font-size: 20px; } }
   .tile.tile-super .tile-inner {
     color: #f9f6f2;
-    background: #3c3a32;
+    /*background: #3c3a32;*/
+    background: #edf22e;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.65556), inset 0 0 0 1px rgba(255, 255, 255, 0.36333);
     font-size: 30px; }
     @media screen and (max-width: 520px) {
       .tile.tile-super .tile-inner {
