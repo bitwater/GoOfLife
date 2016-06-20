@@ -25,7 +25,7 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
     self.updateScore(metadata.score);
     self.updateBestScore(metadata.bestScore);
     level = HTMLActuator.prototype.tileHTML[Math.log((grid.getGreatestTileValue())) / Math.LN2 - 1];
-    document.title = "走进2050之演化，我的世界已经演化出了【" +level+"】"
+    document.title = "走近2050之演化，我的世界已经演化出了【" +level+"】"
 
     if (metadata.terminated) {
       if (metadata.over) {
@@ -134,7 +134,7 @@ HTMLActuator.prototype.updateBestScore = function (bestScore) {
 
 HTMLActuator.prototype.message = function (won) {
   var type    = won ? "game-won" : "game-over";
-  var message = won ? "走进2050，全球脑觉醒" : "这一次，你的世界演化出了【"+level+"】";
+  var message = won ? "走近2050，全球脑觉醒" : "这一次，你的世界演化出了【"+level+"】";
 
   this.messageContainer.classList.add(type);
   this.messageContainer.getElementsByTagName("p")[0].textContent = message;
