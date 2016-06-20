@@ -25,7 +25,7 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
     self.updateScore(metadata.score);
     self.updateBestScore(metadata.bestScore);
     level = HTMLActuator.prototype.tileHTML[Math.log((grid.getGreatestTileValue())) / Math.LN2 - 1];
-    document.title = "2048之演化，我的世界已经演化出了【" +level+"】"
+    document.title = "走进2050之演化，我的世界已经演化出了【" +level+"】"
 
     if (metadata.terminated) {
       if (metadata.over) {
