@@ -54,6 +54,20 @@ Grid.prototype.availableCells = function () {
   return cells;
 };
 
+Grid.prototype.getGreatestTileValue = function () {
+  var max = 0, maxTile;
+  this.eachCell(function(x, y, tile){
+    if (tile && tile.value) {
+      if (tile.value > max) {
+        max = tile.value;
+        maxTile = tile;
+      }
+    }
+  })
+
+  return max;
+}
+
 // Call callback for every cell
 Grid.prototype.eachCell = function (callback) {
   for (var x = 0; x < this.size; x++) {

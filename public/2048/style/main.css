@@ -173,10 +173,10 @@ hr {
     -moz-animation-fill-mode: both;
     animation-fill-mode: both; }
     .game-container .game-message p {
-      font-size: 60px;
+      font-size: 38px;
       font-weight: bold;
       height: 60px;
-      line-height: 60px;
+      line-height: 52px;
       margin-top: 222px; }
     .game-container .game-message .lower {
       display: block;
@@ -756,9 +756,9 @@ hr {
   }
 
   .game-message p {
-    font-size: 30px !important;
+    font-size: 22px !important;
     height: 30px !important;
     line-height: 30px !important;
     margin-top: 90px !important; }
   .game-message .lower {
-    margin-top: 30px !important; } }
+    margin-top: 36px !important; } }
