@@ -77,9 +77,9 @@ define(['core/grid', 'core/board'], function (Grid, Board) {
       // give each player another cell if they don't already have the max
       if (player.cells < this.config.cellsPerPlayer) {
         var newCells = 0;
-        if (player.cellsOnGrid <= 0)  newCells = 200;
+        if (player.cellsOnGrid <= 0)  newCells = 100;
         else
-          newCells = Math.round(200 * Math.pow(player.cellsOnGrid, -0.6));
+          newCells = Math.round(100 * Math.pow(player.cellsOnGrid, -0.6));
 
         player.cells +=  newCells;
         if (this.app.renderer && player.id == this.playerManager.getLocalPlayer().id) {
