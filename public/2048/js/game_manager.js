@@ -10,6 +10,17 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
   this.inputManager.on("restart", this.restart.bind(this));
   this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
 
+  this.inputManager.on('run', function() {
+    if (this.running) {
+      this.running = false;
+      //this.actuator.setRunButton('Auto-run');
+    } else {
+      this.running = true;
+      this.run()
+      //this.actuator.setRunButton('Stop');
+    }
+  }.bind(this));
+
   this.setup();
 }
 
@@ -53,6 +64,7 @@ GameManager.prototype.setup = function () {
     // Add the initial tiles
     this.addStartTiles();
   }
+  this.ai = new AI(this.grid);
 
   // Update the actuator
   this.actuate();
@@ -270,3 +282,16 @@ GameManager.prototype.tileMatchesAvailable = function () {
 GameManager.prototype.positionsEqual = function (first, second) {
   return first.x === second.x && first.y === second.y;
 };
+
+// moves continuously until game is over
+GameManager.prototype.run = function() {
+  var best = this.ai.getBest();
+  this.move(best.move);
+  var timeout = animationDelay;
+  if (this.running && !this.over && !this.won) {
+    var self = this;
+    setTimeout(function(){
+      self.run();
+    }, timeout);
+  }
+}

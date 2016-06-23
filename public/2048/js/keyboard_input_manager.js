@@ -72,6 +72,11 @@ KeyboardInputManager.prototype.listen = function () {
   this.bindButtonPress(".retry-button", this.restart);
   this.bindButtonPress(".restart-button", this.restart);
   this.bindButtonPress(".keep-playing-button", this.keepPlaying);
+  //var runButton = document.getElementById('ai');
+  //runButton.addEventListener('click', function(e) {
+  //  e.preventDefault();
+  //  self.emit('run');
+  //})
 
   // Respond to swipe events
   var touchStartClientX, touchStartClientY;
