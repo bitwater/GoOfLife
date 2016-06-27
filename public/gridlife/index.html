@@ -1,0 +1,3829 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="Cache-Control" content="no-transform">
+
+		<!-- 
+        	作者：xiaoao1024@126.com
+        	时间：2015-05-02
+        	描述：
+        
+		<meta  id="testViewport" name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+		-->
+		<title>纸绘人生 | 我与时光的故事</title>
+		<div id='wx_pic' style='margin:0 auto;display:none;'>
+			<img id="logo" src="img/logo.png" />
+		</div>
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/jquery-1.10.2.js" ></script>
+		<script type="text/javascript" src="js/str-lib.js" ></script>
+		<style>
+			/* 小屏幕（平板，大于等于 768px） */
+			@media (min-width: 768px) {
+				/* body { background-color: pink;}  */
+				.center { margin: 0 auto; }
+				#myCanvas { margin: 0 auto; display: block; margin-top: 20px;}
+				#btn-next { margin: 0 auto; display: block; }
+				#text{font-size:36px;}
+				#log{width:620px;height:260px;border:100px;background-color:white; color: black;}
+				#title{font-size: 40px;}
+				#txt{font-size: 44px; font-weight:bold}
+				#clickHand {margin-top:-200px; margin-right: 20px; float: right; opacity: 0;}
+				#home { width: 60px; float: left;  margin-top: 10px; margin-left: 20px ; visibility: hidden;}
+				.about-us {display: none;}
+				
+				#footer { font-size: 28px; margin-top: 20px;}	
+				#btn-about-us  { font-size: 42px;}
+			}
+			
+			/* 中等屏幕（桌面显示器，大于等于 992px） */
+			@media (min-width: 992px) { 
+				/* body { background-color: gray;} */
+				.center { margin: 0 auto; }
+				#myCanvas { margin: 0 auto; display: block; margin-top: 20px;}
+				#btn-next { margin: 0 auto; display: block; }
+				#text{font-size:36px;}
+				#log{width:620px;height:260px;border:100px;background-color:white; color: black;}
+				#title{font-size: 40px;}
+				#txt{font-size: 44px; font-weight:bold}
+				#clickHand {margin-top:-200px; margin-right: 20px; float: right; opacity: 0;}
+				#home {float: left;  margin-top: 10px; margin-left: 20px ; visibility: hidden;}
+				.about-us {display: none;}
+				
+				#footer { font-size: 28px; margin-top: 20px;}
+			}
+			
+			/* 大屏幕（大桌面显示器，大于等于 1200px） */
+			@media (min-width: 1200px) {
+				/* body { background-color: deepskyblue;} */
+				
+				.center { margin: 0 auto; }
+				#myCanvas { margin: 0 auto; display: block; margin-top: 0px;}
+				#btn-next { margin: 0 auto; display: block; }
+				#text{font-size:18px;}
+				#log{width:360px;height:110px;border:100px;background-color:white; color: black; margin-top: 5px;}
+				#title{font-size: 20px;}
+				#txt{font-size: 24px; font-weight:bold}
+				#clickHand { width:100px; margin-top:-220px; margin-right: 20px; float: right; opacity: 0;}
+				#home { width: 40px; float: left;  margin-top: 10px; margin-left: 20px ; visibility: hidden;}
+				.about-us {display: none; font-size: 18px; margin-top:10px ;}
+				#footer { font-size: 14px; margin-top: -20px;}
+				
+				.myRow { margin-top:-25px ;}
+				.about-us p { font-size: 18px;}
+				.about-us img { width: 30px;}
+				#btn-about-us  { font-size: 20px;}
+			}
+		</style>
+		
+		<style>
+			
+			/*
+			.center { margin: 0 auto; }
+			#myCanvas { margin: 0 auto; display: block; margin-top: 20px;}
+			#btn-next { margin: 0 auto; display: block; }
+			#text{font-size:36px;}
+			#log{width:620px;height:260px;border:100px;background-color:white; color: black;}
+			#title{font-size: 40px;}
+			#txt{font-size: 44px; font-weight:bold}
+			#clickHand {margin-top:-200px; margin-right: 20px; float: right; opacity: 0;}
+			#home {float: left;  margin-top: 10px; margin-left: 20px ; visibility: hidden;}
+			.about-us {display: none;}
+			
+			#footer { font-size: 28px; margin-top: 20px;}
+			 */
+		</style>
+		
+		<script>
+			$(document).ready(function(){
+				/******************** 全局参数定义 ***********************************/
+				var _width = 940;
+				var _height = 940;
+				var _startX = 20;
+				var _startY = 20;
+				var _raws = 30;
+				var _cols = 30;
+				var d = 30;
+				var clickTime=1;
+				
+				var _currentCase = 0;
+				var _isOver = false;
+				var _isTextOver = false;
+				var _isSelectOver = true;
+				var _isBack = false;
+				
+				var _selection = 0;	//记录选项1-学生	2-恋爱	3-工作	4-家庭
+				
+				//study-参数列表
+				var _study_selectTimes = 0;
+				var _study_type = 0; //学生类型 	1-幼儿园	2-小学	3-中学	4-大学
+				var _study_grade = 0;
+				var _study_M = 0;	//M为用户的年龄x12
+				
+				//love-参数列表
+				var _love_selectTimes = 0;	//进行了几次选择
+				var _love_M = 24*12; //M为用户的年龄x12
+				var _love_n = 12; //n为用户相爱的月数
+				
+				//work-参数列表
+				var _work_selectTimes = 0;
+				var _work_time = 0;	//工作时长
+				var _work_age = 0;	//年纪
+				var _work_N = 0;	//工作时长
+				var _work_M = 0; 	//年纪
+				
+				//family-参数列表
+				var _family_selectTimes = 0;
+				var _family_M = 0;
+				var _family_C = 0;
+				var _family_child_type = 0;	//1-学前	2-小学	3-中学	4-大学	5-工作
+				
+				var _last_page_type = 0;	//1-有传送门
+				
+				var _fadeInAndOut_id = 0;
+				/******************** 全局参数定义 ***********************************/
+				
+				var c=document.getElementById("myCanvas");
+				//绑定鼠标事件
+				//c.addEventListener('mousedown',mouseDown,false);
+				//alert(c.attachEvent +" "+c.addEventListener);
+				
+				//alert(c.width+","+document.body.clientWidth+","+document.body.clientHeight);
+				if(document.body.clientWidth>1000){
+					_width = 470;
+					_height = 470;
+					d = 15;
+					_startX = 10;
+					_startY = 10;
+					c.width = _width;
+					c.height = _height;
+					
+					$(".div-blank").css("display","none");
+				}
+				
+				
+				var margin_x = (document.body.clientWidth-c.width)/2;
+				$("#home").css("margin-left",margin_x+"px");
+				$("#clickHand").css("margin-right",margin_x+"px");
+				//$(".div-title").attr("align","center");
+				//$("#title").css("margin-left",margin_x+"px");
+				
+				var body = document.getElementsByTagName("body")[0];
+				//body.addEventListener('touchstart',touchStart,false);
+				var cxt=c.getContext("2d");
+				
+				$("#container").click(function(){
+					clickTime++;
+//					alert("clickTime:"+clickTime 
+//					+" _isOver:"+ _isOver 
+//					+" _isTextOver:"+_isTextOver
+//					+" _isSelectOver:"+_isSelectOver
+//					+" _selection:"+_selection
+//					+" _study_type:"+_study_type
+//					);
+					//alert("_study_type:"+_study_type);
+					if(!_isSelectOver){
+						return;
+					}
+					
+					if(!_isOver || !_isTextOver){
+						clickTime = 0;
+						return;
+					}
+					//alert("_selection:"+_selection);
+					if(_selection==1){//学生
+						if(_study_selectTimes==0){
+							_isSelectOver = false;
+							animation_study_select_type();
+							_study_selectTimes++;
+						}else if(_study_selectTimes==1){
+							_isSelectOver = false;
+							animation_study_select_grade(); 
+							_study_selectTimes++;
+						}else if(_study_selectTimes==2){
+							//hideHome();
+							if(_study_type==1){//幼儿园小朋友
+								switch(_currentCase){
+									case 0:_isOver=false; _isTextOver=false; study_animation0(); _currentCase++; break;
+									case 1:_isOver=false; _isTextOver=false; study_animation_last(); _currentCase++; break;
+									case 2:_isOver=false; _isTextOver=false; all_animation_last1(); _currentCase++; break;
+									default:break;
+								}
+							}else if(_study_type==2){//小学生
+								switch(_currentCase){
+									case 0:_isOver=false; _isTextOver=false; study_animation1(); _currentCase++; break;
+									case 1:_isOver=false; _isTextOver=false; study_animation2(); _currentCase++; break;
+									case 2:_isOver=false; _isTextOver=false; study_animation3(); _currentCase++; break;
+									case 3:_isOver=false; _isTextOver=false; study_animation_last(); _currentCase++; break;
+									case 4:_isOver=false; _isTextOver=false; all_animation_last1(); _currentCase++; break;
+									default:break;
+								}
+							}else if(_study_type==3){//中学生
+								switch(_currentCase){
+									case 0:_isOver=false; _isTextOver=false; study_animation1(); _currentCase++; break;
+									case 1:_isOver=false; _isTextOver=false; study_animation2(); _currentCase++; break;
+									case 2:_isOver=false; _isTextOver=false; study_animation3(); _currentCase++; break;
+									case 3:_isOver=false; _isTextOver=false; 
+											if(_study_grade<=3){//初中生
+												study_animation9();
+											}else{
+												study_animation10();
+											}
+											 _currentCase++; break;
+									case 4:_isOver=false; _isTextOver=false;
+											if(_study_grade<=2){//初一、二
+												study_animation11();
+												_currentCase=5;
+											}else if(_study_grade==3){
+												study_animation12();
+												_currentCase=5;
+											}else{
+												study_animation13();
+											}
+											_currentCase++;  break;
+									case 5:_isOver=false; _isTextOver=false;
+											if(_study_grade==4 || _study_grade==5){
+												study_animation17();
+											}else if(_study_grade==6){
+												study_animation18();
+											}
+											_currentCase++; break;
+									case 6:_isOver=false; _isTextOver=false; study_animation_last(); _currentCase++; break;
+									case 7:_isOver=false; _isTextOver=false; all_animation_last1(); _currentCase++; break;
+									default:break;
+								}
+							}else{//大学生
+								//hideHome();
+								switch(_currentCase){
+									case 0:_isOver=false; _isTextOver=false; study_animation1(); _currentCase++; break;
+									case 1:_isOver=false; _isTextOver=false; study_animation2(); _currentCase++; break;
+									case 2:_isOver=false; _isTextOver=false; study_animation3(); _currentCase++; break;
+									case 3:_isOver=false; _isTextOver=false; study_animation4(); _currentCase++; break;
+									case 4:_isOver=false; _isTextOver=false; 
+											if(_study_grade<=4){
+												study_animation5();
+											}else{
+												study_animation14();
+											}
+											_currentCase++; break;
+									case 5:_isOver=false; _isTextOver=false; 
+											if(_study_grade<=4){//本科
+												study_animation6();
+											}else if(_study_grade==7){//研三
+												study_animation15();
+												_currentCase=6;
+											}else{
+												study_animation16();
+												_currentCase=6;
+											}
+											_currentCase++;  break;
+									case 6:_isOver=false; _isTextOver=false; 
+											if(_study_grade==4){
+												study_animation7();
+											}else if(_study_grade<=3){
+												study_animation8();
+											}
+											_currentCase++; break;
+									case 7:_isOver=false; _isTextOver=false; study_animation_last(); _currentCase++; break;
+									case 8:_isOver=false; _isTextOver=false; all_animation_last(); _currentCase++; break;
+									default:break;
+								}
+							}
+						}else{
+							switch(_currentCase){
+								case 0:_isOver=false; _isTextOver=false; study_tm_animation1(); _currentCase++; break;
+								case 1:_isOver=false; _isTextOver=false; study_tm_animation2(); _currentCase++; break;
+								case 2:_isOver=false; _isTextOver=false; study_tm_animation3(); _currentCase++; break;
+								case 3:_isOver=false; _isTextOver=false; study_tm_animation4(); _currentCase++; break;
+								case 4:_isOver=false; _isTextOver=false; study_tm_animation5(); _currentCase++; break;
+								case 5:_isOver=false; _isTextOver=false; study_tm_animation6(); _currentCase++; break;
+								case 6:_isOver=false; _isTextOver=false; study_tm_animation7(); _currentCase++; break;
+								case 7:_isOver=false; _isTextOver=false; study_tm_animation8(); _currentCase++; break;
+								case 8:_isOver=false; _isTextOver=false; study_tm_animation9(); _currentCase++; break;
+								case 9:_isOver=false; _isTextOver=false; study_tm_animation10(); _currentCase++; break;
+								case 10:_isOver=false; _isTextOver=false; study_tm_animation11(); _currentCase++; break;
+								case 11:_isOver=false; _isTextOver=false; all_animation_last1();_currentCase++;break;
+								default:break;
+							}
+							
+							//alert("进入传送门");
+						}
+					}else if(_selection==2){//恋爱
+						//选年龄段
+						if(_love_selectTimes==0){
+							_isSelectOver = false;
+							animation_love_select_age();
+							_love_selectTimes++;
+						}else if( _love_selectTimes==1){//选择恋爱时间
+							_isSelectOver = false;
+							animation_love_select_time();
+							_love_selectTimes++;
+						}else{
+							//hideHome();
+							switch(_currentCase){
+								case 0:_isOver=false; _isTextOver=false; love_animation1();_currentCase++;break;
+								case 1:_isOver=false; _isTextOver=false; love_animation2();_currentCase++;break;
+								case 2:_isOver=false; _isTextOver=false; love_animation3();_currentCase++;break;
+								case 3:_isOver=false; _isTextOver=false; love_animation4();_currentCase++;break;
+								case 4:_isOver=false; _isTextOver=false; love_animation5();_currentCase++;break;
+								case 5:_isOver=false; _isTextOver=false; love_animation6();_currentCase++;break;
+								case 6:_isOver=false; _isTextOver=false; love_animation7();_currentCase++;break;
+								case 7:_isOver=false; _isTextOver=false; love_animation_last();_currentCase++;break;
+								case 8:_isOver=false; _isTextOver=false; all_animation_last1();_currentCase++;break;
+								default:break;
+							}
+						}
+						
+					}else if(_selection==3){//工作
+						if(_work_selectTimes==0){
+							_isSelectOver = false;
+							animation_work_select_time();
+							_work_selectTimes++;
+						}else if(_work_selectTimes==1){
+							_isSelectOver = false;
+							animation_work_select_age();
+							_work_selectTimes++;
+						}else if(_work_selectTimes==2){
+							//hideHome();
+							switch(_currentCase){
+								case 0:_isOver=false; _isTextOver=false; work_animation1(); _currentCase++; break;
+								case 1:_isOver=false; _isTextOver=false; work_animation2(); _currentCase++; break;
+								case 2:_isOver=false; _isTextOver=false; work_animation3(); _currentCase++; break;
+								case 3:_isOver=false; _isTextOver=false; work_animation4(); _currentCase++; break;
+								case 4:_isOver=false; _isTextOver=false; work_animation5(); _currentCase++; break;
+								case 5:_isOver=false; _isTextOver=false; work_animation6(); _currentCase++; break;
+								case 6:_isOver=false; _isTextOver=false; work_animation7(); _currentCase++; break;
+								case 7:_isOver=false; _isTextOver=false; work_animation8(); _currentCase++; break;
+								case 8:_isOver=false; _isTextOver=false; work_animation_last(); _currentCase++; break;
+								case 9:_isOver=false; _isTextOver=false; all_animation_last(); _currentCase++; break;
+								default:break;
+							}
+						}else{
+							switch(_currentCase){
+								case 0:_isOver=false; _isTextOver=false; work_tm_animation1(); _currentCase++; break;
+								case 1:_isOver=false; _isTextOver=false; work_tm_animation2(); _currentCase++; break;
+								case 2:_isOver=false; _isTextOver=false; work_tm_animation3(); _currentCase++; break;
+								case 3:_isOver=false; _isTextOver=false; work_tm_animation4(); _currentCase++; break;
+								case 4:_isOver=false; _isTextOver=false; work_tm_animation5(); _currentCase++; break;
+								case 5:_isOver=false; _isTextOver=false; work_tm_animation6(); _currentCase++; break;
+								case 6:_isOver=false; _isTextOver=false; work_tm_animation7(); _currentCase++; break;
+								case 7:_isOver=false; _isTextOver=false; work_tm_animation8(); _currentCase++; break;
+								case 8:_isOver=false; _isTextOver=false; work_tm_animation9(); _currentCase++; break;
+								case 9:_isOver=false; _isTextOver=false; work_tm_animation10(); _currentCase++; break;
+								case 10:_isOver=false; _isTextOver=false; work_tm_animation11(); _currentCase++; break;
+								case 11:_isOver=false; _isTextOver=false; work_tm_animation12(); _currentCase++; break;
+								case 12:_isOver=false; _isTextOver=false; work_tm_animation13(); _currentCase++; break;
+								case 13:_isOver=false; _isTextOver=false; all_animation_last1();_currentCase++;break;
+								default:break;
+							}
+						}
+					}else if(_selection==4){//家庭
+						if(_family_selectTimes==0){
+							_isSelectOver = false;
+							animation_family_select_age();
+							_family_selectTimes++;
+						}else if(_family_selectTimes==1){
+							_isSelectOver = false;
+							animation_family_select_child_type();
+							_family_selectTimes++;
+						}else{
+							//hideHome();
+							switch(_currentCase){
+								case 0:_isOver=false; _isTextOver=false; family_animation1(); _currentCase++; break;
+								case 1:_isOver=false; _isTextOver=false; family_animation2(); _currentCase++; break;
+								case 2:_isOver=false; _isTextOver=false; family_animation3(); _currentCase++; break;
+								case 3:_isOver=false; _isTextOver=false; family_animation4(); _currentCase++; break;
+								case 4:_isOver=false; _isTextOver=false; family_animation5(); _currentCase++; break;
+								case 5:_isOver=false; _isTextOver=false; 
+										if(_family_child_type==1){
+											_currentCase=10;
+										}
+										family_animation6(); _currentCase++; break;
+								case 6:_isOver=false; _isTextOver=false; 
+										family_animation7(); _currentCase++; break;
+								case 7:_isOver=false; _isTextOver=false; 
+										if(_family_child_type==2){
+											_currentCase=10;
+										}
+										family_animation8(); _currentCase++; break;
+								case 8:_isOver=false; _isTextOver=false; 
+										if(_family_child_type<5){
+											_currentCase=10;
+										}
+										family_animation9(); _currentCase++; break;
+								case 9:_isOver=false; _isTextOver=false; family_animation10();
+										if(_family_M>=55*12&&_family_child_type==5){
+											_currentCase++;
+										}else{
+											_currentCase=11;
+										} 
+										break;
+								case 10:_isOver=false; _isTextOver=false; family_animation11(); _currentCase++; break;
+								case 11:_isOver=false; _isTextOver=false; family_animation_last(); _currentCase++; break;
+								case 12:_isOver=false; _isTextOver=false; all_animation_last1(); _currentCase++; break;
+								default:break;
+							}
+						}
+					}else if(_selection==0){
+						animation_select();
+					}
+				});
+				//c.addEventListener('touchstart',body_touchStart,false);
+				//开始动画
+				animation_start();
+				//drawGrid();
+				
+				cxt.globalCompositeOperation="destination-over"; 
+				//study_grow_up();
+//				drawRects(0,0,0,30,'rgba(0,0,255,0.05)');
+//				fillLine(3,0,3,30,'rgba(0,0,255,0.5)');
+				
+				//drawSmileImg();
+				//背景色块
+				function backgroundyellow (x,y,xtimes,endX,endY,color){
+				    cxt.fillStyle=color;  
+				    cxt.fillRect(x,y,d*xtimes,d); 
+					var xNow = (x+xtimes*d);
+					if(xNow<_startX+d*_cols){
+						if(y!=endY||y==endY&&xNow<endX)
+							xtimes++
+					}else{
+						if(y<endY){
+							x=_startX;
+							y+=d;
+							xtimes=0;
+							xNow = (x+xtimes*d);
+						}
+					}
+					if(xNow==endX && y==endY){
+						_isOver = true;
+						//clickTime=0;
+						if(_isTextOver){
+							clickTime=0;
+						}
+						return;
+					}
+					if(clickTime==1){
+						setTimeout(function(){
+							backgroundyellow(x,y,xtimes,endX,endY,color);}, 20);
+					}else{
+						if(_isTextOver){
+							
+						}
+						setTimeout(function(){
+							backgroundyellow(x,y,xtimes,endX,endY,color);}, 0);
+					}
+				};
+			
+			
+				//画n*m的格子  每个小格子边长d
+				function drawGrid(){
+					cxt.beginPath();
+					for(var i=0; i<=_raws; i++){
+						cxt.moveTo(_startX,_startY+d*i);
+						cxt.lineTo(_startX+d*_cols,_startY+d*i);
+						//cxt.stroke();
+					}
+					for(var j=0; j<=_cols; j++){
+						cxt.moveTo(_startX+j*d,_startY);
+						cxt.lineTo(_startX+j*d,_startY+_raws*d);
+						//cxt.stroke();
+					}
+					cxt.closePath();
+					cxt.lineWidth=2;
+					cxt.stroke();
+				};
+				
+				//画一个色块（raw,col）
+				function drawRect(raw,col,color){
+					cxt.fillStyle=color;  
+				    cxt.fillRect(_startX+col*d,_startY+raw*d,d,d); 
+				};
+				
+				//动画效果(r1,c1)-->(r2,c2) 包括起点 不包括终点
+				function drawRects(r1,c1,r2,c2,color){
+					backgroundyellow(
+						_startX+d*c1,
+						_startY+d*r1,
+						0,
+						_startX+d*c2,
+						_startY+d*r2,
+						color
+					);
+					
+				};
+				
+				function drawRectWithColors(r1,c1,r2,c2,color){
+					cxt.globalCompositeOperation="source-over";
+					cxt.fillStyle=color; 
+					
+					if(c1==30){
+						r1++;
+						c1=0;
+					}
+					if(r1==r2 && c1==c2){
+						_isOver = true;
+						if(_isTextOver){
+							clickTime=0;
+						}
+						cxt.globalCompositeOperation="destination-over";
+						return;
+					}
+					cxt.fillRect(_startX+c1*d+1,_startY+r1*d+1,d-2,d-2);
+					c1++;
+					if(clickTime==1){
+						setTimeout(function(){
+							drawRectWithColors(r1,c1,r2,c2,color);
+						},16.667);
+					}else{
+						setTimeout(function(){
+							drawRectWithColors(r1,c1,r2,c2,color);
+						},0);
+					}
+				};
+				
+				//画多边形区域
+				function drawPolygon(arr_Row,arr_Col,color){
+					//alert(arr_Row +" "+ arr_Col);
+					cxt.beginPath();
+					cxt.moveTo(_startX+d*(arr_Col[0]),_startY+d*(arr_Row[0]));
+					//alert(arr_Row[0]+","+arr_Col[0]);
+					var len = arr_Row.length;
+					for(var i=1; i<len; i++){
+						cxt.lineTo(_startX+d*(arr_Col[i]),_startY+d*(arr_Row[i]));
+						//alert(arr_Row[i]+","+arr_Col[i]);
+					}
+					cxt.fillStyle=color;
+					cxt.closePath();
+					cxt.fill();
+				};
+				 
+				//无动画效果  填充一块矩形区域 起点：(startR,startC) 宽：width 高：height 单位：格子数
+				function fillRect(startR,startC,width,height,color){
+					cxt.fillStyle=color;  
+				    cxt.fillRect(_startX+startC*d,_startY+startR*d,width*d,height*d);
+				    //_isOver = true;
+					//clickTime=0;
+					if(_isTextOver){
+						clickTime=0;
+					}
+				};
+				
+				//(r1,c1)-->(r2,c2) 包括起点 不包括终点
+				function fillLine(r1,c1,r2,c2,color){
+					fillRect(r1,c1,c2-c1,1,color);
+				};
+				
+				//清除画布
+				function clear(){
+					cxt.clearRect(_startX,_startY,_cols*d,_raws*d);
+					clearText();
+				};
+				
+				function clearText(){
+					$('#log').html('');
+				}
+				
+				function addMsg(msg,i){
+					if(clickTime==1){
+						if(i<msg.length){
+							if(i==msg.length-1){
+								_isTextOver = true;
+								if(_isOver){
+									clickTime = 0;
+								}
+							} 
+							$('#log').append(msg.charAt(i));
+							i++;
+							setTimeout(function(){
+								addMsg(msg,i);
+							},100);
+						}
+					}else{
+						$('#log').append(msg.substring(i,msg.length));
+						_isTextOver = true;
+					}
+				};
+				
+				//根据drawGrid()重新定义了一个函数
+				//根据传入的参数画格子，格子数为num*num 
+				function drawGridByNum(num){
+					cxt.beginPath();
+					for(var i=0; i<=num; i++){
+						cxt.moveTo(_startX,_startY+d*i);
+						cxt.lineTo(_startX+d*num,_startY+d*i);
+						//cxt.stroke();
+					}
+					for(var j=0; j<=num; j++){
+						cxt.moveTo(_startX+j*d,_startY);
+						cxt.lineTo(_startX+j*d,_startY+num*d);
+						//cxt.stroke();
+					}
+					cxt.closePath();
+					cxt.lineWidth=2;
+					cxt.stroke();
+				};
+
+				function drawSmileImg(){
+					var img_smile = new Image();
+					img_smile.src = "img/smile.png";
+					if(document.body.clientWidth>1000){
+						img_smile.onload = function(){ cxt.drawImage(img_smile,130,130,200,200); };
+					}else{
+						img_smile.onload = function(){ cxt.drawImage(img_smile,200,200); };
+					}
+				};
+				
+				function drawFriendImg(){
+					var img_friend = new Image();
+					img_friend.src = "img/friend.png";
+					img_friend.onload = function(){ cxt.drawImage(img_friend,200,200,400,400); };
+				};
+
+				//开始页面动画
+				//一共执行三个动作
+				//1.显示一个格子
+				//2.显示所有格子（渐变形式）
+				//3.对第一行格子添加背景色块
+				function animation_start(){
+					cxt.clearRect(_startX-1,_startY-1,_cols*d+2,_raws*d+2);  	//清除所有格子
+					clear();
+					var ii=0;
+					drawGridByNum(1);			//执行第一个动作，显示一个格子
+					setTimeout(function(){		//执行第二个动作，显示所有格子（渐变形式）
+						cxt.clearRect(_startX,_startY,_cols*d,_raws*d);  //清除画布
+						drawGrid();
+						cxt.clearRect(_startX-1,_startY+ii+1,_cols*d+1,_raws*d+1);  	//清除格子
+						cxt.clearRect(_startX+ii+1,_startY-1,_cols*d+1,_raws*d+1);		//清除格子
+						ii+=10;		//通过像素个数，控制显示格子的速度，此处3代表每次移动三个像素
+						if(ii<901){
+							setTimeout(arguments.callee,10);		//格子未显示完，继续执行
+						}
+						else{
+							_isOver = true;
+							drawClickHand();
+							showHome();
+						}
+					},0);	//执行第二个动作之前的等待时间
+									
+					addMsg("我们的人生其实只有900个月，如果一个格子代表一个月，那么我们的全部人生就会在这一张白纸上。（请点击屏幕踏上你的时光之旅）",0);
+				};
+			
+				function draw0(startR, startC, color){					
+					fillRect(startR+0,startC+0,3,1,color);
+					fillRect(startR+1,startC+0,1,3,color);
+					fillRect(startR+1,startC+2,1,3,color);
+					fillRect(startR+4,startC+0,3,1,color);
+				};
+
+				function draw1(startR, startC, color){
+					fillRect(startR+0,startC+0,1,5,color);
+				};
+	
+				function draw2(startR, startC, color){
+					fillRect(startR+0,startC+0,3,1,color);
+					fillRect(startR+2,startC+0,3,1,color);
+					fillRect(startR+4,startC+0,3,1,color);
+					drawRect(startR+1,startC+2,color);
+					drawRect(startR+3,startC+0,color);
+				};
+	
+				function draw3(startR, startC, color){
+					fillRect(startR+0,startC+0,3,1,color);
+					fillRect(startR+2,startC+0,3,1,color);
+					fillRect(startR+4,startC+0,3,1,color);
+					drawRect(startR+1,startC+2,color);
+					drawRect(startR+3,startC+2,color);
+				};
+				
+				function draw4(startR, startC, color){
+					fillRect(startR+0,startC+0,1,3,color);
+					fillRect(startR+0,startC+2,1,5,color);
+					drawRect(startR+2,startC+1,color);
+				};
+				function draw5(startR, startC, color){
+					fillRect(startR+0,startC+0,3,1,color);
+					fillRect(startR+2,startC+0,3,1,color);
+					fillRect(startR+4,startC+0,3,1,color);
+					drawRect(startR+1,startC+0,color);
+					drawRect(startR+3,startC+2,color);
+				};
+				function draw6(startR, startC, color){
+					fillRect(startR+0,startC+0,3,1,color);
+					fillRect(startR+2,startC+0,3,1,color);
+					fillRect(startR+4,startC+0,3,1,color);
+					drawRect(startR+1,startC+0,color);
+					drawRect(startR+3,startC+0,color);
+					drawRect(startR+3,startC+2,color);
+				};
+				
+				function draw7(startR, startC, color){
+					fillRect(startR+0,startC+0,3,1,color);
+					fillRect(startR+1,startC+2,1,4,color);
+				};
+	
+				function draw8(startR, startC, color){
+					fillRect(startR+0,startC+0,3,1,color);
+					fillRect(startR+2,startC+0,3,1,color);
+					fillRect(startR+4,startC+0,3,1,color);
+					drawRect(startR+1,startC+0,color);
+					drawRect(startR+1,startC+2,color);
+					drawRect(startR+3,startC+0,color);
+					drawRect(startR+3,startC+2,color);
+				};
+				
+				function draw9(startR, startC, color){
+					fillRect(startR+0,startC+0,3,1,color);
+					fillRect(startR+2,startC+0,3,1,color);
+					fillRect(startR+4,startC+0,3,1,color);
+					drawRect(startR+1,startC+0,color);
+					drawRect(startR+1,startC+2,color);
+					drawRect(startR+3,startC+2,color);
+				};
+				
+				function drawlessthan(startR, startC, color){
+					drawPolygon([startR+0,startR+0.5,startR+1.5,startR+2.5,startR+3,startR+1.5],
+							[startC+1.5,startC+2,startC+1,startC+2,startC+1.5,startC+0],color);
+				};
+				
+				function drawTriangle(startR, startC, color, type){
+					cxt.beginPath();
+					if(type==0){
+						cxt.moveTo(_startX+startC*d, _startY+startR*d);
+						cxt.lineTo(_startX+(startC+1)*d, _startY+startR*d);
+						cxt.lineTo(_startX+startC*d, _startY+(startR+1)*d);
+					}else if(type==1){
+						cxt.moveTo(_startX+(startC+1)*d, _startY+startR*d);
+						cxt.lineTo(_startX+(startC+1)*d, _startY+(startR+1)*d);
+						cxt.lineTo(_startX+startC*d, _startY+startR*d);
+					}else if(type==2){
+						cxt.moveTo(_startX+(startC+1)*d, _startY+(startR+1)*d);
+						cxt.lineTo(_startX+startC*d, _startY+(startR+1)*d);
+						cxt.lineTo(_startX+(startC+1)*d, _startY+startR*d);
+					}else{
+						cxt.moveTo(_startX+startC*d, _startY+(startR+1)*d);
+						cxt.lineTo(_startX+startC*d, _startY+startR*d);
+						cxt.lineTo(_startX+(startC+1)*d, _startY+(startR+1)*d);
+					}
+					
+					cxt.closePath();
+					cxt.fillStyle = color;
+					cxt.fill();
+				};
+				
+				function drawclickhand(startR,startC,color){
+					fillRect(startR+1,startC+4,1,9,color);	
+					fillRect(startR+1,startC+7,1,6,color);	
+					fillRect(startR+4,startC+10,1,3,color);	
+					fillRect(startR+5,startC+13,1,3,color);
+					fillRect(startR+6,startC+15,1,7,color);	
+					fillRect(startR+13,startC+14,1,2,color);	
+					fillRect(startR+6,startC+0,1,3,color);	
+					fillRect(startR+10,startC+2,1,2,color);	
+					fillRect(startR+12,startC+3,1,2,color);	
+					fillRect(startR+14,startC+4,1,3,color);	
+					fillRect(startR+6,startC+1,2,1,color);	
+					fillRect(startR+0,startC+5,2,1,color);	
+					fillRect(startR+3,startC+8,2,1,color);	
+					fillRect(startR+4,startC+11,2,1,color);	
+					fillRect(startR+16,startC+5,8,1,color);	
+					drawRect(startR+7,startC+3,color);
+					drawRect(startR+9,startC+1,color);
+					drawRect(startR+5,startC+14,color);
+					drawRect(startR+15,startC+13,color);
+				};
+
+				function drawround(startR,startC){
+					 cxt.beginPath();
+						cxt.arc(_startX+startC*d,_startY+startR*d, 3*d, 0, Math.PI * 2, true);
+					cxt.closePath();
+	
+					var grd=cxt.createRadialGradient(_startX+startC*d,_startY+startR*d,0,_startX+startC*d,_startY+startR*d,3*d);
+					grd.addColorStop(0,"blue");
+					grd.addColorStop(1,"white");
+					cxt.fillStyle=grd;
+					cxt.fill();
+				};
+
+				
+				function drawStudy(startR, startC, color){
+					fillLine(startR+0,startC+1,startR+0,startC+14,color);
+					fillLine(startR+1,startC+4,startR+1,startC+11,color);
+					fillLine(startR+2,startC+4,startR+2,startC+11,color);
+					fillLine(startR+3,startC+4,startR+3,startC+11,color);
+					fillLine(startR+4,startC+4,startR+4,startC+11,color);
+					fillLine(startR+5,startC+3,startR+5,startC+12,color);
+					fillLine(startR+6,startC+3,startR+6,startC+12,color);
+					fillLine(startR+7,startC+3,startR+7,startC+12,color);
+					fillLine(startR+8,startC+4,startR+8,startC+11,color);
+					fillLine(startR+9,startC+5,startR+9,startC+10,color);
+					fillLine(startR+10,startC+6,startR+10,startC+9,color);
+					fillLine(startR+11,startC+3,startR+11,startC+12,color);		
+					fillLine(startR+12,startC+5,startR+12,startC+10,color);	
+					fillLine(startR+13,startC+1,startR+13,startC+4,color);
+					fillLine(startR+13,startC+6,startR+13,startC+9,color);
+					fillLine(startR+13,startC+11,startR+13,startC+14,color);
+					fillLine(startR+14,startC+2,startR+14,startC+5,color);
+					fillLine(startR+14,startC+10,startR+14,startC+13,color);
+					fillLine(startR+15,startC+2,startR+15,startC+6,color);
+					fillLine(startR+15,startC+9,startR+15,startC+13,color);
+					fillLine(startR+16,startC+2,startR+16,startC+13,color);
+					fillLine(startR+17,startC+2,startR+17,startC+13,color);
+					fillLine(startR+18,startC+2,startR+18,startC+13,color);
+					fillLine(startR+19,startC+2,startR+19,startC+13,color);
+					fillLine(startR+20,startC+2,startR+20,startC+13,color);
+					fillLine(startR+21,startC+2,startR+21,startC+13,color);
+					fillLine(startR+22,startC+3,startR+22,startC+12,color);
+					fillLine(startR+23,startC+4,startR+23,startC+7,color);
+					fillLine(startR+24,startC+4,startR+24,startC+7,color);
+					fillLine(startR+25,startC+4,startR+25,startC+7,color);
+					fillLine(startR+26,startC+4,startR+26,startC+7,color);
+					fillLine(startR+27,startC+4,startR+27,startC+7,color);
+					fillLine(startR+28,startC+4,startR+28,startC+7,color);
+					fillLine(startR+23,startC+8,startR+23,startC+11,color);
+					fillLine(startR+24,startC+8,startR+24,startC+11,color);
+					fillLine(startR+25,startC+8,startR+25,startC+11,color);
+					fillLine(startR+26,startC+8,startR+26,startC+11,color);
+					fillLine(startR+27,startC+8,startR+27,startC+11,color);
+					fillLine(startR+28,startC+8,startR+28,startC+11,color);
+					drawRect(startR+2,startC+12,color);
+					drawRect(startR+3,startC+12,color);
+					drawRect(startR+12,startC+2,color);
+					drawRect(startR+12,startC+12,color);
+					drawRect(startR+14,startC+7,color);
+					drawRect(startR+15,startC+7,color);
+					drawRect(startR+29,startC+5,color);
+					drawRect(startR+29,startC+9,color);
+					drawTriangle(startR+1,startC+12,color,2);
+					drawTriangle(startR+4,startC+3,color,2);
+					drawTriangle(startR+4,startC+11,color,3);
+					drawTriangle(startR+4,startC+12,color,1);
+					drawTriangle(startR+8,startC+3,color,1);
+					drawTriangle(startR+9,startC+4,color,1);
+					drawTriangle(startR+10,startC+5,color,1);
+					drawTriangle(startR+12,startC+4,color,1);
+					drawTriangle(startR+13,startC+5,color,1);
+					drawTriangle(startR+14,startC+6,color,1);
+					drawTriangle(startR+29,startC+4,color,1);
+					drawTriangle(startR+29,startC+8,color,1);
+					drawTriangle(startR+12,startC+3,color,3);
+					drawTriangle(startR+13,startC+4,color,3);
+					drawTriangle(startR+14,startC+5,color,3);
+					drawTriangle(startR+15,startC+6,color,3);
+					drawTriangle(startR+11,startC+12,color,3);
+					drawTriangle(startR+12,startC+13,color,3);
+					drawTriangle(startR+13,startC+14,color,3);
+					drawTriangle(startR+12,startC+11,color,2);
+					drawTriangle(startR+13,startC+10,color,2);
+					drawTriangle(startR+14,startC+9,color,2);
+					drawTriangle(startR+15,startC+8,color,2);
+					drawTriangle(startR+11,startC+2,color,2);
+					drawTriangle(startR+12,startC+1,color,2);
+					drawTriangle(startR+13,startC+0,color,2);
+					drawTriangle(startR+12,startC+10,color,0);
+					drawTriangle(startR+13,startC+9,color,0);
+					drawTriangle(startR+14,startC+8,color,0);
+					drawTriangle(startR+8,startC+11,color,0);
+					drawTriangle(startR+9,startC+10,color,0);
+					drawTriangle(startR+10,startC+9,color,0);
+					drawTriangle(startR+29,startC+6,color,0);
+					drawTriangle(startR+29,startC+10,color,0);
+				};
+				
+				function drawLove(startR,startC,color){
+					fillLine(startR+0,startC+10,startR+0,startC+1+12,color);
+					fillLine(startR+1,startC+9,startR+1,startC+1+13,color);
+					fillLine(startR+2,startC+9,startR+2,startC+1+13,color);
+					fillLine(startR+3,startC+9,startR+3,startC+1+13,color);
+					fillLine(startR+4,startC+10,startR+4,startC+1+13,color);
+					fillLine(startR+5,startC+11,startR+5,startC+1+12,color);
+					
+					fillLine(startR+2,startC+17,startR+2,startC+1+18,color);
+					fillLine(startR+3,startC+16,startR+3,startC+1+22,color);
+					fillLine(startR+4,startC+16,startR+4,startC+1+19,color);
+					fillLine(startR+5,startC+16,startR+5,startC+1+19,color);
+					fillLine(startR+6,startC+17,startR+6,startC+1+18,color);
+					fillLine(startR+7,startC+8,startR+7,startC+1+15,color);
+					fillLine(startR+8,startC+6,startR+8,startC+1+18,color);
+					fillLine(startR+9,startC+5,startR+9,startC+1+20,color);
+					fillLine(startR+10,startC+5,startR+10,startC+1+21,color);
+					fillLine(startR+11,startC+4,startR+11,startC+1+8,color);
+					fillLine(startR+11,startC+13,startR+11,startC+1+14,color);
+					fillLine(startR+11,startC+19,startR+11,startC+1+22,color);
+					fillLine(startR+12,startC+4,startR+12,startC+1+8,color);
+					fillLine(startR+12,startC+19,startR+12,startC+1+21,color);
+					fillLine(startR+13,startC+4,startR+13,startC+1+8,color);
+					fillLine(startR+13,startC+19,startR+13,startC+1+20,color);
+					fillLine(startR+14,startC+4,startR+14,startC+1+8,color);
+					fillLine(startR+15,startC+5,startR+15,startC+1+9,color);
+					fillLine(startR+15,startC+18,startR+15,startC+1+19,color);
+					fillLine(startR+16,startC+5,startR+16,startC+1+10,color);
+					fillLine(startR+16,startC+17,startR+16,startC+1+20,color);
+					fillLine(startR+17,startC+5,startR+17,startC+1+11,color);
+					fillLine(startR+17,startC+16,startR+17,startC+1+21,color);
+					fillLine(startR+18,startC+6,startR+18,startC+1+12,color);
+					fillLine(startR+18,startC+15,startR+18,startC+1+22,color);	
+					fillLine(startR+19,startC+6,startR+19,startC+1+23,color);
+					fillLine(startR+20,startC+6,startR+20,startC+1+23,color);
+					fillLine(startR+21,startC+6,startR+21,startC+1+23,color);	
+					fillLine(startR+22,startC+7,startR+22,startC+1+22,color);
+					fillLine(startR+23,startC+8,startR+23,startC+1+16,color);
+					fillLine(startR+23,startC+19,startR+23,startC+1+20,color);	
+					fillLine(startR+24,startC+8,startR+24,startC+1+9,color);
+					fillLine(startR+24,startC+13,startR+24,startC+1+16,color);
+					fillLine(startR+24,startC+19,startR+24,startC+1+20,color);	
+					fillLine(startR+25,startC+8,startR+25,startC+1+9,color);	
+					fillLine(startR+25,startC+13,startR+25,startC+1+16,color);	
+					fillLine(startR+25,startC+19,startR+25,startC+1+20,color);	
+					fillLine(startR+26,startC+8,startR+26,startC+1+9,color);	
+					fillLine(startR+26,startC+13,startR+26,startC+1+14,color);	
+					fillLine(startR+27,startC+8,startR+27,startC+1+9,color);	
+					fillLine(startR+27,startC+13,startR+27,startC+1+14,color);	
+					
+					drawRect(startR+2,startC+21,color);
+					drawRect(startR+4,startC+22,color);
+					drawRect(startR+14,startC+19,color);
+					drawRect(startR+26,startC+16,color);
+					drawRect(startR+26,startC+19,color);
+					drawRect(startR+27,startC+16,color);
+					drawRect(startR+27,startC+19,color);
+					drawRect(startR+28,startC+9,color);
+					drawRect(startR+28,startC+13,color);
+					drawRect(startR+28,startC+16,color);
+					drawRect(startR+28,startC+19,color);
+
+					drawTriangle(startR+0,startC+9,color,2);
+					drawTriangle(startR+0,startC+13,color,3);
+					drawTriangle(startR+2,startC+16,color,2);
+					drawTriangle(startR+2,startC+19,color,3);
+					drawTriangle(startR+2,startC+20,color,2);
+					drawTriangle(startR+2,startC+22,color,3);
+					drawTriangle(startR+4,startC+9,color,1);
+					drawTriangle(startR+4,startC+20,color,0);
+					drawTriangle(startR+5,startC+10,color,1);
+					drawTriangle(startR+5,startC+13,color,0);
+					drawTriangle(startR+5,startC+21,color,2);
+					drawTriangle(startR+5,startC+22,color,0);
+					drawTriangle(startR+6,startC+16,color,1);
+					drawTriangle(startR+6,startC+19,color,0);
+					drawTriangle(startR+6,startC+21,color,1);
+					drawTriangle(startR+6,startC+22,color,3);
+					drawTriangle(startR+6,startC+23,color,2);
+					drawTriangle(startR+7,startC+7,color,2);
+					drawTriangle(startR+7,startC+16,color,3);
+					drawTriangle(startR+7,startC+22,color,1);
+					drawTriangle(startR+7,startC+23,color,0);
+					drawTriangle(startR+8,startC+5,color,2);
+					drawTriangle(startR+8,startC+19,color,3);
+					drawTriangle(startR+9,startC+21,color,3);
+					drawTriangle(startR+10,startC+4,color,2);
+					drawTriangle(startR+11,startC+9,color,0);
+					drawTriangle(startR+11,startC+12,color,1);
+					drawTriangle(startR+11,startC+15,color,0);
+					drawTriangle(startR+11,startC+18,color,1);
+					drawTriangle(startR+12,startC+13,color,1);
+					drawTriangle(startR+12,startC+14,color,0);
+					drawTriangle(startR+12,startC+22,color,0);
+					drawTriangle(startR+13,startC+21,color,0);
+					drawTriangle(startR+14,startC+9,color,3);
+					drawTriangle(startR+14,startC+18,color,2);
+					drawTriangle(startR+14,startC+20,color,0);
+					drawTriangle(startR+15,startC+4,color,1);
+					drawTriangle(startR+15,startC+10,color,3);
+					drawTriangle(startR+15,startC+17,color,2);
+					drawTriangle(startR+15,startC+20,color,3);
+					drawTriangle(startR+16,startC+11,color,3);
+					drawTriangle(startR+16,startC+16,color,2);
+					drawTriangle(startR+16,startC+21,color,3);
+					drawTriangle(startR+17,startC+12,color,3);
+					drawTriangle(startR+17,startC+21,color,3);
+					drawTriangle(startR+17,startC+15,color,2);
+					drawTriangle(startR+17,startC+22,color,3);
+					drawTriangle(startR+18,startC+5,color,1);
+					drawTriangle(startR+18,startC+13,color,3);
+					drawTriangle(startR+18,startC+14,color,2);
+					drawTriangle(startR+18,startC+23,color,3);
+					drawTriangle(startR+22,startC+6,color,1);
+					drawTriangle(startR+22,startC+23,color,0);
+					drawTriangle(startR+23,startC+7,color,1);
+					drawTriangle(startR+23,startC+17,color,0);
+					drawTriangle(startR+23,startC+18,color,1);
+					drawTriangle(startR+23,startC+21,color,0);
+					drawTriangle(startR+24,startC+10,color,0);
+					drawTriangle(startR+24,startC+12,color,1);
+					drawTriangle(startR+26,startC+15,color,1);
+					drawTriangle(startR+26,startC+20,color,0);
+					drawTriangle(startR+28,startC+8,color,1);
+					drawTriangle(startR+28,startC+14,color,0);
+					drawTriangle(startR+29,startC+9,color,1);
+					drawTriangle(startR+29,startC+13,color,0);
+					drawTriangle(startR+29,startC+16,color,1);
+					drawTriangle(startR+29,startC+19,color,0);
+				};
+
+				function drawFamily(startR, startC, color){
+					
+					fillLine(startR+0,startC+11,startR+0,startC+1+13,color);
+					fillLine(startR+1,startC+10,startR+1,startC+1+14,color);
+					fillLine(startR+2,startC+10,startR+2,startC+1+14,color);
+					fillLine(startR+3,startC+10,startR+3,startC+1+14,color);
+					fillLine(startR+4,startC+11,startR+4,startC+1+14,color);
+					fillLine(startR+5,startC+12,startR+5,startC+1+13,color);
+					
+					fillLine(startR+2,startC+18,startR+2,startC+1+19,color);
+					fillLine(startR+3,startC+17,startR+3,startC+1+20,color);
+					fillLine(startR+4,startC+17,startR+4,startC+1+20,color);
+					fillLine(startR+5,startC+17,startR+5,startC+1+20,color);
+					fillLine(startR+6,startC+18,startR+6,startC+1+19,color);
+					
+					fillLine(startR+7,startC+11,startR+7,startC+1+16,color);
+					fillLine(startR+8,startC+9,startR+8,startC+1+19,color);
+					fillLine(startR+9,startC+8,startR+9,startC+1+21,color);
+					fillLine(startR+10,startC+8,startR+10,startC+1+22,color);
+					fillLine(startR+11,startC+7,startR+11,startC+1+23,color);
+					fillLine(startR+12,startC+7,startR+12,startC+1+13,color);
+					fillLine(startR+12,startC+18,startR+12,startC+1+23,color);
+					fillLine(startR+13,startC+8,startR+13,startC+1+13,color);
+					fillLine(startR+13,startC+18,startR+13,startC+1+23,color);
+					fillLine(startR+14,startC+9,startR+14,startC+1+13,color);
+					fillLine(startR+14,startC+18,startR+14,startC+1+22,color);
+					fillLine(startR+15,startC+11,startR+15,startC+1+13,color);
+					fillLine(startR+15,startC+18,startR+15,startC+1+20,color);
+					fillLine(startR+16,startC+14,startR+16,startC+1+17,color);
+					fillLine(startR+17,startC+8,startR+17,startC+1+9,color);
+					fillLine(startR+18,startC+9,startR+18,startC+1+10,color);
+					fillLine(startR+18,startC+21,startR+18,startC+1+22,color);
+					fillLine(startR+19,startC+9,startR+19,startC+1+11,color);
+					fillLine(startR+19,startC+20,startR+19,startC+1+21,color);
+					fillLine(startR+20,startC+9,startR+20,startC+1+12,color);
+					fillLine(startR+20,startC+19,startR+20,startC+1+21,color);
+					fillLine(startR+21,startC+9,startR+21,startC+1+12,color);
+					fillLine(startR+21,startC+19,startR+21,startC+1+21,color);
+					fillLine(startR+22,startC+10,startR+22,startC+1+12,color);
+					fillLine(startR+22,startC+19,startR+22,startC+1+21,color);
+					fillLine(startR+23,startC+10,startR+23,startC+1+12,color);
+					fillLine(startR+23,startC+19,startR+23,startC+1+21,color);
+					fillLine(startR+24,startC+10,startR+24,startC+1+12,color);
+					fillLine(startR+24,startC+19,startR+24,startC+1+21,color);
+					fillLine(startR+25,startC+10,startR+25,startC+1+12,color);
+					fillLine(startR+25,startC+19,startR+25,startC+1+21,color);
+					fillLine(startR+26,startC+11,startR+26,startC+1+12,color);
+					fillLine(startR+26,startC+15,startR+26,startC+1+16,color);
+					fillLine(startR+26,startC+19,startR+26,startC+1+20,color);
+					fillLine(startR+27,startC+11,startR+27,startC+1+12,color);
+					fillLine(startR+27,startC+15,startR+27,startC+1+16,color);
+					fillLine(startR+27,startC+19,startR+27,startC+1+20,color);
+					fillLine(startR+28,startC+15,startR+28,startC+1+16,color);
+					fillLine(startR+29,startC+15,startR+29,startC+1+16,color);
+
+
+					drawRect(startR+16,startC+8,color);
+					drawRect(startR+16,startC+23,color);
+					drawRect(startR+17,startC+22,color);
+					drawRect(startR+28,startC+12,color);
+					drawRect(startR+28,startC+19,color);
+
+
+					drawTriangle(startR+0,startC+10,color,2);
+					drawTriangle(startR+0,startC+14,color,3);
+					drawTriangle(startR+4,startC+10,color,1);
+					drawTriangle(startR+5,startC+11,color,1);
+					drawTriangle(startR+5,startC+14,color,0);
+					
+					drawTriangle(startR+2,startC+17,color,2);
+					drawTriangle(startR+2,startC+20,color,3);
+					drawTriangle(startR+6,startC+17,color,1);
+					drawTriangle(startR+6,startC+20,color,0);
+					
+					drawTriangle(startR+7,startC+10,color,2);
+					drawTriangle(startR+7,startC+17,color,3);
+					drawTriangle(startR+8,startC+8,color,2);
+					drawTriangle(startR+8,startC+20,color,3);
+					drawTriangle(startR+9,startC+22,color,3);
+					drawTriangle(startR+10,startC+7,color,2);
+					drawTriangle(startR+12,startC+14,color,0);
+					drawTriangle(startR+12,startC+17,color,1);
+					drawTriangle(startR+12,startC+24,color,3);
+					drawTriangle(startR+13,startC+7,color,1);
+					drawTriangle(startR+13,startC+24,color,0);
+					drawTriangle(startR+14,startC+8,color,1);
+					drawTriangle(startR+14,startC+23,color,0);
+					drawTriangle(startR+14,startC+24,color,2);
+					drawTriangle(startR+15,startC+8,color,3);
+					drawTriangle(startR+15,startC+10,color,1);
+					drawTriangle(startR+15,startC+14,color,3);
+					drawTriangle(startR+15,startC+17,color,2);
+					drawTriangle(startR+15,startC+21,color,0);
+					drawTriangle(startR+15,startC+23,color,2);
+					drawTriangle(startR+15,startC+24,color,0);
+					drawTriangle(startR+16,startC+9,color,3);
+					drawTriangle(startR+16,startC+13,color,1);
+					drawTriangle(startR+16,startC+18,color,0);
+					drawTriangle(startR+16,startC+22,color,2);
+					drawTriangle(startR+17,startC+10,color,3);
+					drawTriangle(startR+17,startC+21,color,2);
+					drawTriangle(startR+17,startC+23,color,0);
+					drawTriangle(startR+18,startC+8,color,1);
+					drawTriangle(startR+18,startC+11,color,3);
+					drawTriangle(startR+18,startC+20,color,2);
+					drawTriangle(startR+19,startC+12,color,3);
+					drawTriangle(startR+19,startC+19,color,2);
+					drawTriangle(startR+19,startC+22,color,0);
+					drawTriangle(startR+22,startC+9,color,1);
+					drawTriangle(startR+25,startC+15,color,2);
+					drawTriangle(startR+25,startC+16,color,3);
+					drawTriangle(startR+26,startC+21,color,0);
+					drawTriangle(startR+26,startC+10,color,1);
+					drawTriangle(startR+28,startC+11,color,1);
+					drawTriangle(startR+28,startC+20,color,0);
+					drawTriangle(startR+29,startC+12,color,1);
+					drawTriangle(startR+29,startC+13,color,3);
+					drawTriangle(startR+29,startC+18,color,2);
+					drawTriangle(startR+29,startC+19,color,0);
+
+				};
+
+				function drawWork(startR,startC,color){
+					fillRect(startR+0,startC+12,4,5,color);	
+					fillRect(startR+1,startC+11,1,3,color);
+					fillRect(startR+1,startC+16,1,3,color);
+					fillRect(startR+5,startC+13,2,1,color);
+					fillRect(startR+7,startC+10,3,1,color);
+					fillRect(startR+7,startC+15,3,2,color);
+					fillRect(startR+8,startC+9,4,12,color);
+					fillRect(startR+10,startC+15,4,10,color);
+					fillRect(startR+19,startC+13,2,1,color);
+					fillRect(startR+20,startC+10,8,1,color);
+					fillRect(startR+21,startC+11,2,9,color);
+					fillRect(startR+21,startC+15,2,9,color);
+					fillRect(startR+8,startC+18,1,2,color);
+
+					drawTriangle(startR+0,startC+11,color,2);
+					drawTriangle(startR+0,startC+16,color,3);
+					drawTriangle(startR+4,startC+11,color,1);
+					drawTriangle(startR+4,startC+16,color,0);
+					drawTriangle(startR+5,startC+12,color,1);
+					drawTriangle(startR+5,startC+15,color,0);
+					drawTriangle(startR+6,startC+13,color,1);
+					drawTriangle(startR+6,startC+14,color,0);
+					drawTriangle(startR+7,startC+9,color,2);
+					drawTriangle(startR+7,startC+13,color,3);
+					drawTriangle(startR+7,startC+14,color,2);
+					drawTriangle(startR+7,startC+18,color,3);
+					drawTriangle(startR+8,startC+13,color,0);
+					drawTriangle(startR+8,startC+14,color,1);
+					drawTriangle(startR+9,startC+16,color,0);
+					drawTriangle(startR+9,startC+17,color,1);
+					drawTriangle(startR+12,startC+14,color,2);
+					drawTriangle(startR+13,startC+13,color,2);
+					drawTriangle(startR+13,startC+14,color,0);
+					drawTriangle(startR+14,startC+13,color,0);
+					drawTriangle(startR+14,startC+14,color,2);
+					drawTriangle(startR+15,startC+13,color,2);
+					drawTriangle(startR+15,startC+14,color,0);
+					drawTriangle(startR+16,startC+13,color,0);
+					drawTriangle(startR+18,startC+13,color,3);
+					drawTriangle(startR+18,startC+14,color,2);
+
+					drawRect(startR+9,startC+15,color);
+					//_isOver = true;
+				};
+				
+				function drawStudySmall(startR, startC, color){
+					fillLine(startR+0,startC+3,startR+0,startC+12,color);
+					fillLine(startR+1,startC+6,startR+1,startC+9,color);
+					fillLine(startR+2,startC+6,startR+2,startC+9,color);
+					fillLine(startR+3,startC+5,startR+3,startC+10,color);
+					fillLine(startR+4,startC+6,startR+4,startC+1+8,color);
+					fillLine(startR+5,startC+6,startR+5,startC+1+8,color);
+					fillLine(startR+7,startC+4,startR+7,startC+1+5,color);
+					fillLine(startR+7,startC+9,startR+7,startC+1+10,color);
+					fillLine(startR+8,startC+4,startR+8,startC+1+10,color);
+					fillLine(startR+9,startC+4,startR+9,startC+1+10,color);
+					fillLine(startR+10,startC+4,startR+10,startC+1+10,color);
+					fillLine(startR+11,startC+5,startR+11,startC+1+9,color);
+			
+					drawRect(startR+2,startC+11,color);
+					drawRect(startR+6,startC+4,color);
+					drawRect(startR+6,startC+7,color);
+					drawRect(startR+6,startC+10,color);
+					drawRect(startR+7,startC+7,color);
+					drawRect(startR+12,startC+6,color);
+					drawRect(startR+12,startC+8,color);
+					drawRect(startR+13,startC+6,color);
+					drawRect(startR+13,startC+8,color);
+
+					drawTriangle(startR+1,startC+11,color,3);
+					drawTriangle(startR+6,startC+5,color,3);
+					drawTriangle(startR+7,startC+6,color,3);
+					drawTriangle(startR+5,startC+10,color,3);
+					drawTriangle(startR+6,startC+11,color,3);
+					drawTriangle(startR+2,startC+9,color,3);
+					drawTriangle(startR+5,startC+4,color,2);
+					drawTriangle(startR+6,startC+3,color,2);
+					drawTriangle(startR+6,startC+9,color,2);
+					drawTriangle(startR+7,startC+8,color,2);
+					drawTriangle(startR+2,startC+5,color,2);
+					drawTriangle(startR+4,startC+9,color,0);
+					drawTriangle(startR+5,startC+9,color,0);
+					drawTriangle(startR+6,startC+8,color,0);
+					drawTriangle(startR+14,startC+8,color,0);
+					drawTriangle(startR+3,startC+11,color,0);
+					drawTriangle(startR+4,startC+5,color,1);
+					drawTriangle(startR+5,startC+5,color,1);
+					drawTriangle(startR+6,startC+6,color,1);
+					drawTriangle(startR+14,startC+6,color,1);
+				};
+				
+				function drawFamilySmall(startR, startC, color){
+				
+					fillLine(startR+0,startC+5,startR+0,startC+1+6,color);
+					fillLine(startR+1,startC+4,startR+1,startC+1+6,color);
+					fillLine(startR+2,startC+5,startR+2,startC+1+6,color);
+					fillLine(startR+1,startC+8,startR+1,startC+1+9,color);
+					fillLine(startR+2,startC+8,startR+2,startC+1+10,color);
+					fillLine(startR+4,startC+3,startR+4,startC+1+10,color);
+					fillLine(startR+5,startC+2,startR+5,startC+1+11,color);
+					fillLine(startR+6,startC+2,startR+6,startC+1+12,color);
+					fillLine(startR+7,startC+2,startR+7,startC+1+5,color);
+					fillLine(startR+7,startC+9,startR+7,startC+1+12,color);
+					fillLine(startR+10,startC+3,startR+10,startC+1+4,color);
+					fillLine(startR+11,startC+4,startR+11,startC+1+5,color);
+					fillLine(startR+12,startC+4,startR+12,startC+1+5,color);
+
+					drawRect(startR+8,startC+3,color);
+					drawRect(startR+8,startC+5,color);
+					drawRect(startR+8,startC+9,color);
+					drawRect(startR+8,startC+11,color);
+					drawRect(startR+9,startC+3,color);
+					drawRect(startR+10,startC+10,color);
+					drawRect(startR+11,startC+9,color);
+					drawRect(startR+12,startC+9,color);
+					drawRect(startR+13,startC+5,color);
+					drawRect(startR+13,startC+7,color);
+					drawRect(startR+13,startC+9,color);
+					drawRect(startR+14,startC+7,color);
+				
+					drawTriangle(startR+0,startC+4,color,2);
+					drawTriangle(startR+3,startC+4,color,2);
+					drawTriangle(startR+4,startC+2,color,2);
+					drawTriangle(startR+9,startC+8,color,2);
+					drawTriangle(startR+9,startC+10,color,2);
+					drawTriangle(startR+10,startC+9,color,2);
+					drawTriangle(startR+3,startC+5,color,3);
+					drawTriangle(startR+9,startC+4,color,3);
+					drawTriangle(startR+10,startC+5,color,3);
+					drawTriangle(startR+9,startC+6,color,3);
+					drawTriangle(startR+1,startC+10,color,3);
+					drawTriangle(startR+4,startC+11,color,3);
+					drawTriangle(startR+5,startC+12,color,3);
+					drawTriangle(startR+8,startC+4,color,1);
+					drawTriangle(startR+9,startC+5,color,1);
+					drawTriangle(startR+7,startC+8,color,1);
+					drawTriangle(startR+14,startC+5,color,1);
+					drawTriangle(startR+3,startC+8,color,1);
+					drawTriangle(startR+2,startC+4,color,1);
+					drawTriangle(startR+8,startC+2,color,1);
+					drawTriangle(startR+11,startC+3,color,1);
+					drawTriangle(startR+13,startC+4,color,1);
+					drawTriangle(startR+14,startC+5,color,1);
+					drawTriangle(startR+7,startC+6,color,0);
+					drawTriangle(startR+8,startC+10,color,0);
+					drawTriangle(startR+9,startC+9,color,0);
+					drawTriangle(startR+8,startC+12,color,0);
+					drawTriangle(startR+9,startC+11,color,0);
+					drawTriangle(startR+11,startC+10,color,0);
+					drawTriangle(startR+14,startC+9,color,0);
+					drawTriangle(startR+3,startC+9,color,0);
+				};
+
+				function drawLoveSmall(startR, startC, color){
+
+					fillLine(startR+0,startC+5,startR+0,startC+1+6,color);
+					fillLine(startR+1,startC+4,startR+1,startC+1+6,color);
+					fillLine(startR+2,startC+9,startR+2,startC+1+11,color);
+					fillLine(startR+4,startC+3,startR+4,startC+1+10,color);
+					fillLine(startR+5,startC+2,startR+5,startC+1+3,color);
+					fillLine(startR+5,startC+10,startR+5,startC+1+11,color);
+					fillLine(startR+6,startC+2,startR+6,startC+1+3,color);
+					fillLine(startR+7,startC+2,startR+7,startC+1+3,color);
+					fillLine(startR+8,startC+3,startR+8,startC+1+4,color);
+					fillLine(startR+8,startC+9,startR+8,startC+1+11,color);
+					fillLine(startR+9,startC+3,startR+9,startC+1+5,color);
+					fillLine(startR+9,startC+8,startR+9,startC+1+11,color);
+					fillLine(startR+10,startC+3,startR+10,startC+1+10,color);
+					fillLine(startR+11,startC+4,startR+11,startC+1+10,color);
+					fillLine(startR+12,startC+7,startR+12,startC+1+10,color);
+					fillLine(startR+13,startC+7,startR+13,startC+1+8,color);
+
+					drawRect(startR+2,startC+5,color);
+					drawRect(startR+3,startC+5,color);
+					drawRect(startR+1,startC+10,color);
+					drawRect(startR+6,startC+10,color);
+					drawRect(startR+7,startC+10,color);
+					drawRect(startR+12,startC+4,color);
+					drawRect(startR+13,startC+4,color);
+					drawRect(startR+13,startC+10,color);
+
+					drawTriangle(startR+3,startC+10,color,0);
+					drawTriangle(startR+5,startC+4,color,0);
+					drawTriangle(startR+5,startC+7,color,0);
+					drawTriangle(startR+6,startC+11,color,0);
+					drawTriangle(startR+10,startC+11,color,0);
+					drawTriangle(startR+9,startC+12,color,0);
+					drawTriangle(startR+12,startC+5,color,0);
+					drawTriangle(startR+14,startC+7,color,0);
+					drawTriangle(startR+14,startC+10,color,0);
+					drawTriangle(startR+2,startC+6,color,0);
+					drawTriangle(startR+2,startC+4,color,1);
+					drawTriangle(startR+8,startC+2,color,1);
+					drawTriangle(startR+12,startC+6,color,1);
+					drawTriangle(startR+14,startC+4,color,1);
+					drawTriangle(startR+14,startC+8,color,1);
+					drawTriangle(startR+3,startC+9,color,1);
+					drawTriangle(startR+3,startC+11,color,1);
+					drawTriangle(startR+5,startC+6,color,1);
+					drawTriangle(startR+5,startC+9,color,1);
+					drawTriangle(startR+12,startC+6,color,1);
+					drawTriangle(startR+14,startC+4,color,1);
+					drawTriangle(startR+14,startC+8,color,1);
+					drawTriangle(startR+3,startC+4,color,2);
+					drawTriangle(startR+0,startC+4,color,2);
+					drawTriangle(startR+1,startC+9,color,2);
+					drawTriangle(startR+7,startC+9,color,2);
+					drawTriangle(startR+8,startC+8,color,2);
+					drawTriangle(startR+9,startC+7,color,2);
+					drawTriangle(startR+4,startC+2,color,2);
+					drawTriangle(startR+1,startC+11,color,3);
+					drawTriangle(startR+7,startC+4,color,3);
+					drawTriangle(startR+8,startC+5,color,3);
+					drawTriangle(startR+9,startC+6,color,3);
+					drawTriangle(startR+7,startC+11,color,3);
+					drawTriangle(startR+8,startC+12,color,3);
+					drawTriangle(startR+4,startC+11,color,3);
+				};
+				
+				function drawWorkSmall(startR,startC,color){
+					cxt.globalCompositeOperation="source-over";
+					drawPolygon([startR+0,startR+0.5,startR+2,startR+3.5,startR+2,startR+0.5,startR+0],
+								[startC+6,startC+5.5,startC+5.5,startC+7,startC+8.5,startC+8.5,startC+8],color);
+					drawPolygon([startR+3.5,startR+4,startR+10,startR+10,startR+10.5,startR+10.5,startR+15,startR+15,startR+10.5,startR+10.5,startR+15,startR+15,startR+10.5,startR+10.5,startR+10,startR+10,startR+4,startR+3.5,startR+3.5,startR+4,startR+3.5],
+								[startC+5,startC+4.5,startC+4.5,startC+5,startC+5,startC+5.5,startC+5.5,startC+6.5,startC+6.5,startC+7.5,startC+7.5,startC+8.5,startC+8.5,startC+9,startC+9,startC+9.5,startC+9.5,startC+9,startC+7.5,startC+7,startC+6.5],color);
+					drawPolygon([ startR+4.5, startR+7, startR+6, startR+4.5 , startR+4],
+								[startC+6.5, startC+6.5, startC+7.5, startC+7.5, startC+7 ],'rgba(255,255,255,1)');
+					drawPolygon([ startR+8.5, startR+9, startR+9.5, startR+9, startR+7.5],
+								[startC+6.5, startC+6.5, startC+7, startC+7.5, startC+7.5 ],'rgba(255,255,255,1)');
+					drawPolygon([  startR+7.5, startR+8, startR+7, startR+6.5],
+								[   startC+6.5, startC+6.5, startC+7.5, startC+7.5 ],'rgba(255,255,255,1)');			
+					drawPolygon([  startR+5, startR+5, startR+4.5],
+								[  startC+8, startC+9, startC+8.5],'rgba(255,255,255,1)');
+					drawGrid();
+					cxt.globalCompositeOperation="destination-over";		
+				};
+//				function drawWorkSmall(startR,startC,color){
+//					
+//					fillRect(startR+10,startC+6,1,5,color);	
+//					fillRect(startR+10,startC+8,1,5,color);
+//
+//					drawPolygon([startR+1,startR+0,startR+0,startR+1,startR+2,startR+3,startR+3,startR+2],
+//								[startC+6,startC+7,startC+8,startC+9,startC+9,startC+8,startC+7,startC+6],color);
+//
+//					drawPolygon([startR+4,startR+4,startR+10,startR+10,startR+9,startR+9,startR+5],
+//								[startC+5.5,startC+7,startC+7,startC+5.5,startC+5.5,startC+5,startC+5],color);
+//					drawPolygon([startR+8,startR+9,startR+8,startR+10,startR+10],
+//								[startC+7,startC+7.5,startC+8,startC+8,startC+7],color);
+//								
+//					drawPolygon([startR+7,startR+6,startR+7,startR+8],
+//								[startC+7,startC+8,startC+8,startC+7],color);
+//								
+//					drawPolygon([startR+4,startR+4,startR+5,startR+5],
+//								[startC+8,startC+9.5,startC+10,startC+8],color);
+//								
+//					drawPolygon([startR+4,startR+5,startR+5],
+//								[startC+7,startC+7.5,startC+7],color);
+//								
+//					drawPolygon([startR+4,startR+5,startR+5],
+//								[startC+8,startC+8,startC+7.5],color);
+//					
+//					drawPolygon([startR+5,startR+5,startR+5.5,startR+5.5,startR+5,startR+5,startR+9,startR+9,startR+10,startR+10],
+//								[startC+8,startC+8.5,startC+8.5,startC+9.5,startC+9.5,startC+10,startC+10,startC+9.5,startC+9.5,startC+8],color);
+//				};
+
+				
+				function drawchild(startR,startC,color){
+					fillRect(startR+0,startC+3,1,6,color);	
+					fillRect(startR+1,startC+2,1,1,color);	
+					fillRect(startR+1,startC+4,1,1,color);
+					fillRect(startR+3,startC+2,1,5,color);	
+					//fillRect(startR+3,startC+3,1,3,color);	
+					fillRect(startR+3,startC+4,1,5,color);	
+					drawTriangle(startR+2,startC+4,color,0);
+					drawTriangle(startR+2,startC+2,color,1);
+					drawTriangle(startR+0,startC+2,color,2);
+					drawTriangle(startR+0,startC+4,color,3);
+					drawPolygon([startR+1,startR+2,startR+4,startR+3],
+							[startC+0,startC+0,startC+2,startC+2],color);
+					drawPolygon([startR+1,startR+3,startR+4,startR+2],
+							[startC+7,startC+5,startC+5,startC+7],color);
+				};
+				
+				//修改   color1 = 'rgba(0,162,232,1)', color2 = 'rgba(205,16,26,1)'
+				function drawpupil(startR,startC,color1,color2){
+					cxt.globalCompositeOperation="source-over";
+					//drawpupil_withoutscraf(startR,startC,'rgba(0,162,232,1)');
+					drawpupil_withoutscraf(startR,startC,color1);
+					//drawredscarf(startR,startC,'rgba(205,16,26,1)');
+					drawredscarf(startR,startC,color2);
+					drawGrid();
+					cxt.globalCompositeOperation="destination-over";
+				};
+				
+				function drawpupil_withoutscraf(startR,startC,color){
+					fillRect(startR+0,startC+4,1,9,color);	
+					fillRect(startR+0,startC+5,1,9,color);	
+					fillRect(startR+4,startC+3,1,8,color);	
+					fillRect(startR+4,startC+6,1,8,color);
+					fillRect(startR+1,startC+3,1,2,color);	
+					fillRect(startR+1,startC+6,1,2,color);	
+					drawPolygon([startR+4,startR+5,startR+8,startR+7],
+								[startC+3,startC+3,startC+0,startC+0],color);
+					drawPolygon([startR+4,startR+5,startR+2,startR+1],
+								[startC+7,startC+7,startC+10,startC+10],color);
+					drawTriangle(startR+3,startC+6,color,0);
+					drawTriangle(startR+3,startC+3,color,1);
+					drawTriangle(startR+0,startC+3,color,2);
+					drawTriangle(startR+0,startC+6,color,3);
+				};
+				
+				function drawredscarf(startR,startC,color){
+					drawPolygon([startR+4,startR+5.5,startR+6.5,startR+7,startR+6.5,startR+5.5,startR+4,startR+4,startR+5,startR+4],
+								[startC+3,startC+4.5,startC+4.5,startC+5,startC+5.5,startC+5.5,startC+7,startC+6,startC+5,startC+4],color);
+				
+				};
+				
+				function drawlittlemiddlestudent(startR,startC,color){
+					cxt.globalCompositeOperation="source-over";
+					drawPolygon([startR+0,startR+1,startR+2,startR+3.5,startR+2,startR+1,startR+0],
+								[startC+6,startC+5,startC+5,startC+6.5,startC+8,startC+8,startC+7],color);
+					drawPolygon([startR+3.5,startR+3.5,startR+4,startR+4,startR+5.5,startR+6,startR+6.5,startR+7,startR+7.5,startR+7.5,startR+7,startR+6.5,startR+6,startR+5.5,startR+4.5,startR+4.5],
+								[startC+6.5,startC+6,startC+5.5,startC+5,startC+3.5,startC+3.5,startC+3,startC+3,startC+2.5,startC+3,startC+3.5,startC+3.5,startC+4,startC+4,startC+5,startC+5.5],color);
+					drawPolygon([startR+3.5,startR+3.5,startR+4,startR+4,startR+5.5,startR+6,startR+6.5,startR+7,startR+7.5,startR+7.5,startR+7,startR+6.5,startR+6,startR+5.5,startR+4.5,startR+4.5],
+								[startC+6.5,startC+7,startC+7.5,startC+8,startC+9.5,startC+9.5,startC+10,startC+10,startC+10.5,startC+10,startC+9.5,startC+9.5,startC+9,startC+9,startC+8,startC+7.5],color);
+					drawPolygon([startR+7.5, startR+8.5, startR+9.5, startR+8.5, startR+7.5, startR+6.5, startR+7.5],
+								[ startC+2.5, startC+2.5, startC+3.5, startC+3.5, startC+4.5, startC+4.5, startC+3.5],color);
+					drawPolygon([startR+7.5, startR+8.5, startR+9.5, startR+8.5, startR+7.5, startR+6.5, startR+7.5],
+								[ startC+10.5, startC+10.5, startC+9.5, startC+9.5, startC+8.5, startC+8.5, startC+9.5],color);
+					drawPolygon([  startR+4.5, startR+5.5, startR+4.5, startR+4],
+								[  startC+5.5, startC+6.5, startC+6.5, startC+6],color);
+				    drawPolygon([  startR+4.5, startR+5.5, startR+4.5, startR+4],
+								[   startC+7.5, startC+6.5, startC+6.5, startC+7       ],color);		
+					drawPolygon([  startR+7, startR+11, startR+11.5, startR+14, startR+15, startR+15, startR+14.5, startR+14, startR+8.5, startR+6.5],
+								[  startC+4, startC+4, startC+4.5, startC+4.5, startC+5.5, startC+6, startC+6, startC+6.5, startC+6.5, startC+4.5],color);
+				    drawPolygon([ startR+7, startR+11, startR+11.5, startR+14, startR+15, startR+15, startR+14.5, startR+14, startR+8.5, startR+6.5],
+								[   startC+9, startC+9, startC+8.5, startC+8.5, startC+7.5, startC+7, startC+7, startC+6.5, startC+6.5, startC+8.5 ],color);
+					drawPolygon([ startR+7, startR+9, startR+9.5, startR+7.5 ],
+								[startC+4.5, startC+6.5, startC+6.5, startC+4.5 ],'rgba(255,255,255,1)');
+					drawPolygon([  startR+7, startR+9, startR+9.5, startR+7.5],
+								[   startC+8.5, startC+6.5, startC+6.5, startC+8.5 ],'rgba(255,255,255,1)');			
+					drawPolygon([  startR+9.5, startR+10.5, startR+10, startR+9],
+								[  startC+4.5, startC+4.5, startC+5, startC+5],'rgba(255,255,255,1)');
+					drawPolygon([  startR+9.5, startR+10.5, startR+10, startR+9],
+								[   startC+8.5, startC+8.5, startC+8, startC+8 ],'rgba(255,255,255,1)');
+					drawPolygon([  startR+11.5, startR+12.5, startR+12, startR+11.5],
+								[  startC+5, startC+5, startC+5.5, startC+5.5],'rgba(255,255,255,1)');
+				    drawPolygon([  startR+11.5, startR+12.5, startR+12, startR+11.5],
+								[  startC+8, startC+8, startC+7.5, startC+7.5  ],'rgba(255,255,255,1)');
+					drawGrid();
+					cxt.globalCompositeOperation="destination-over";
+							
+				};
+				
+				function drawmiddlestudent(startR,startC,color){
+					cxt.globalCompositeOperation="source-over";
+					drawPolygon([  startR+0, startR+2, startR+4, startR+7, startR+4, startR+2, startR+0],
+								[  startC+12, startC+10, startC+10, startC+13, startC+16, startC+16, startC+14],color);
+				    drawPolygon([  startR+7, startR+7, startR+8, startR+8, startR+11, startR+12, startR+13, startR+14, startR+15, startR+15, startR+14, startR+13, startR+12, startR+11, startR+9, startR+9],
+								[  startC+13, startC+12, startC+11, startC+10, startC+7, startC+7, startC+6, startC+6, startC+5, startC+6, startC+7, startC+7, startC+8, startC+8, startC+10, startC+11],color);
+					drawPolygon([  startR+7, startR+7, startR+8, startR+8, startR+11, startR+12, startR+13, startR+14, startR+15, startR+15, startR+14, startR+13, startR+12, startR+11, startR+9, startR+9],
+								[  startC+13, startC+14, startC+15, startC+16, startC+19, startC+19, startC+20, startC+20, startC+21, startC+20, startC+19, startC+19, startC+18, startC+18, startC+16, startC+15],color);
+				    drawPolygon([ startR+15, startR+17, startR+19, startR+17, startR+15, startR+13, startR+15 ],
+								[ startC+5, startC+5, startC+7, startC+7, startC+9, startC+9, startC+7],color);		
+					drawPolygon([  startR+15, startR+17, startR+19, startR+17, startR+15, startR+13, startR+15],
+								[ startC+21, startC+21, startC+19, startC+19, startC+17, startC+17, startC+19 ],color);
+				    drawPolygon([  startR+9, startR+11, startR+9, startR+8],
+								[  startC+11, startC+13, startC+13, startC+12],color);
+					drawPolygon([  startR+9, startR+11, startR+9, startR+8],
+								[  startC+15, startC+13, startC+13, startC+14],color);
+				    drawPolygon([  startR+14, startR+22, startR+23, startR+28, startR+30, startR+30, startR+29, startR+28, startR+17, startR+13],
+								[  startC+8, startC+8, startC+9, startC+9, startC+11, startC+12, startC+12, startC+13, startC+13, startC+9],color);	
+					drawPolygon([  startR+14, startR+22, startR+23, startR+28, startR+30, startR+30, startR+29, startR+28, startR+17, startR+13],
+								[  startC+18, startC+18, startC+17, startC+17, startC+15, startC+14, startC+14, startC+13, startC+13, startC+17],color);
+				    drawPolygon([  startR+14, startR+18, startR+19, startR+15],
+								[  startC+9, startC+13, startC+13, startC+9],'rgba(255,255,255,1)');
+					drawPolygon([ startR+14, startR+18, startR+19, startR+15 ],
+								[ startC+17, startC+13, startC+13, startC+17 ],'rgba(255,255,255,1)');
+				    drawPolygon([ startR+19, startR+21, startR+20, startR+18 ],
+								[ startC+9, startC+9, startC+10, startC+10 ],'rgba(255,255,255,1)');		
+					drawPolygon([  startR+19, startR+21, startR+20, startR+18],
+								[  startC+17, startC+17, startC+16, startC+16],'rgba(255,255,255,1)');
+				    drawPolygon([  startR+23, startR+25, startR+24, startR+23],
+								[ startC+10, startC+10, startC+11, startC+11 ],'rgba(255,255,255,1)');
+					drawPolygon([ startR+23, startR+25, startR+24, startR+23 ],
+								[  startC+16, startC+16, startC+15, startC+15],'rgba(255,255,255,1)');
+						drawGrid();
+					cxt.globalCompositeOperation="destination-over";
+							
+				};
+
+				function drawlastselect(){
+					drawsenddoor(2,4,'rgba(69,192,26,1)');
+					drawback(5,18,'rgba(69,192,26,1)');
+					drawshare(16,8,'rgba(69,192,26,1)');
+					drawshareframe(19,10,'rgba(69,192,26,1)');
+				}
+
+				
+				function drawsenddoor(startR,startC,color){
+					drawPolygon([startR+3,startR+14.5,startR+11,startR+0],
+								[startC+2,startC+2,startC+8,startC+8],color);	
+					fillRect(startR+0,startC+0,8,1,color);	
+					fillRect(startR+0,startC+0,1,10,color);	
+					fillRect(startR+10,startC+0,8,1,color);	
+				}
+				
+				
+				
+				function drawback(startR,startC,color){
+					drawPolygon([startR+0,startR+3,startR+6,startR+5,startR+3,startR+1],
+								[startC+3,startC+0,startC+3,startC+4,startC+2,startC+4],color);	
+					drawPolygon([startR+2,startR+4,startR+4,startR+2],
+								[startC+1,startC+1,startC+8,startC+8],color);	
+				}
+				
+				
+				
+				function drawshare(startR,startC,color){
+					drawPolygon([startR+1,startR+5,startR+3],
+								[startC+9,startC+9,startC+12],color);
+					
+				    cxt.beginPath();
+					cxt.moveTo(_startX+(startC+5)*d,_startY+(startR+8)*d);
+					cxt.bezierCurveTo(_startX+(startC+3)*d,_startY+(startR+3)*d,_startX+(startC+7)*d,_startY+(startR+2)*d,_startX+(startC+9)*d,_startY+(startR+2)*d);
+					cxt.lineTo(_startX+(startC+9)*d,_startY+(startR+4)*d);
+					cxt.bezierCurveTo(_startX+(startC+7)*d,_startY+(startR+4)*d,_startX+(startC+4)*d,_startY+(startR+4.5)*d,_startX+(startC+5)*d,_startY+(startR+8)*d);
+					cxt.closePath();
+					cxt.fillStyle=color;
+					cxt.fill();
+				};
+
+
+				
+				function drawshareframe(startR,startC,color){
+					drawPolygon([startR+0,startR+0,startR+7,startR+7,startR+3,startR+4,startR+6,startR+6,startR+1,startR+1],
+								[startC+2,startC+0,startC+0,startC+8,startC+8,startC+7,startC+7,startC+1,startC+1,startC+2],color);
+				};
+
+				/*********************** 选择点击事件 *****************************/
+				function mouseDown(e){
+					var x = e.offsetX;
+					var y = e.offsetY;
+					//alert(x+" "+y);
+					var selected;
+					if(x<_width/2&&y<_height/2){
+						selected = "1. 学生";
+						_selection = 1;
+					}else if(x>=_width/2&&y<_height/2){
+						selected = "2. 恋爱";
+						_selection = 2;
+					}else if(x<_width/2&&y>=_height/2){
+						selected = "3. 工作"
+						_selection = 3;
+					}else{
+						selected = "4. 家庭";
+						_selection = 4;
+					}
+					//设置分享图片
+					setLogo(_selection);
+					c.removeEventListener('mousedown',mouseDown,false);
+					//body.addEventListener('touchstart',body_touchStart,false);
+					//$("#title").css("visibility","hidden");
+				};
+				
+				//选择题
+				function study_select_type(e){
+					var x = e.offsetX;
+					var y = e.offsetY;
+					var mid = _width/2;
+					if(y<mid){
+						if(x<mid){
+							//alert("幼儿园");
+							_study_type = 1;
+							//跳过选择年级
+							_study_selectTimes++;
+						}else{
+							//alert("小学");
+							_study_type = 2;
+						}
+					}else{
+						if(x<mid){
+							//alert("中学");
+							_study_type = 3;
+						}else{
+							//alert("大学");
+							_study_type = 4;
+						}
+					}
+					c.removeEventListener('mousedown',study_select_type,false);
+					_isSelectOver = true;
+				};
+				
+				function study_select_grade(e){
+					
+					var x = e.offsetX;
+					var y = e.offsetY;
+					var timeDiff = new Date()-new Date(2014,8,1);
+					var monthDiff = Math.round( timeDiff/(1000*3600*24*30) );
+					//alert( Math.round(monthDiff) );
+					if(_study_type==1){//幼儿园
+						//alert("小屁孩儿，就知道玩手机，快滚去学习！^.^");
+						//_study_selectTimes++;
+						//_currentCase = 7;
+					}else if(_study_type==2){//小学
+						if(y<_width/2){
+							if(x<_width/3){	//一年级
+								_study_grade = 1;
+								
+							}else if(x<_width*2/3){	//二年级
+								_study_grade = 2;
+							}else{	//三年级
+								_study_grade = 3;
+							}
+						}else{
+							if(x<_width/3){	//四年级
+								_study_grade = 4;
+							}else if(x<_width*2/3){	//五年级
+								_study_grade = 5;
+							}else{	//六年级
+								_study_grade = 6;
+							}
+						}
+						//小学生年纪换算公式
+						_study_M = 12*(5+_study_grade) + monthDiff;
+					}else if(_study_type==3){
+						if(y<_width/2){
+							if(x<_width/3){	//初一、一年级
+								_study_grade = 1;
+							}else if(x<_width*2/3){	//初二、二年级
+								_study_grade = 2;
+							}else{	//初三、三年级
+								_study_grade = 3;
+							}
+							//_study_M = 12 * (11+_study_grade) + monthDiff;
+						}else{
+							if(x<_width/3){	//高一、四年级
+								_study_grade = 4;
+							}else if(x<_width*2/3){	//高二、五年级
+								_study_grade = 5;
+							}else{	//高三、六年级
+								_study_grade = 6;
+							}
+							//_study_M = 12 * (14 +_study_grade) + monthDiff;
+						}
+						_study_M = 12 * (11+_study_grade) + monthDiff;
+					}else{	//大学
+						if(y<_height/3){//大学生
+							if(x<_width/4){
+								_study_grade =1;
+							}else if(x<_width*2/4){
+								_study_grade = 2;
+							}else if(x<_width*3/4){
+								_study_grade = 3;
+							}else{
+								_study_grade = 4;
+							}
+						}else if(y<_height*2/3){
+							if(x<_width/4){
+								_study_grade =5;
+							}else if(x<_width*2/4){
+								_study_grade = 6;
+							}else{
+								_study_grade = 7;
+							}
+						}else{
+							if(x<_width/4){
+								_study_grade =8;
+							}else if(x<_width*2/4){
+								_study_grade = 9;
+							}else if(x<_width*3/4){
+								_study_grade = 10;
+							}else{
+								_study_grade = 11;
+							}
+						}
+						_study_M = 12*(17+_study_grade) + monthDiff;
+					}
+					//alert("study_type:"+_study_type+" "+"study_grade:"+_study_grade);
+					c.removeEventListener('mousedown',study_select_grade,false);
+					_isSelectOver = true;
+					$("#title").css("visibility","hidden");
+				};
+				
+				function love_select_age(e){
+					//alert(e.clientX+" "+e.clientY);
+					var currentYear = 2015;
+					var x = e.offsetX;
+					var y = e.offsetY;
+					var age = 0;
+					var level1 = _width/3;
+					var level2 = _width*2/3;
+					if(y<level1){
+						if(x<level1){//00后
+							age = currentYear-2000;
+						}else if(x>=level2){//90后
+							age = currentYear-1990;
+						}else{//95后
+							age = currentYear-1995;
+						}
+					}else if(y<level2){
+						if(x<level1){//85后
+							age = currentYear-1985;
+						}else if(x>=level2){//75后
+							age = currentYear-1975;
+						}else{//80后
+							age = currentYear-1980;
+						}
+					}else{ 
+						if(x<level1){//70后
+							age = currentYear-1970;
+						}else if(x>=level2){//60后
+							age = currentYear-1965;
+						}else{//65后
+							age = currentYear-1960;
+						}
+					}
+					//alert("你现在的年龄："+age);
+					_love_M = 12*age;
+					c.removeEventListener('mousedown',love_select_age,false);
+					_isSelectOver = true;
+					//$("#title").css("visibility","hidden");
+				};
+				
+				//选择相爱几个月
+				function love_select_lovetime(e){
+					var x = e.offsetX;
+					var y = e.offsetY;
+					/*
+					var Y1 = _height/3;
+					var Y2 = _height*2/3;
+					var X1 = _width/2;
+					if(y<Y1){
+						if(x<X1){
+							_love_n = 0.5*12;
+						}else{
+							_love_n = 0.75*12;
+						}
+					}else if(y<Y2){
+						if(x<X1){
+							_love_n = 1.5*12;
+						}else{
+							_love_n = 4*12;
+						}
+					}else{
+						if(x<X1){
+							_love_n = 7.5*12;
+						}else{
+							_love_n = 12*12;
+						}
+					}
+					*/
+					var time = 0;
+					if(y<_height/3){
+						if(x<_width/4){
+							time = 0.5;
+						}else if(x<_width*2/4){
+							time = 1;
+						}else if(x<_width*3/4){
+							time = 2;
+						}else{
+							time = 3;
+						}
+					}else if(y<_height*2/3){
+						if(x<_width/4){
+							time = 4;
+						}else if(x<_width*2/4){
+							time = 5;
+						}else if(x<_width*3/4){
+							time = 6;
+						}else{
+							time = 7;
+						}
+					}else{
+						if(x<_width/4){
+							time = 8;
+						}else if(x<_width*2/4){
+							time = 9;
+						}else if(x<_width*3/4){
+							time = 10;
+						}else{
+							time = 15;
+						}
+					}
+					_love_n = time*12;
+					
+					//alert("相爱"+_love_n+"个月");
+					c.removeEventListener('mousedown',love_select_lovetime,false);
+					$("#title").css("visibility","hidden");
+					_isSelectOver = true;
+				};
+				
+				function work_select_time(e){
+					var x = e.offsetX;
+					var y = e.offsetY;
+					var time = 0;
+					if(y<_height/3){
+						if(x<_width/4){
+							time = 0.5;
+						}else if(x<_width*2/4){
+							time = 1;
+						}else if(x<_width*3/4){
+							time = 2;
+						}else{
+							time = 3;
+						}
+					}else if(y<_height*2/3){
+						if(x<_width/4){
+							time = 4;
+						}else if(x<_width*2/4){
+							time = 5;
+						}else if(x<_width*3/4){
+							time = 6;
+						}else{
+							time = 7;
+						}
+					}else{
+						if(x<_width/4){
+							time = 8;
+						}else if(x<_width*2/4){
+							time = 9;
+						}else if(x<_width*3/4){
+							time = 10;
+						}else{
+							time = 15;
+						}
+					}
+					_work_N = time*12;
+					c.removeEventListener('mousedown',work_select_time,false);
+					_isSelectOver = true;
+				};
+				
+				function work_select_age(e){
+					var currentYear = 2015;
+					var x = e.offsetX;
+					var y = e.offsetY;
+					var age = 0;
+					var level1 = _width/3;
+					var level2 = _width*2/3;
+					if(y<level1){
+						if(x<level1){//00后
+							age = 3+currentYear-2000;
+						}else if(x>=level2){//90后
+							age = currentYear-1990;
+						}else{//95后
+							age = currentYear-1995;
+						}
+					}else if(y<level2){
+						if(x<level1){//85后
+							age = currentYear-1985;
+						}else if(x>=level2){//75后
+							age = currentYear-1975;
+						}else{//80后
+							age = currentYear-1980;
+						}
+					}else{ 
+						if(x<level1){//70后
+							age = currentYear-1970;
+						}else if(x>=level2){//60后
+							age = currentYear-1965;
+						}else{//65后
+							age = currentYear-1960;
+						}
+					}
+					_work_M = age*12;
+					//alert("_work_M:"+_work_M+","+"_work_N:"+_work_N);
+					c.removeEventListener('mousedown',work_select_age,false);
+					_isSelectOver = true;
+					$("#title").css("visibility","hidden");
+				};
+				
+				function family_select_age(e){
+					var currentYear = 2015;
+					var x = e.offsetX;
+					var y = e.offsetY;
+					var age = 0;
+					if(y<_height/3){
+						if(x<_width/3){
+							age = currentYear - 1990;
+						}else if(x<_width*2/3){
+							age = currentYear - 1985;
+						}else{
+							age = currentYear - 1980;
+						}
+					}else if(y<_height*2/3){
+						if(x<_width/3){
+							age = currentYear - 1975;
+						}else if(x<_width*2/3){
+							age = currentYear - 1970;
+						}else{
+							age = currentYear - 1965;
+						}
+					}else{
+						if(x<_width/3){
+							age = currentYear - 1960;
+						}else if(x<_width*2/3){
+							age = currentYear - 1955;
+						}else{
+							age = currentYear - 1950;
+						}
+					}
+					//alert(age);
+					_family_M = age * 12;
+					c.removeEventListener('mousedown',family_select_age,false);
+					_isSelectOver = true;
+				};
+				
+				function family_select_child_type(e){
+					var x = e.offsetX;
+					var y = e.offsetY;
+					if(_family_M<=25*12){
+						if(x<_width/2){
+							_family_C = 3*12;
+							_family_child_type = 1;//学前
+						}else{
+							_family_C = 9*12;
+							_family_child_type = 2;//小学
+						}
+					}else if(_family_M<=30*12){
+						if(y<_height/2){
+							if(x<_width/2){
+								_family_C = 3*12;
+								_family_child_type = 1;//学前
+							}else{
+								_family_C = 9*12;
+								_family_child_type = 2;//小学
+							}
+						}else{
+							_family_C = 15*12;
+							_family_child_type = 3;//中学
+						}
+					}else if(_family_M<=35*12){
+						if(y<_height/2){
+							if(x<_width/2){
+								_family_C = 3*12;
+								_family_child_type = 1;//学前
+							}else{
+								_family_C = 9*12;
+								_family_child_type = 2;//小学
+							}
+						}else{
+							if(x<_width/2){
+								_family_C = 15*12;
+								_family_child_type = 3;//中学
+							}else{
+								_family_C = 20*12;
+								_family_child_type = 4;//大学
+							}
+						}
+					}else{
+						if(y<_height/2){
+							if(x<_width/2){
+								_family_C = 9*12;
+								_family_child_type = 2;//小学
+							}else{
+								_family_C = 15*12;
+								_family_child_type = 3;//中学
+							}
+						}else{
+							if(x<_width/2){
+								_family_C = 20*12;
+								_family_child_type = 4;//大学
+							}else{
+								if(_family_M<=50*12){
+									_family_C = 25*12;
+								}else{
+									_family_C = 30*12;
+								}
+								_family_child_type = 5;//工作
+							}
+						}
+					}
+					//alert(_family_C/12);
+					//alert("孩子类型："+_family_child_type);
+					c.removeEventListener('mousedown',family_select_child_type,false);
+					_isSelectOver = true;
+					$("#title").css("visibility","hidden");
+				};
+				
+				function all_last_select(e){
+					var x = e.offsetX;
+					var y = e.offsetY;
+					if(y<_height/2){
+						if(x<_width/2){
+							//alert("传送门");
+							_currentCase = 0;
+							_study_selectTimes++;
+							_work_selectTimes++;
+						}else{
+							//alert("重来");
+							back();
+						}
+					}else{
+						//alert("分享");
+						$("#shareit").show();
+					}
+					c.removeEventListener('mousedown',all_last_select,false);
+					_isSelectOver = true;
+					_isOver = true;
+					_isTextOver = true;
+					_last_page_type = 1;
+					
+				};
+				
+				function all_last_select1(e){
+					var x = e.offsetX;
+					var y = e.offsetY;
+					if(x<_width/2){
+						back();
+					}else{
+						$("#shareit").show();
+					}
+					c.removeEventListener('mousedown',all_last_select1,false);
+					_isSelectOver = true;
+					_isOver = true;
+					_isTextOver = true;
+					_last_page_type = 0;
+					
+				};
+				/*********************** 选择点击事件 *****************************/
+				
+				
+				
+				/*********************** 轮播动画  *****************************/
+				function study_animation0(){
+					clear();
+					drawGrid();
+					drawSmileImg();
+					_isOver = true;
+					addMsg("小屁孩儿，就知道玩手机，快滚去学习！^.^",0);
+					setTimeout(function(){ showClickHand(); },2000);
+				};
+				
+				function study_animation1(){
+					clear();
+					drawGrid();
+					//  alert(_study_M);
+					var r2 = Math.floor( (_study_M)/30 );
+					var c2 = Math.ceil( (_study_M)%30 );
+					
+					drawRects(0,0,r2,c2,'rgba(85,141,236,1)');
+					//_isOver = true;
+					addMsg("这是你现在的人生看起来的样子。在这里1秒将走过现实中的5年。",0);
+					setTimeout(function(){ showClickHand(); },2000);
+					
+				};
+				
+				function study_animation2(){
+					clear();
+					drawGrid();
+					var r2 = Math.floor( (12*6)/30);
+					var c2 = Math.ceil( (12*6)%30);
+					drawRects(0,0,r2,c2,'rgba(85,141,236,1)');
+					//drawFriendImg();
+					addMsg("这是你上学前的快乐的、无忧无虑的日子，当年的玩伴现在是否还有联系呢",0);
+					hideClickHand();
+				};
+				
+				function study_animation3(){
+					clear();
+					drawGrid();
+					var r1 = Math.floor( (12*6)/30 );
+					var c1 = Math.floor( (12*6)%30 );
+					var r2 = Math.floor( (12*12)/30 );
+					var c2 = Math.ceil( (12*12)%30 );
+					drawRects(r1,c1,r2,c2,'rgba(85,141,236,1)');
+					addMsg("这是你的小学，那懵懂的童年现在回想起来是否让你微微一笑",0)
+				};
+				
+				function study_animation4(){
+					clear();
+					drawGrid();
+					var r1 = Math.floor( (12*12)/30 );
+					var c1 = Math.floor( (12*12)%30 );
+					var r2 = Math.floor( (12*18)/30 );
+					var c2 = Math.ceil( (12*18)%30 );
+					drawRects(r1,c1,r2,c2,'rgba(85,141,236,1)');
+					addMsg("这是你的中学，是否还记得叛逆的初中和日渐成熟的高中呢",0)
+				};
+				
+				function study_animation5(){
+					clear();
+					drawGrid();
+					var r1 = Math.floor( (12*17)/30 );
+					var c1 = Math.floor( (12*17)%30 );
+					var r2 = Math.floor( (12*18-2)/30 );
+					var c2 = Math.ceil( (12*18-2)%30 );
+					drawRects(r1,c1,r2,c2,'rgba(85,141,236,1)');
+					addMsg("你的高三如今看起来是这样的",0)
+				};
+				
+				function study_animation6(){
+					clear();
+					drawGrid();
+					var r1 = Math.floor( (12*18)/30 );
+					var c1 = Math.floor( (12*18)%30 );
+					var r2 = Math.floor( (_study_M)/30 );
+					var c2 = Math.ceil( (_study_M)%30 );
+					drawRects(r1,c1,r2,c2,'rgba(85,141,236,1)');
+					addMsg("你的大学已经过去了"+(_study_M-12*18)+"个月,不一样的环境给了你怎样的成长和蜕变呢",0)
+				};
+				
+				function study_animation7(){
+					clear();
+					drawGrid();
+					var r1 = Math.floor( _study_M/30 );
+					var c1 = Math.floor( _study_M%30 );
+					var r2 = Math.floor( (12*22-2)/30 );
+					var c2 = Math.ceil( (12*22-2)%30 );
+					drawRects(r1,c1,r2,c2,'rgba(85,141,236,1)');
+					addMsg("还有"+(12*22-2-_study_M)+"个月你就要大学毕业了，如今将要各奔东西，说好会再见，但我们不说再见。",0)
+				};
+				
+				function study_animation8(){
+					clear();
+					drawGrid();
+					var r1 = Math.floor( _study_M/30 );
+					var c1 = Math.floor( _study_M%30 );
+					var r2 = Math.floor( (12*22-2)/30 );
+					var c2 = Math.ceil( (12*22-2)%30 );
+					drawRects(r1,c1,r2,c2,'rgba(85,141,236,1)');
+					addMsg("你们的大学还剩下"+(12*22-2-_study_M)+"个月。",0)
+				};
+				
+				function study_animation9(){
+					clear();
+					drawGrid();
+					var r1 = Math.floor( (12*12)/30 );
+					var c1 = Math.floor( (12*12)%30 );
+					var r2 = Math.floor( (_study_M)/30 );
+					var c2 = Math.ceil( (_study_M)%30 );
+					drawRects(r1,c1,r2,c2,'rgba(85,141,236,1)');
+					addMsg("你的初中已经过去了"+(_study_M-12*12)+"个月。",0)
+				};
+				
+				function study_animation10(){
+					clear();
+					drawGrid();
+					var r1 = Math.floor( (12*12)/30 );
+					var c1 = Math.floor( (12*12)%30 );
+					var r2 = Math.floor( (12*15)/30 );
+					var c2 = Math.ceil( (12*15)%30 );
+					drawRects(r1,c1,r2,c2,'rgba(85,141,236,1)');
+					addMsg("这是你的初中三年。",0)
+				};
+				
+				function study_animation11(){
+					clear();
+					drawGrid();
+					var r1 = Math.floor( (_study_M)/30 );
+					var c1 = Math.floor( (_study_M)%30 );
+					var r2 = Math.floor( (12*15-2)/30 );
+					var c2 = Math.ceil( (12*15-2)%30 );
+					drawRects(r1,c1,r2,c2,'rgba(85,141,236,1)');
+					addMsg("你的初中只剩下 "+(12*15-2-_study_M)+"个月了。",0)
+				};
+				
+				function study_animation12(){
+					clear();
+					drawGrid();
+					var r1 = Math.floor( (_study_M)/30 );
+					var c1 = Math.floor( (_study_M)%30 );
+					var r2 = Math.floor( (12*15-2)/30 );
+					var c2 = Math.ceil( (12*15-2)%30 );
+					drawRects(r1,c1,r2,c2,'rgba(85,141,236,1)');
+					addMsg("再过2个月你就要参加中考了，相信自己，你能行的！",0)
+				};
+				
+				function study_animation13(){
+					clear();
+					drawGrid();
+					var r1 = Math.floor( (12*15)/30 );
+					var c1 = Math.floor( (12*15)%30 );
+					var r2 = Math.floor( (_study_M)/30 );
+					var c2 = Math.ceil( (_study_M)%30 );
+					drawRects(r1,c1,r2,c2,'rgba(85,141,236,1)');
+					addMsg("你的高中已经过去了 "+(_study_M-12*15)+"个月。",0)
+				};
+				
+				function study_animation14(){
+					clear();
+					drawGrid();
+					var r1 = Math.floor( (12*18)/30 );
+					var c1 = Math.floor( (12*18)%30 );
+					var r2 = Math.floor( (12*22)/30 );
+					var c2 = Math.ceil( (12*22)%30 );
+					drawRects(r1,c1,r2,c2,'rgba(85,141,236,1)');
+					addMsg("这是你的本科生涯，四年的时光给你留下了什么样的回忆呢。",0)
+				};
+				
+				function study_animation15(){
+					clear();
+					drawGrid();
+					var r1 = Math.floor( (12*22)/30 );
+					var c1 = Math.floor( (12*22)%30 );
+					var r2 = Math.floor( (_study_M)/30 );
+					var c2 = Math.ceil( (_study_M)%30 );
+					drawRects(r1,c1,r2,c2,'rgba(85,141,236,1)');
+					addMsg("你的研究生生涯已经过去了"+(_study_M-12*22)+"个月了，也许你已经毕业开始了新的生活，也许再过"+(12*25-2-_study_M)+"个月你就毕业了，梦想还在继续。",0)
+				};
+				
+				function study_animation16(){
+					clear(); 
+					drawGrid();
+					var r1 = Math.floor( (12*22)/30 );
+					var c1 = Math.floor( (12*22)%30 );
+					var r2 = Math.floor( (_study_M)/30 );
+					var c2 = Math.ceil( (_study_M)%30 );
+					drawRects(r1,c1,r2,c2,'rgba(85,141,236,1)');
+					addMsg("你的研究生生涯已经过去了"+(_study_M-12*22)+"个月了，现在的你是在实验室做实验、写论文，还是在实习呢。",0)
+				};
+				
+				function study_animation17(){
+					clear();
+					drawGrid();
+					var r1 = Math.floor( (_study_M)/30 );
+					var c1 = Math.floor( (_study_M)%30 );
+					var r2 = Math.floor( (12*18-2)/30 );
+					var c2 = Math.ceil( (12*18-2)%30 );
+					drawRects(r1,c1,r2,c2,'rgba(85,141,236,1)');
+					addMsg("你的高中还有"+(12*18-2-_study_M)+"个月。",0);
+				};
+				
+				function study_animation18(){
+					clear();
+					drawGrid();
+					var r1 = Math.floor( (_study_M)/30 );
+					var c1 = Math.floor( (_study_M)%30 );
+					var r2 = Math.floor( (12*18-2)/30 );
+					var c2 = Math.ceil( (12*18-2)%30 );
+					drawRects(r1,c1,r2,c2,'rgba(85,141,236,1)');
+					var diffTime = new Date(2015,5,7)-new Date();
+					var day = Math.floor(diffTime/(1000*3600*24) );
+					var hour = Math.floor( (diffTime-day*1000*3600*24)/(1000*3600) );
+					var min = Math.floor( (diffTime-day*1000*3600*24-hour*1000*3600)/(1000*60) );
+					var sec = Math.floor( (diffTime-day*1000*3600*24-hour*1000*3600-min*1000*60)/1000 );
+					
+					addMsg("在过"+day+"天"+hour+"时"+min+"分"+sec+"秒，你就要参加高考了，加油，梦想是会实现的！",0);
+				};
+				
+				function study_tm_animation1(){
+					clear();
+					drawGrid();
+					hideAboutUs();
+					$("#title").text("这是你和父母的时光故事");
+					var r2 = Math.floor( (_study_M+12*26)/30 );
+					var c2 = Math.ceil( (_study_M+12*26)%30 );
+					drawRectWithColors(0,0,r2,c2,'rgba(244,199,169,1)');
+					addMsg("假设父母平均比我们大26岁的话，他们现在的人生看起来是这样的。",0);
+				};
+				
+				function study_tm_animation2(){
+					clearText();
+					var r1 = Math.floor( (12*26)/30 );
+					var c1 = Math.floor( (12*26)%30 );
+					var r2 = Math.floor( (_study_M+12*26)/30 );
+					var c2 = Math.ceil( (_study_M+12*26)%30 );
+					drawRectWithColors(r1,c1,r2,c2,'rgba(0, 162,232,1)');
+					addMsg( (_study_M/12).toFixed(0)+"年前，我们呱呱坠地来到这世上，从此在父母的"+( (_study_M*100)/(_study_M+12*26) ).toFixed(2)+"%的人生里留下了我们的印记。",0);
+				};
+				
+				function study_tm_animation3(){
+					clear();
+					drawGrid();
+					var r1 = Math.floor( (12*26)/30 );
+					var c1 = Math.floor( (12*26)%30 );
+					var r2 = Math.floor( (3*12+12*26)/30 );
+					var c2 = Math.ceil( (3*12+12*26)%30 );
+					drawRectWithColors(r1,c1,r2,c2,'rgba(220, 225,13,1)');
+					addMsg("在我们上幼儿园之前，我们和父母几乎天天在一起。",0);
+				};
+				
+				function study_tm_animation4(){
+					clear();
+					drawGrid();
+					var r1 = Math.floor( (348)/30 );
+					var c1 = Math.floor( (348)%30 );
+					var r2 = Math.floor( (9*12+348)/30 );
+					var c2 = Math.ceil( (9*12+348)%30 );
+					drawRectWithColors(r1,c1,r2,c2,'rgba(0, 162,232,1)');
+					addMsg("这是我们的幼儿园和小学在父母人生中的位置",0);
+				};
+				
+				function study_tm_animation5(){
+					clearText();
+					var r1 = Math.floor( (348)/30 );
+					var c1 = Math.floor( (348)%30 );
+					var r2 = Math.floor( (434)/30 );
+					var c2 = Math.ceil( (434)%30 );
+					drawRectWithColors(r1,c1,r2,c2,'rgba(220, 225,13,1)');
+					addMsg("我们和父母约有4/5的时间是在一起的。",0);
+				};
+				
+				function study_tm_animation6(){
+					clear();
+					drawGrid();
+					var factor1 = 12*26+12*12;
+					var factor2 = Math.round( factor1+1+12*6*9/12*2/7+12*6*3/12 );
+					var r1 = Math.floor( (factor1)/30 );
+					var c1 = Math.floor( (factor1)%30 );
+					var r2 = Math.floor( (factor1+12*6)/30 );
+					var c2 = Math.ceil( (factor1+12*6)%30 );
+					drawRectWithColors(r1,c1,r2,c2,'rgba(119, 140,245,1)');
+					addMsg("这是我们的中学在父母人生中的位置",0);
+				};
+				
+				function study_tm_animation7(){
+					clearText();
+					var factor1 = 12*26+12*12;
+					var factor2 = Math.round( factor1+1+12*6*9/12*2/7+12*6*3/12 );
+					var r1 = Math.floor( (factor1)/30 );
+					var c1 = Math.floor( (factor1)%30 );
+					var r2 = Math.floor( (factor2)/30 );
+					var c2 = Math.ceil( (factor2)%30 );
+					drawRectWithColors(r1,c1,r2,c2,'rgba(220, 225,13,1)');
+					addMsg("如果我们中学住校，只能周末回家，我们和父母约有1/2的时间是在一起的",0);
+				};
+				
+				function study_tm_animation8(){
+					clear();
+					drawGrid();
+					var factor1 = 26*12+12*18;
+					var factor2 = Math.round( factor1+1+(_study_M-18*12) );
+					//alert(factor1+","+factor2);
+					var r1 = Math.floor( (factor1)/30 );
+					var c1 = Math.floor( (factor1)%30 );
+					var r2 = Math.floor( (factor2)/30 );
+					var c2 = Math.ceil( (factor2)%30 );
+					drawRectWithColors(r1,c1,r2,c2,'rgba(84,109 ,235,1)');
+					addMsg("这是我们的大学在父母人生中的位置",0);
+				};
+				
+				function study_tm_animation9(){
+					clearText();
+					var factor1 = 26*12+12*18;
+					var factor2 = Math.round( factor1+1+(_study_M-18*12)*3/12 );
+					//alert(factor1+","+factor2);
+					var r1 = Math.floor( (factor1)/30 );
+					var c1 = Math.floor( (factor1)%30 );
+					var r2 = Math.floor( (factor2)/30 );
+					var c2 = Math.ceil( (factor2)%30 );
+					drawRectWithColors(r1,c1,r2,c2,'rgba(220, 225,13,1)');
+					addMsg("我们和父母约有1/4的时间是在一起的",0);
+				};
+				
+				function study_tm_animation10(){
+					clear();
+					drawGrid();
+					var factor1 = _study_M +26*12+1;
+					var factor2 = Math.round( _study_M +26*12+1+(900-_study_M-26*12)/12*7/30 );
+					var r1 = Math.floor( (factor1)/30 );
+					var c1 = Math.floor( (factor1)%30 );
+					var r2 = Math.floor( (factor2)/30 );
+					var c2 = Math.ceil( (factor2)%30 );
+					drawRectWithColors(r1,c1,r2,c2,'rgba(220, 225,13,1)');
+					addMsg("如果在接下来的日子里，我们每周都往家打一次一个小时的电话，我们和父母相处的时间会多出这么多，而他们每周都会有一天充满了期待和幸福。",0);
+				};
+				
+				function study_tm_animation11(){
+					clear();
+					drawGrid();
+					var factor1 = Math.round( _study_M+26*12+1+(900-_study_M-26*12)/12*7/30 );
+					var factor2 = Math.round( _study_M +26*12+1+(900-_study_M-26*12)/12*7/30*2 );
+					
+					var r1 = Math.floor( (factor1)/30 );
+					var c1 = Math.floor( (factor1)%30 );
+					var r2 = Math.floor( (factor2)/30 );
+					var c2 = Math.ceil( (factor2)%30 );
+					//drawRectWithColors(r1,c1,30,0,'rgba(220, 225,13,0.2)');
+					drawRectWithColors(r1,c1,r2,c2,'rgba(220, 225,13,1)');
+					
+					addMsg("如果我们在微信上每天和父母互动10分钟，我们和他们的联络时间会多出这么多,而他们的每一天都会充满着爱。",0);
+				};
+				
+				 
+				function love_animation1(){
+					clear();
+					drawGrid();
+					var r1 = Math.floor((_love_M-_love_n)/30);
+					var c1 = Math.floor((_love_M-_love_n)%30);
+					var r2 = r1;
+					var c2 = c1+1;
+					drawRects(r1,c1,r2,c2,'rgba(245,169,170,1)');
+					addMsg("某一天，你在Ta身上看到了所有对明天的期许。",0);	
+					setTimeout(function(){ showClickHand(); },2000);
+				};
+				function love_animation2(){
+					clear();
+					drawGrid();
+					var r1 = Math.floor((_love_M-_love_n)/30);
+					var c1 = Math.floor((_love_M-_love_n)%30);
+					var r2 = r1;
+					var c2 = c1+2;
+					drawRects(r1,c1,r2,c2,'rgba(245,169,170,1)');
+					addMsg("你们恋爱了。",0);	
+					hideClickHand();
+				};
+				function love_animation3(){
+					clear();
+					drawGrid();
+					var r1 = Math.floor((_love_M-_love_n)/30);
+					var c1 = Math.floor((_love_M-_love_n)%30);
+					var r2 = Math.floor((_love_M-_love_n/2)/30);
+					var c2 = Math.ceil((_love_M-_love_n/2)%30);
+					drawRects(r1,c1,r2,c2,'rgba(245,169,170,1)');
+					addMsg("你们慢慢走过了大约"+_love_n*30+"个甜蜜的日子。",0)	;	
+				};
+				function love_animation4(){
+					clear();
+					drawGrid();
+					var r1 = Math.floor((_love_M-_love_n)/30);
+					var c1 = Math.ceil((_love_M-_love_n)%30);
+					var r2 = Math.floor((_love_M-2*_love_n/3)/30);
+					var c2 = Math.ceil((_love_M-2*_love_n/3)%30);
+					drawRects(r1,c1,r2,c2,'rgba(245,169,170,1)');
+					addMsg("在这些日子里，你们或许会有短暂的出差、小别扭。",0)	;
+				};
+				function love_animation5(){
+					clear();
+					drawGrid();
+					var r1 = Math.floor((_love_M-_love_n)/30);
+					var c1 = Math.ceil((_love_M-_love_n)%30);
+					var r2 = Math.floor((_love_M-_love_n+_love_n/7)/30);
+					var c2 = Math.ceil((_love_M-_love_n+_love_n/7)%30);
+					drawRects(r1,c1,r2,c2,'rgba(245,169,170,1)');
+					addMsg("亦或是异地恋，一周见一天。",0)	;	
+				};
+				function love_animation6(){
+					clear();
+					drawGrid();
+					var r1 = Math.floor((_love_M-_love_n)/30);
+					var c1 = Math.ceil((_love_M-_love_n)%30);
+					var r2 = Math.floor((_love_M)/30);
+					var c2 = Math.ceil((_love_M)%30);
+					drawRects(r1,c1,r2,c2,'rgba(245,169,170,1)');
+					addMsg("然而，这些日子终将成为对方生命里最重要的时光。",0)	;
+				};
+				function love_animation7(){
+					clear();
+					drawGrid();
+					var r1 = Math.floor((_love_M-_love_n)/30);
+					var c1 = Math.ceil((_love_M-_love_n)%30);
+					
+					drawRects(r1,c1,29,30,'rgba(245,169,170,1)');
+					addMsg("你们最终成为了彼此最亲密的人，并陪伴Ta剩下的整个生命。",0);		
+				};
+				
+				function work_animation1(){
+					clear();
+					drawGrid();
+					var r2 = Math.floor( (_work_M)/30);
+					var c2 = Math.ceil( (_work_M)%30);
+					drawRects(0,0,r2,c2,'rgba(154,154,154,1)');
+					addMsg("这是你现在的人生看起来的样子。在这里1秒将走过现实中的5年。",0);
+					setTimeout(function(){ showClickHand(); },3000);
+				};
+				
+				function work_animation2(){
+					clear();
+					drawGrid();
+//					if(_work_N>(_work_M-12*6-12)){
+//						_work_N = _work_M-12*6-12;
+//					}
+					//alert(_work_M+","+_work_N);
+					
+					var r1 = Math.floor((12*6)/30);
+					var c1 = Math.ceil((12*6)%30);
+					var r2 = Math.floor((_work_M-_work_N)/30);
+					var c2 = Math.ceil((_work_M-_work_N)%30);
+					drawRects(r1,c1,r2,c2,'rgba(1,117,203,1)');
+					addMsg("这是你工作前的学习生涯",0);
+					hideClickHand();
+				};
+				
+				function work_animation3(){
+					clear();
+					drawGrid();
+					var r1 = Math.floor((_work_M-_work_N)/30);
+					var c1 = Math.ceil((_work_M-_work_N)%30);
+					var r2 = Math.floor((_work_M)/30);
+					var c2 = Math.ceil((_work_M)%30);
+					drawRects(r1,c1,r2,c2,'rgba(154,154,154,1)');
+					addMsg("这是你工作的日子看起来的样子",0);
+				};
+				
+				function work_animation4(){
+					clear();
+					drawGrid();
+					var r1 = Math.floor((_work_M-_work_N)/30);
+					var c1 = Math.ceil((_work_M-_work_N)%30);
+					var r2 = Math.floor((_work_M-_work_N+3)/30);
+					var c2 = Math.ceil((_work_M-_work_N+3)%30);
+					drawRects(r1,c1,r2,c2,'rgba(154,154,154,1)');
+					addMsg("如果你用3个月扛下了一个压力山大的任务，中间以为有很多过不去的坎，时常加班到深夜，最终按时完成，回头看起来是这样的",0)
+				};
+				
+				function work_animation5(){
+					clear();
+					drawGrid();
+					var r1 = Math.floor((_work_M)/30);
+					var c1 = Math.ceil((_work_M)%30);
+					var r2 = Math.floor((60*12)/30);
+					var c2 = Math.ceil((60*12)%30);
+					drawRects(r1,c1,r2,c2,'rgba(154,154,154,1)');
+					addMsg("如果你工作到60岁，那你接下来工作的日子是这样子的 。",0);
+				};
+				
+				function work_animation6(){
+					clear();
+					drawGrid();
+					var factor1 = Math.round( (60*12-_work_M)*43 );
+					var factor2 = Math.round( (60*12-_work_M)*0.06 );
+					var r1 = Math.floor((_work_M)/30);
+					var c1 = Math.ceil((_work_M)%30);
+					var r2 = Math.floor( (_work_M+1+factor2 )/30);
+					var c2 = Math.ceil((_work_M+1+factor2) )%30;
+					drawRects(r1,c1,r2,c2,'rgba(154,154,154,1)');
+					addMsg("在接下来工作的日子里， 如果你每天花费2小时在上班路上，那么有"+factor1+"个小时你是在路上的。",0);
+				};
+				
+				function work_animation7(){
+					clear();
+					drawGrid();
+					if(_work_N>5*12){
+						var factor = Math.round( 0.27* (60*12-_work_M) );
+						var r1 = Math.floor((_work_M)/30);
+						var c1 = Math.ceil((_work_M)%30);
+						var r2 = Math.floor( (_work_M+1+factor )/30);
+						var c2 = Math.ceil((_work_M+1+factor ) )%30;
+						drawRects(r1,c1,r2,c2,'rgba(154,154,154,1)');
+						addMsg(" 在接下来工作的日子里，如果你每天工作8小时，除去上班、睡觉、吃饭，留给你空闲时间是这样的。",0);
+					}else{
+						var factor = Math.round( (60*12-_work_M)*0.512 );
+						var r1 = Math.floor((_work_M)/30);
+						var c1 = Math.ceil((_work_M)%30);
+						var r2 = Math.floor( (_work_M+1+factor  )/30);
+						var c2 = Math.ceil((_work_M+1+factor  ) )%30;
+						drawRects(r1,c1,r2,c2,'rgba(220, 225,13,1)');
+						addMsg("在接下来工作的日子里，如果你的工作是你所热爱的，那你能够投入到你所热爱的事情的时间可能就是这样的。",0);
+					}
+				};
+				
+				function work_animation8(){
+					clear();
+					drawGrid();
+					if(_work_N>5*12){
+						var factor = Math.round( 0.113* (60*12-_work_M) );
+						var r1 = Math.floor((_work_M)/30);
+						var c1 = Math.ceil((_work_M)%30);
+						var r2 = Math.floor( (_work_M+1+factor  )/30);
+						var c2 = Math.ceil((_work_M+1+factor ) )%30;
+						drawRects(r1,c1,r2,c2,'rgba(154,154,154,1)');
+						addMsg(" 在接下来工作的日子里，如果你每天加班到晚上10点，每周上6天班，那么你能陪伴家人的时间最多是这样的。",0);
+					}else{
+						var factor = Math.round( (60*12-_work_M)*0.274 );
+						var r1 = Math.floor((_work_M)/30);
+						var c1 = Math.ceil((_work_M)%30);
+						var r2 = Math.floor( (_work_M+1+factor  )/30);
+						var c2 = Math.ceil((_work_M+1+factor ) )%30;
+						drawRects(r1,c1,r2,c2,'rgba(220, 225,13,1)');
+						addMsg("在接下来工作的日子里，如果你并不喜欢你的工作，那你能够投入到你所热爱的事情的时间可能最多是这样，而在另外一倍多的时间里，你只是在工作。",0);
+					}
+				};
+				
+				function work_tm_animation1(){
+					clear();
+					drawGrid();
+					hideAboutUs();
+					if(	_work_M-_work_N>=22*12 && _work_M>=22*12 && _work_M<=35*12){
+						$("#title").text("这是你和父母的时光故事");
+						var r2 = Math.floor( (_work_M+12*26)/30 );
+						var c2 = Math.ceil( (_work_M+12*26)%30 );
+						drawRectWithColors(0,0,r2,c2,'rgba(244,199,169,1)');
+						addMsg("假设父母平均比我们大26岁的话，他们现在的人生看起来是这样的。",0);		
+					}else{
+						$("#title").text("这是你和自己的时光故事");
+						var r2 = Math.floor( (6*12)/30 );
+						var c2 = Math.ceil( (6*12)%30 );
+						drawRectWithColors(0,0,r2,c2,'rgba(84,192 ,251,1)');
+						addMsg("在你的学前时光，你梦想是成为超人、打到怪兽的奥特曼、武功盖世的高人、美少女战士、拥有魔法的精灵，还是什么？",0);	
+					}
+					
+				};
+				function work_tm_animation2(){
+					clearText();
+					if(_work_M-_work_N>=22*12 && _work_M>=22*12 && _work_M<=35*12){
+						var r1 = Math.floor( (12*26)/30 );
+						var c1 = Math.floor( (12*26)%30 );
+						var r2 = Math.floor( (_work_M+12*26)/30 );
+						var c2 = Math.ceil( (_work_M+12*26)%30 );
+						drawRectWithColors(r1,c1,r2,c2,'rgba(0, 162,232,1)');
+						addMsg( (_work_M/12).toFixed(0)+"年前，我们呱呱坠地来到这世上，从此在父母的"+( (_work_M*100)/(_work_M+12*26) ).toFixed(2)+"%的人生里留下了我们的印记。",0);
+					}else{
+						clear();
+						drawGrid();
+						var r1 = Math.floor( (12*6)/30 );
+						var c1 = Math.floor( (12*6)%30 );
+						var r2 = Math.floor( (12*12)/30 );
+						var c2 = Math.ceil( (12*12)%30 );
+						drawRectWithColors(r1,c1,r2,c2,'rgba(0, 162,232,1)');
+						addMsg( "当你上小学时，在你的作文里，长大后的梦想是成为科学家、发明家、军人、设计师、画家，还是什么？",0);
+					}
+				};
+				function work_tm_animation3(){
+					if(_work_M-_work_N>=22*12 && _work_M>=22*12 && _work_M<=35*12){
+						clear();
+						drawGrid();
+						var r1 = Math.floor( (12*26)/30 );
+						var c1 = Math.floor( (12*26)%30 );
+						var r2 = Math.floor( (3*12+12*26)/30 );
+						var c2 = Math.ceil( (3*12+12*26)%30 );
+						drawRectWithColors(r1,c1,r2,c2,'rgba(220, 225,13,1)');
+						addMsg("在我们上幼儿园之前，我们和父母几乎天天在一起。",0);
+					}else{
+						clear();
+						drawGrid();
+						var r1 = Math.floor( (12*12)/30 );
+						var c1 = Math.floor( (12*12)%30 );
+						var r2 = Math.floor( (12*15)/30 );
+						var c2 = Math.ceil( (12*15)%30 );
+						drawRectWithColors(r1,c1,r2,c2,'rgba(119, 140,245,1)');
+						addMsg("到了初中，你的梦想是考到第一名、成为篮球明星、拥有一件很喜欢的衣服/玩具、成为大人，还是什么？",0);
+					}
+				};
+				function work_tm_animation4(){
+					if(_work_M-_work_N>=22*12 && _work_M>=22*12 && _work_M<=35*12){
+						clear();
+						drawGrid();
+						var r1 = Math.floor( (348)/30 );
+						var c1 = Math.floor( (348)%30 );
+						var r2 = Math.floor( (9*12+348)/30 );
+						var c2 = Math.ceil( (9*12+348)%30 );
+						drawRectWithColors(r1,c1,r2,c2,'rgba(0, 162,232,1)');
+						addMsg("这是我们的幼儿园和小学在父母人生中的位置",0);
+					}else{
+						clear();
+						drawGrid();
+						var r1 = Math.floor( (12*15)/30 );
+						var c1 = Math.floor( (12*15)%30 );
+						var r2 = Math.floor( (12*18)/30 );
+						var c2 = Math.ceil( (12*18)%30 );
+						drawRectWithColors(r1,c1,r2,c2,'rgba(119, 140,245 ,1)');
+						addMsg("到了高中，你是否纠结过梦想是考上清华还是考上北大？",0);
+					}
+				};
+				function work_tm_animation5(){
+					clearText();
+					if(_work_M-_work_N>=22*12 && _work_M>=22*12 && _work_M<=35*12){
+						var r1 = Math.floor( (348)/30 );
+						var c1 = Math.floor( (348)%30 );
+						var r2 = Math.floor( (434)/30 );
+						var c2 = Math.ceil( (434)%30 );
+						drawRectWithColors(r1,c1,r2,c2,'rgba(220, 225,13,1)');
+						addMsg("我们和父母约有4/5的时间是在一起的。",0);
+					}else{
+						clear();
+						drawGrid();
+						var factor1 = 12*18;
+						var factor2 = 12*22;
+						var r1 = Math.floor( (factor1)/30 );
+						var c1 = Math.floor( (factor1)%30 );
+						var r2 = Math.floor( (factor2)/30 );
+						var c2 = Math.ceil( (factor2)%30 );
+						drawRectWithColors(r1,c1,r2,c2,'rgba(84,109 ,235,1)');
+						addMsg("上了大学，你的梦想是成为学神、和你喜欢的ta在一起、环游世界、从事自己喜欢的职业，还是什么？",0);
+					}
+				};
+				function work_tm_animation6(){
+					clearText();
+					if(_work_M-_work_N>=22*12 && _work_M>=22*12 && _work_M<=35*12){
+						clear();
+						drawGrid();
+						var factor1 = 12*26+12*12;
+						var factor2 = Math.round( factor1+1+12*6*9/12*2/7+12*6*3/12 );
+						var r1 = Math.floor( (factor1)/30 );
+						var c1 = Math.floor( (factor1)%30 );
+						var r2 = Math.floor( (factor1+12*6)/30 );
+						var c2 = Math.ceil( (factor1+12*6)%30 );
+						drawRectWithColors(r1,c1,r2,c2,'rgba(119, 140,245,1)');
+						addMsg("这是我们的中学在父母人生中的位置",0);
+					}else{
+						clear();
+						drawGrid();
+						var factor1 = 12*22;
+						var factor2 = _work_M<12*22+1? 12*24: _work_M;
+						var r1 = Math.floor( (factor1)/30 );
+						var c1 = Math.floor( (factor1)%30 );
+						var r2 = Math.floor( (factor2)/30 );
+						var c2 = Math.ceil( (factor2)%30 );
+						drawRectWithColors(r1,c1,r2,c2,'rgba(0,64,128,1)');
+						addMsg("工作了，你梦想是自己 干出一番事业、 成为老板、拥有很多钱、过上无忧无虑的生活、还是什么呢？",0);
+						_currentCase +=7;
+					}
+				};
+				function work_tm_animation7(){
+					clearText();
+					if(_work_M-_work_N>=22*12 && _work_M>=22*12 && _work_M<=35*12){
+						var factor1 = 12*26+12*12;
+						var factor2 = Math.round( factor1+1+12*6*9/12*2/7+12*6*3/12 );
+						var r1 = Math.floor( (factor1)/30 );
+						var c1 = Math.floor( (factor1)%30 );
+						var r2 = Math.floor( (factor2)/30 );
+						var c2 = Math.ceil( (factor2)%30 );
+						drawRectWithColors(r1,c1,r2,c2,'rgba(220, 225,13,1)');
+						addMsg("如果我们中学住校，只能周末回家，我们和父母约有1/2的时间是在一起的",0);
+					}else{
+						
+					}
+				};
+				
+				function work_tm_animation8(){
+					clear();
+					drawGrid();
+					var factor1 = 12*26+12*18;
+					var factor2 = 12*26+12*18+1+12*4;
+					var r1 = Math.floor( (factor1)/30 );
+					var c1 = Math.floor( (factor1)%30 );
+					var r2 = Math.floor( (factor2)/30 );
+					var c2 = Math.ceil( (factor2)%30 );
+					drawRectWithColors(r1,c1,r2,c2,'rgba(84,109 ,235,1)');
+//					addMsg("当我们上了大学之后我们能够陪伴父母的日子是这样的。",0);
+					addMsg("这是我们的大学在父母人生中的位置",0);
+				};
+				
+				function work_tm_animation9(){
+					clearText();
+					var factor1 = 12*26+12*18;
+					var factor2 = 12*26+12*18+1+12*4*3/12;
+					var r1 = Math.floor( (factor1)/30 );
+					var c1 = Math.floor( (factor1)%30 );
+					var r2 = Math.floor( (factor2)/30 );
+					var c2 = Math.ceil( (factor2)%30 );
+					drawRectWithColors(r1,c1,r2,c2,'rgba(220, 225,13,1)');
+					addMsg("我们和父母约有1/4的时间是在一起的",0);
+				};
+				
+				function work_tm_animation10(){
+					clear();
+					drawGrid();
+					var factor1 = 12*26+12*22+1;
+					var factor2 = Math.round(12*26+12*22+1+_work_M-22*12);
+					var r1 = Math.floor( (factor1)/30 );
+					var c1 = Math.floor( (factor1)%30 );
+					var r2 = Math.floor( (factor2)/30 );
+					var c2 = Math.ceil( (factor2)%30 );
+					drawRectWithColors(r1,c1,r2,c2,'rgba(0,64,128,1)');
+					addMsg("这是我们工作的日子在父母人生中的样子",0);
+				};
+				
+				function work_tm_animation11(){
+					clearText();
+						var factor1 = 12*26+12*22+1;
+						var factor2 = Math.round(12*26+12*22+1+0.5*(_work_M/12-22));
+						var r1 = Math.floor( (factor1)/30 );
+						var c1 = Math.floor( (factor1)%30 );
+						var r2 = Math.floor( (factor2)/30 );
+						var c2 = Math.ceil( (factor2)%30 );
+						drawRectWithColors(r1,c1,r2,c2,'rgba(220, 225,13,1)');
+						addMsg("如果我们在异地工作，我们和父母可能就只有1/24的时间是在一起的",0);
+				};
+	
+				function work_tm_animation12(){
+					clear();
+					drawGrid();
+					var factor1 = _work_M +26*12+1;
+					var factor2 = Math.round( _work_M +26*12+1+1+(900-_work_M-26*12)/12*7/30 );
+					var r1 = Math.floor( (factor1)/30 );
+					var c1 = Math.floor( (factor1)%30 );
+					var r2 = Math.floor( (factor2)/30 );
+					var c2 = Math.ceil( (factor2)%30 );
+					drawRectWithColors(r1,c1,r2,c2,'rgba(220, 225,13,1)');
+					addMsg("如果在接下来的日子里，我们每周都往家打一次一个小时的电话，我们和父母相处的时间会多出这么多。而他们每周都会有一天充满了期待和幸福。",0);
+				};
+				
+				function work_tm_animation13(){
+					clearText();
+					var factor1 = Math.round( _work_M+26*12+1+1+(900-_work_M-26*12)/12*7/30 );
+					var factor2 = Math.round( _work_M +26*12+1+1+(900-_work_M-26*12)/12*7/30*2 );
+					var r1 = Math.floor( (factor1)/30 );
+					var c1 = Math.floor( (factor1)%30 );
+					var r2 = Math.floor( (factor2)/30 );
+					var c2 = Math.ceil( (factor2)%30 );
+					drawRectWithColors(r1,c1,r2,c2,'rgba(220, 225,13,1)');
+					addMsg("如果我们在微信上每天和父母互动10分钟，我们和他们的联络时间可能会多出这么多,而他们的每一天都会充满着爱。",0);
+				};
+				
+				
+				function family_animation1(){
+					clear();
+					drawGrid();
+					var r2 = Math.floor( ( _family_M )/30);
+					var c2 = Math.ceil( ( _family_M ) %30);
+					drawRectWithColors(0,0,r2,c2,'rgba(244,199,169,1)');
+					addMsg("这是您现在的人生看起来的样子。在这里1秒将走过现实中的5年。",0);
+				};
+				
+				function family_animation2(){
+//					clear();
+//					drawGrid();
+					clearText();
+					var r1 = Math.floor((_family_M-_family_C-18)/30);
+					var c1 = Math.ceil((_family_M-_family_C-18)%30);
+					var r2 = Math.floor( ( _family_M )/30);
+					var c2 = Math.ceil( ( _family_M ) %30);
+					drawRectWithColors(r1,c1,r2,c2,'rgba(245,169,170,1)');
+					addMsg("多年前，您和您的爱人相遇、相爱、相伴，结合成了一个幸福的家庭，牵手相伴一生的旅途",0);
+				};
+				
+				function family_animation3(){
+					//clear();
+					//drawGrid();
+					clearText();
+					var r1 = Math.floor((_family_M-_family_C)/30);
+					var c1 = Math.ceil((_family_M-_family_C)%30);
+					var r2 = Math.floor( ( _family_M-_family_C+1 )/30);
+					var c2 = Math.ceil( ( _family_M-_family_C+1 ) %30);
+					drawRectWithColors(r1,c1,r2,c2,'rgba(210,236,255,1)');
+					addMsg("伴随着一声啼哭，您的孩子来到了这个世上，从此您的人生有了新的意义",0);
+				};
+				
+				function family_animation4(){
+//					clear();
+//					drawGrid();
+					clearText();
+					var r1 = Math.floor((_family_M-_family_C)/30);
+					var c1 = Math.ceil((_family_M-_family_C)%30);
+					var r2 = Math.floor( ( _family_M-_family_C+12 )/30);
+					var c2 = Math.ceil( ( _family_M-_family_C+12 ) %30);
+					drawRectWithColors(r1,c1,r2,c2,'rgba(210,236,255,1)');
+					addMsg("过了大约一年，当您听见孩子叫的第一声爸爸妈妈时，您脸上的笑容一定是幸福的",0);
+				};
+				
+				function family_animation5(){
+//					clear();
+//					drawGrid();
+					clearText();
+					if(_family_child_type==1){
+						var r1 = Math.floor((_family_M-_family_C+12)/30);
+						var c1 = Math.ceil((_family_M-_family_C+12)%30);
+						var r2 = Math.floor( ( _family_M-_family_C+24 )/30);
+						var c2 = Math.ceil( ( _family_M-_family_C+24 ) %30);
+						drawRectWithColors(r1,c1,r2,c2,'rgba(165,216,254,1)');
+						addMsg("当孩子会自己走路，到处玩耍，累了的时候，他/她说：妈妈/爸爸抱，稚嫩童真的声音让人充满怜爱。 ",0);
+					}else{
+						var r1 = Math.floor((_family_M-_family_C+12)/30);
+						var c1 = Math.ceil((_family_M-_family_C+12)%30);
+						var r2 = Math.floor( ( _family_M-_family_C+36 )/30);
+						var c2 = Math.ceil( ( _family_M-_family_C+36 ) %30);
+						drawRectWithColors(r1,c1,r2,c2,'rgba(165,216,254,1)');
+						addMsg("当孩子会自己走路，到处玩耍，累了的时候，他/她说：妈妈/爸爸抱，稚嫩童真的声音让人充满怜爱。 ",0);
+					}
+					
+				};
+				
+				function family_animation6(){
+//					clear();
+//					drawGrid();
+					clearText();
+					if(_family_child_type==1){
+						var r1 = Math.floor((_family_M-_family_C+24)/30);
+						var c1 = Math.ceil((_family_M-_family_C+24)%30);
+						var r2 = Math.floor( ( _family_M )/30);
+						var c2 = Math.ceil( ( _family_M ) %30);
+						drawRectWithColors(r1,c1,r2,c2,'rgba(101,189,254,1)');
+						addMsg("孩子要走的成长之路还有很长，看着孩子一天天的长大，您的心里一定是喜悦的。",0);
+					}else{
+						var r1 = Math.floor((_family_M-_family_C+36)/30);
+						var c1 = Math.ceil((_family_M-_family_C+36)%30);
+						var r2 = Math.floor( ( _family_M-_family_C+72 )/30);
+						var c2 = Math.ceil( ( _family_M-_family_C+72 ) %30);
+						drawRectWithColors(r1,c1,r2,c2,'rgba(101,189,254,1)');
+						addMsg("刚送孩子去上幼儿园时，孩子哭哭啼啼的不愿和您分离。",0);
+					}
+					
+				};
+				
+				function family_animation7(){
+//					clear();
+//					drawGrid();
+					clearText();
+					if(_family_child_type==2){
+						var r1 = Math.floor((_family_M-_family_C+72)/30);
+						var c1 = Math.ceil((_family_M-_family_C+72)%30);
+						var r2 = Math.floor( ( _family_M-_family_C+84 )/30);
+						var c2 = Math.ceil( ( _family_M-_family_C+84 ) %30);
+						drawRectWithColors(r1,c1,r2,c2,'rgba(52,168,254,1)');
+						addMsg("孩子上小学了，回家的路上和您说在学校里的新鲜事，有没有觉得孩子的世界真好。",0);
+					}else if(_family_child_type>=3){
+						var r1 = Math.floor((_family_M-_family_C+72)/30);
+						var c1 = Math.ceil((_family_M-_family_C+72)%30);
+						var r2 = Math.floor( ( _family_M-_family_C+144 )/30);
+						var c2 = Math.ceil( ( _family_M-_family_C+144 ) %30);
+						drawRectWithColors(r1,c1,r2,c2,'rgba(52,168,254,1)');
+						addMsg("孩子上小学了，回家的路上和您说在学校里的新鲜事，有没有觉得孩子的世界真好。",0);
+					}
+				};
+				
+				function family_animation8(){
+//					clear();
+//					drawGrid();
+					clearText();
+					if(_family_child_type==2){
+						var r1 = Math.floor((_family_M-_family_C+84)/30);
+						var c1 = Math.ceil((_family_M-_family_C+84)%30);
+						var r2 = Math.floor( ( _family_M-_family_C+108 )/30);
+						var c2 = Math.ceil( ( _family_M-_family_C+108 ) %30);
+						drawRectWithColors(r1,c1,r2,c2,'rgba(1,139,241,1)');
+						addMsg("孩子要走的成长之路还有很长，看着孩子一天天的长大，您的心里一定是喜悦的。",0);
+					}else if(_family_child_type==3){
+						var r1 = Math.floor((_family_M-_family_C+144)/30);
+						var c1 = Math.ceil((_family_M-_family_C+144)%30);
+						var r2 = Math.floor( ( _family_M-_family_C+156 )/30);
+						var c2 = Math.ceil( ( _family_M-_family_C+156 ) %30);
+						drawRectWithColors(r1,c1,r2,c2,'rgba(1,139,241,1)');
+						addMsg("孩子上了中学，处于青春期的孩子是不是很让您为难，但随着时间的推移，您是不是也发现了孩子慢慢地长大了，懂事了。",0);
+					}else if(_family_child_type>3){
+						var r1 = Math.floor((_family_M-_family_C+144)/30);
+						var c1 = Math.ceil((_family_M-_family_C+144)%30);
+						var r2 = Math.floor( ( _family_M-_family_C+216 )/30);
+						var c2 = Math.ceil( ( _family_M-_family_C+216 ) %30);
+						drawRectWithColors(r1,c1,r2,c2,'rgba(1,139,241,1)');
+						addMsg("孩子上了中学，处于青春期的孩子是不是很让您为难，但随着时间的推移，您是不是也发现了孩子慢慢地长大了，懂事了。",0);
+					}
+					
+				};
+				
+				function family_animation9(){
+//					clear();
+//					drawGrid();
+					clearText();
+					if(_family_child_type==3){
+						var r1 = Math.floor((_family_M-_family_C+144)/30);
+						var c1 = Math.ceil((_family_M-_family_C+144)%30);
+						var r2 = Math.floor( ( _family_M-_family_C+180 )/30);
+						var c2 = Math.ceil( ( _family_M-_family_C+180 ) %30);
+						drawRectWithColors(r1,c1,r2,c2,'rgba(1,117,203,1)');
+						addMsg("就像您在上中学时一样，成长的蜕变总会让父母操心许多，但也正是有了这个过程，使得孩子有了破茧成蝶的美丽。",0);
+					}else if(_family_child_type==4){
+						var r1 = Math.floor((_family_M-_family_C+216)/30);
+						var c1 = Math.ceil((_family_M-_family_C+216)%30);
+						var r2 = Math.floor( ( _family_M-_family_C+240 )/30);
+						var c2 = Math.ceil( ( _family_M-_family_C+240 ) %30);
+						drawRectWithColors(r1,c1,r2,c2,'rgba(1,117,203,1)');
+						addMsg("孩子上了大学，也许是第一次离家这么远这么久，但电话、微信、亲情从未让家变远。",0);
+					}else if(_family_child_type==5){
+						var r1 = Math.floor((_family_M-_family_C+216)/30);
+						var c1 = Math.ceil((_family_M-_family_C+216)%30);
+						var r2 = Math.floor( ( _family_M-_family_C+264 )/30);
+						var c2 = Math.ceil( ( _family_M-_family_C+264 ) %30);
+						drawRectWithColors(r1,c1,r2,c2,'rgba(1,117,203,1)');
+						addMsg("孩子上了大学，也许是第一次离家这么远这么久，但电话、微信、亲情从未让家变远。",0);
+					}
+				};
+				
+				function family_animation10(){
+//					clear();
+//					drawGrid();
+					clearText();
+					if(_family_child_type==5){
+						var r1 = Math.floor((_family_M-_family_C+264)/30);
+						var c1 = Math.ceil((_family_M-_family_C+264)%30);
+						var r2 = Math.floor( ( _family_M-_family_C+300 )/30);
+						var c2 = Math.ceil( ( _family_M-_family_C+300 ) %30);
+						drawRectWithColors(r1,c1,r2,c2,'rgba(1,88,152,1)');
+						addMsg("孩子工作了，当他第一次过年给您包红包时，接过红包，欣慰一定在您的心里荡开了。",0);
+					}
+				};
+				
+				function family_animation11(){
+//					clear();
+//					drawGrid();
+					clearText();
+					if(_family_child_type==5&&_family_M>=55*12){
+						var r1 = Math.floor((_family_M-_family_C+300)/30);
+						var c1 = Math.ceil((_family_M-_family_C+300)%30);
+						var r2 = Math.floor( ( _family_M )/30);
+						var c2 = Math.ceil( ( _family_M ) %30);
+						drawRectWithColors(r1,c1,r2,c2,'rgba(244,199,169,1)');
+						addMsg("也许如今您的孩子已经结婚并做了爸爸/妈妈。爱一直被传承着，从未间断过。",0);
+					}
+				};
+				
+				//结束动画
+				function love_animation_last(){
+					clear();
+					drawGrid();
+					//drawLove(0,0,'rgba(245,169,170,1)');
+					//_isOver = true;
+					fadeIn_love();
+					var str = getRandomStr(str6);
+					document.title = "纸绘人生 | "+str;
+					
+					addMsg(str,0);
+					
+				};
+				
+				function study_animation_last(){
+					$("#title").css("visibility","hidden");
+					clear();
+					drawGrid();
+					if(_study_type==3){
+						//drawmiddlestudent(0,2,'rgba(119, 140,245 ,1)');
+						study_middle_grow_up();
+					}else if(_study_type==4){
+						//drawStudy(0,7,'rgba(85,141,236,1)');
+						study_college_grow_up();
+					}else{
+						fadeIn_study();
+					}
+					//fadeIn_study();
+					
+					var str = " ";
+					if(_study_type==1){	
+						str = getRandomStr(str1);
+					}else if(_study_type==2){
+						str = getRandomStr(str1);
+					}else if(_study_type==3){
+						
+						if(_study_grade==3){	//初三
+							str = getRandomStr(str3);
+							str += "--距中考2个月";
+						}else if(_study_grade==6){	//高三
+							var diffTime = new Date(2015,5,7)-new Date();
+							var day = Math.floor(diffTime/(1000*3600*24) );
+							str = getRandomStr(str3);
+							str += "--距高考"+day+"天";
+						}else{
+							str = getRandomStr(str1);
+						}
+						
+					}else if(_study_type==4){
+						
+						if(_study_grade==4){
+							str = getRandomStr(str4);
+							str += "--距毕业"+(22*12-2-_study_M)+"个月";
+						}else if(_study_grade==7 || _study_grade==11){
+							str = getRandomStr(str4);
+						}else{
+							str = getRandomStr(str2);
+						}
+					}
+					//alert(document.title);
+					document.title = "纸绘人生 | "+str;
+					//alert(document.title);
+					addMsg(str,0);	
+					hideClickHand();
+				};
+				
+				function all_animation_last(){
+					clearInterval( _fadeInAndOut_id );
+					clear();
+					drawGrid();
+					$("#title").css("visibility","");
+					$("#title").text("请点击图标，选择“传送门”去看你与Ta的时光故事、“返回”或者“分享”。");
+					drawlastselect();
+					showAboutUs();
+					
+					//addMsg("......",0);
+					c.addEventListener('mousedown',all_last_select,false);
+				};
+				
+				function all_animation_last1(){
+					clear();
+					drawGrid();
+					$("#title").text("请点击图标，选择“返回”重新选择、“分享”时光故事。");
+					$("#title").css("visibility","");
+					drawback(11,3,'rgba(69,192,26,1)');
+					drawshare(8,15,'rgba(69,192,26,1)');
+					drawshareframe(11,17,'rgba(69,192,26,1)');
+					addMsg(" ",0);
+					c.addEventListener('mousedown',all_last_select1,false);
+					showAboutUs();
+					//alert("log");
+					
+				};
+				
+				function family_animation_last(){
+					clear();
+					drawGrid();
+					//drawFamily(0,0,'rgba(244,199,169,1)');
+					fadeIn_family();
+					var str = getRandomStr(str5);
+					document.title = "纸绘人生 | "+str;
+					addMsg(str,0);
+				};
+				
+				function work_animation_last(){
+					clear();
+					drawGrid();
+					//drawWork(0,0,'rgba(154,154,154,1)');
+					//fadeInAndOut_work(false);
+					work_grow_up();
+					var str = getRandomStr(str8);
+					document.title = "纸绘人生 | "+str;
+					
+					addMsg(str,0);
+				};
+				
+				/*********************** 轮播动画  *****************************/
+				
+				/*********************** 选择界面  *****************************/
+				function animation_select(){
+					$("#title").removeClass("text-center");
+					$("#title").addClass("text-left");
+					$("#title").text("Q1.请选择你的人生现在所处的阶段");
+					$("#title").css("visibility","visible");
+					clear();
+					drawGrid();
+					drawStudySmall(0,0,'rgba(85,141,236,1)');
+					drawLoveSmall(0,15,'rgba(245,169,170,1)');
+					drawFamilySmall(15,15,'rgba(244,199,169,1)');
+					drawWorkSmall(15,0.5,'rgba(154,154,154,1)');
+					c.addEventListener('mousedown',mouseDown,false);
+					//body.removeEventListener('touchstart',body_touchStart,false);
+					showHome();
+					hideClickHand();
+					hideAboutUs();
+				};
+				
+				function animation_study_select_type(){
+					$("#title").text("Q2.请选择你正在上幼儿园、小学、中学还是大学？");
+					$("#title").css("visibility","visible");
+					clear();
+					drawGrid();
+					drawchild(3,4,'rgba(84,192 ,251,1)');
+					//drawpupil(1,17);
+					//修改   color1 = 'rgba(0,162,232,1)', color2 = 'rgba(205,16,26,1)'
+					drawpupil(1,17,'rgba(0,162,232,1)','rgba(205,16,26,1)');
+					drawlittlemiddlestudent(15,1,'rgba(119, 140,245 ,1)');
+					drawStudySmall(15,14,'rgba(84,109 ,235,1)');
+					//注意
+					_isOver = true;
+					//addMsg("......",0);
+					c.addEventListener('mousedown',study_select_type,false);
+				};
+				
+				function animation_study_select_grade(){
+					clear();
+					drawGrid();
+					$("#title").css("visibility","visible");
+					if(_study_type==1){
+						//$("#title").text("Q3.你上小学几年级啦？");
+					}else if(_study_type==2){
+						$("#title").text("Q3.请选择你上小学几年级啦？");
+						draw1(7,5,'rgba(85,141,236,1)');
+						draw2(7,13,'rgba(85,141,236,1)');
+						draw3(7,22,'rgba(85,141,236,1)');
+						draw4(17,4,'rgba(85,141,236,1)');
+						draw5(17,13,'rgba(85,141,236,1)');
+						draw6(17,22,'rgba(85,141,236,1)');
+					}else if(_study_type==3){
+						$("#title").text("Q3.请选择你上初一、初二、初三？高一、高二、高三？");
+						draw1(7,5,'rgba(117,175,247,1)');
+						draw2(7,13,'rgba(117,175,247,1)');
+						draw3(7,22,'rgba(117,175,247,1)');
+						
+						draw1(17,5,'rgba(119, 140,245 ,1)');
+						draw2(17,13,'rgba(119, 140,245 ,1)');
+						draw3(17,22,'rgba(119, 140,245 ,1)');
+					}else{
+						draw1(4,3,'rgba(9,142,233,1)');
+						draw2(4,9,'rgba(9,142,233,1)');
+						draw3(4,17,'rgba(9,142,233,1)');
+						draw4(4,24,'rgba(9,142,233,1)');
+						draw1(13,3,'rgba(84,109 ,235,1)');
+						draw2(13,9,'rgba(84,109 ,235,1)');
+						draw3(13,17,'rgba(84,109 ,235,1)');
+						draw1(22,3,'rgba(72,15,223,1)');
+						draw2(22,9,'rgba(72,15,223,1)');
+						draw3(22,17,'rgba(72,15,223,1)');
+						draw4(22,24,'rgba(72,15,223,1)');
+						$("#title").text("Q3.请选择你上大一、大二...？研一、研二...？还是博一、博二...？");
+					}
+					
+					
+					//addMsg("......",0);
+					c.addEventListener('mousedown',study_select_grade,false);
+				};
+				
+				function animation_love_select_time(){
+					$("#title").text("Q3.请选择你和Ta相爱多久了？（年）");
+					$("#title").css("visibility","visible");
+					clear();
+					drawGrid();		
+					drawlessthan(3,1,'rgba(245,169,170,1)');
+					draw1(2,4,'rgba(245,169,170,1)');
+					draw1(2,11,'rgba(245,169,170,1)');
+					draw2(2,17,'rgba(245,169,170,1)');
+					draw3(2,24,'rgba(245,169,170,1)');
+					
+					draw4(12,3,'rgba(245,169,170,1)');
+					draw5(12,10,'rgba(245,169,170,1)');
+					draw6(12,17,'rgba(245,169,170,1)');
+					draw7(12,24,'rgba(245,169,170,1)');
+					
+					draw8(22,3,'rgba(245,169,170,1)');
+					draw9(22,9,'rgba(245,169,170,1)');
+					draw1(22,15,'rgba(245,169,170,1)');
+					draw0(22,17,'rgba(245,169,170,1)');
+					draw1(22,23,'rgba(245,169,170,1)');
+					draw1(22,25,'rgba(245,169,170,1)');
+					fillRect(23,28,1,3,'rgba(245,169,170,1)');
+					fillRect(24,27,3,1,'rgba(245,169,170,1)');
+					addMsg(" ",0);
+					c.addEventListener('mousedown',love_select_lovetime,false);
+				};
+			
+			
+				function animation_love_select_age(){
+					$("#title").css("visibility","visible");
+					$("#title").text("Q2.请选择你的出生年代（**后）");
+					clear();
+					drawGrid();
+					draw0(3,2,'rgba(245,169,170,1)');
+					draw0(3,6,'rgba(245,169,170,1)');
+					
+					draw9(3,12,'rgba(245,169,170,1)');
+					draw5(3,16,'rgba(245,169,170,1)');
+					
+					draw9(3,22,'rgba(245,169,170,1)');
+					draw0(3,26,'rgba(245,169,170,1)');
+					
+					draw8(12,2,'rgba(245,169,170,1)');
+					draw5(12,6,'rgba(245,169,170,1)');
+					
+					draw8(12,12,'rgba(245,169,170,1)');
+					draw0(12,16,'rgba(245,169,170,1)');
+					
+					draw7(12,22,'rgba(245,169,170,1)');
+					draw5(12,26,'rgba(245,169,170,1)');
+					
+					draw7(21,2,'rgba(245,169,170,1)');
+					draw0(21,6,'rgba(245,169,170,1)');
+					
+					draw6(21,12,'rgba(245,169,170,1)');
+					draw5(21,16,'rgba(245,169,170,1)');
+					
+					draw6(21,22,'rgba(245,169,170,1)');
+					draw0(21,26,'rgba(245,169,170,1)');
+					c.addEventListener('mousedown',love_select_age,false);
+				};
+				
+				function animation_work_select_time(){
+					$("#title").css("visibility","visible");
+					$("#title").text("Q2.请选择你工作多久了？（年）");
+					clear();
+					drawGrid();
+					drawlessthan(3,1,'rgba(154,154,154,1)');
+					draw1(2,4,'rgba(154,154,154,1)');
+					draw1(2,11,'rgba(154,154,154,1)');
+					draw2(2,17,'rgba(154,154,154,1)');
+					draw3(2,24,'rgba(154,154,154,1)');
+					
+					draw4(12,3,'rgba(154,154,154,1)');
+					draw5(12,10,'rgba(154,154,154,1)');
+					draw6(12,17,'rgba(154,154,154,1)');
+					draw7(12,24,'rgba(154,154,154,1)');
+					
+					draw8(22,3,'rgba(154,154,154,1)');
+					draw9(22,9,'rgba(154,154,154,1)');
+					draw1(22,15,'rgba(154,154,154,1)');
+					draw0(22,17,'rgba(154,154,154,1)');
+					draw1(22,23,'rgba(154,154,154,1)');
+					draw1(22,25,'rgba(154,154,154,1)');
+					fillRect(23,28,1,3,'rgba(154,154,154,1)');
+					fillRect(24,27,3,1,'rgba(154,154,154,1)');
+					//addMsg("......",0);
+					c.addEventListener('mousedown',work_select_time,false);
+				};
+				
+				function animation_work_select_age(){
+					$("#title").text("Q3.请选择你的出生年代（**后）？");
+					$("#title").css("visibility","visible");
+					clear();
+					drawGrid();
+					draw0(3,2,'rgba(154,154,154,1)');
+					draw0(3,6,'rgba(154,154,154,1)');
+					
+					draw9(3,12,'rgba(154,154,154,1)');
+					draw5(3,16,'rgba(154,154,154,1)');
+					
+					draw9(3,22,'rgba(154,154,154,1)');
+					draw0(3,26,'rgba(154,154,154,1)');
+					
+					draw8(12,2,'rgba(154,154,154,1)');
+					draw5(12,6,'rgba(154,154,154,1)');
+					
+					draw8(12,12,'rgba(154,154,154,1)');
+					draw0(12,16,'rgba(154,154,154,1)');
+					
+					draw7(12,22,'rgba(154,154,154,1)');
+					draw5(12,26,'rgba(154,154,154,1)');
+					
+					draw7(21,2,'rgba(154,154,154,1)');
+					draw0(21,6,'rgba(154,154,154,1)');
+					
+					draw6(21,12,'rgba(154,154,154,1)');
+					draw5(21,16,'rgba(154,154,154,1)');
+					
+					draw6(21,22,'rgba(154,154,154,1)');
+					draw0(21,26,'rgba(154,154,154,1)');
+					//addMsg("......",0);
+					c.addEventListener('mousedown',work_select_age,false);
+				};
+				
+				function animation_family_select_age(){
+					$("#title").text("Q2.请选择您的出生年代（**后）？");
+					$("#title").css("visibility","visible");
+					clear();
+					drawGrid();
+					draw9(3,2,'rgba(244,199,169,1)');
+					draw0(3,6,'rgba(244,199,169,1)');
+					
+					draw8(3,12,'rgba(244,199,169,1)');
+					draw5(3,16,'rgba(244,199,169,1)');
+					
+					draw8(3,22,'rgba(244,199,169,1)');
+					draw0(3,26,'rgba(244,199,169,1)');
+					
+					draw7(12,2,'rgba(244,199,169,1)');
+					draw5(12,6,'rgba(244,199,169,1)');
+					
+					draw7(12,12,'rgba(244,199,169,1)');
+					draw0(12,16,'rgba(244,199,169,1)');
+					
+					draw6(12,22,'rgba(244,199,169,1)');
+					draw5(12,26,'rgba(244,199,169,1)');
+					
+					draw6(21,2,'rgba(244,199,169,1)');
+					draw0(21,6,'rgba(244,199,169,1)');
+					
+					draw5(21,12,'rgba(244,199,169,1)');
+					draw5(21,16,'rgba(244,199,169,1)');
+					
+					draw5(21,22,'rgba(244,199,169,1)');
+					draw0(21,26,'rgba(244,199,169,1)');
+					
+					//addMsg("......",0);
+					c.addEventListener('mousedown',family_select_age,false);
+				};
+				
+				function animation_family_select_child_type(){
+					
+					clear();
+					drawGrid();
+					$("#title").css("visibility","visible");
+					if(_family_M <= 25*12){
+						$("#title").text("Q3.请选择您的孩子正处在的阶段(学前、小学)");
+						drawchild(11,4,'rgba(84,109 ,235,1)');
+						drawpupil(9,17,'rgba(0,162,232,1)','rgba(205,16,26,1)');
+					}else if(_family_M<= 30*12){
+						$("#title").text("Q3.请选择您的孩子正处在的阶段(学前、小学、中学)");
+						drawchild(3,4,'rgba(84,109 ,235,1)');
+						drawpupil(1,17,'rgba(0,162,232,1)','rgba(205,16,26,1)');
+						drawlittlemiddlestudent(15,8,'rgba(119, 140,245 ,1)');
+					}else if(_family_M<=35*12){
+						$("#title").text("Q3.请选择您的孩子正处在的阶段(学前、小学、中学、大学)");
+						drawchild(3,4,'rgba(84,109 ,235,1)');
+						drawpupil(1,17,'rgba(0,162,232,1)','rgba(205,16,26,1)');
+						drawlittlemiddlestudent(15,1,'rgba(119, 140,245 ,1)');
+						drawStudySmall(15,14,'rgba(84,109 ,235,1)');
+					}else{
+						$("#title").text("Q3.请选择您的孩子正处在的阶段(小学、中学、大学、工作)");
+						drawpupil(1,2,'rgba(0,162,232,1)','rgba(205,16,26,1)');
+						drawlittlemiddlestudent(0,16,'rgba(119, 140,245 ,1)');
+						drawStudySmall(15,0,'rgba(84,109 ,235,1)');
+						drawWorkSmall(15,15.5,'rgba(154,154,154,1)');
+					}
+					//addMsg("......",0);
+					c.addEventListener('mousedown',family_select_child_type,false);
+				};
+				/*********************** 选择界面  *****************************/
+				
+				/*********************** 淡入淡出 *****************************/
+				function fadeInAndOut_work(isFadeInAndOut){
+					var alpha = 0;
+					var isFadeIn = true;
+					var timerId = setInterval(function(){
+						if(isFadeIn){
+							if(alpha>=1){
+								isFadeIn = false;
+								if(!isFadeInAndOut){
+									clearInterval(timerId);
+									_isOver = true;
+								}
+							}
+							alpha += 0.1;
+						}else{
+							if(alpha<=0.2){
+								isFadeIn = true;
+								if(isFadeInAndOut){
+									clearInterval(timerId);
+									_isOver = true;
+								}
+							}
+							alpha -= 0.1;
+						}
+						
+						var color = "rgba(154,154,154,"+alpha+")";
+						//alert(color);
+						cxt.clearRect(_startX,_startY,_cols*d,_raws*d);
+						drawGrid();
+						drawWork(0,0,color);
+					},100);
+				};
+				
+				function work_grow_up(){
+					var alpha = 0;
+					var isFadeIn = true;
+					var times = 0;
+					var timerId = setInterval(function(){
+						if(isFadeIn){
+							if(alpha>=1){
+								isFadeIn = false;
+								if(times==4){
+									clearInterval(timerId);
+									_isOver = true;
+									return;
+								}
+							}
+							alpha += 0.1;
+						}else{
+							if(alpha<=0.2){
+								isFadeIn = true;
+								times++;
+							}
+							alpha -= 0.1;
+						}
+						cxt.clearRect(_startX,_startY,_cols*d,_raws*d);
+						drawGrid();
+						if(times==0){
+							var color1 = "rgba(84,109,235,"+alpha+")";
+							drawchild(3,4,color1);
+						}else if(times==1){
+							var color1 = "rgba(0,162,232,"+alpha+")";
+							var color2 = "rgba(205,16,26,"+alpha+")";
+							drawpupil(1,17,color1,color2);
+						}else if(times==2){
+							var color3 = "rgba(119,140,245,"+alpha+")";
+							drawlittlemiddlestudent(15,1,color3);
+						}else if(times==3){
+							var color4 = "rgba(84,109 ,235,"+alpha+")";
+							drawStudySmall(15,14,color4);
+						}else if(times==4){
+							var color5 = "rgba(154,154,154,"+alpha+")";
+							drawWork(0,0,color5);
+						}
+					},80);	
+				};
+				
+				function study_middle_grow_up(){
+					var alpha = 0;
+					var isFadeIn = true;
+					var times = 0;
+					var timerId = setInterval(function(){
+						if(isFadeIn){
+							if(alpha>=1){
+								isFadeIn = false;
+								if(times==2){
+									clearInterval(timerId);
+									_isOver = true;
+									return;
+								}
+							}
+							alpha += 0.1;
+						}else{
+							if(alpha<=0.2){
+								isFadeIn = true;
+								times++;
+							}
+							alpha -= 0.1;
+						}
+						cxt.clearRect(_startX,_startY,_cols*d,_raws*d);
+						drawGrid();
+						if(times==0){
+							var color1 = "rgba(84,109,235,"+alpha+")";
+							drawchild(13,4,color1);
+						}else if(times==1){
+							var color1 = "rgba(0,162,232,"+alpha+")";
+							var color2 = "rgba(205,16,26,"+alpha+")";
+							drawpupil(11,17,color1,color2);
+						}else if(times==2){
+							var color3 = "rgba(119,140,245,"+alpha+")";
+							drawmiddlestudent(0,2,color3);
+						}
+					},80);	
+				};
+				
+				function study_college_grow_up(){
+					var alpha = 0;
+					var isFadeIn = true;
+					var times = 0;
+					var timerId = setInterval(function(){
+						if(isFadeIn){
+							if(alpha>=1){
+								isFadeIn = false;
+								if(times==3){
+									clearInterval(timerId);
+									_isOver = true;
+									return;
+								}
+							}
+							alpha += 0.1;
+						}else{
+							if(alpha<=0.2){
+								isFadeIn = true;
+								times++;
+							}
+							alpha -= 0.1;
+						}
+						cxt.clearRect(_startX,_startY,_cols*d,_raws*d);
+						drawGrid();
+						if(times==0){
+							var color1 = "rgba(84,109,235,"+alpha+")";
+							drawchild(3,4,color1);
+						}else if(times==1){
+							var color1 = "rgba(0,162,232,"+alpha+")";
+							var color2 = "rgba(205,16,26,"+alpha+")";
+							drawpupil(1,17,color1,color2);
+						}else if(times==2){
+							var color3 = "rgba(119,140,245,"+alpha+")";
+							drawlittlemiddlestudent(15,9,color3);
+						}else if(times==3){
+							var color4 = "rgba(84,109 ,235,"+alpha+")";
+							drawStudy(0,7,color4);
+						}
+					},80);	
+				};
+				
+				
+				function fadeIn_study(){
+					var alpha = 0;
+					var timerId = setInterval(function(){
+						if(alpha>1){
+							clearInterval(timerId);
+							_isOver = true;
+							return;
+						}
+						alpha += 0.1;
+						
+						cxt.clearRect(_startX,_startY,_cols*d,_raws*d);
+						drawGrid();
+						if(_study_type==3){
+							var color = "rgba(119, 140,245,"+alpha+")";
+							drawmiddlestudent(0,2,color);
+						}else{
+							var color = "rgba(85,141,236,"+alpha+")";
+							drawStudy(0,7,color);
+						}
+						
+						
+					},80);
+				};
+				
+				function fadeIn_love(){
+					var alpha = 0;
+					var timerId = setInterval(function(){
+						if(alpha>1){
+							clearInterval(timerId);
+							_isOver = true;
+							return;
+						}
+						alpha += 0.1;
+						
+						cxt.clearRect(_startX,_startY,_cols*d,_raws*d);
+						drawGrid();
+						
+						var color = "rgba(245,169,170,"+alpha+")";
+						drawLove(0,0,color);
+						
+					},80);
+				};
+				
+				function fadeIn_family(){
+					var alpha = 0;
+					var timerId = setInterval(function(){
+						if(alpha>1){
+							clearInterval(timerId);
+							_isOver = true;
+							return;
+						}
+						alpha += 0.1;
+						
+						cxt.clearRect(_startX,_startY,_cols*d,_raws*d);
+						drawGrid();
+						
+						var color = "rgba(244,199,169,"+alpha+")";
+						drawFamily(0,0,color);
+					},80);
+				};
+				/*********************** 淡入淡出 *****************************/
+				
+				
+				$("#btn-again").click(function(){
+					_selection = 0;
+					clickTime=1;
+				
+					_currentCase = 0;
+					_isOver = true;
+					_isTextOver = true;
+					_isSelectOver = true;
+					_study_selectTimes = 0;
+					_love_selectTimes = 0;
+					_work_selectTimes = 0;
+					_family_selectTimes = 0;
+					$("#btn-again").css("display","none");
+					$("#title").css("visibility","");
+					animation_select();
+				});
+				
+				//分享
+				$("#shareit").on("click", function(){
+	              $("#shareit").hide(); 
+	              if(_last_page_type==1){
+	              	c.addEventListener('mousedown',all_last_select,false);
+	              }else{
+	              	c.addEventListener('mousedown',all_last_select1,false);
+	              }
+	              
+	            });
+	            
+	            $("#home").click(function(){
+	            	//alert("click home");
+	            	if(_isOver&&_isTextOver){
+	            		back();
+	            		
+	            	}
+				});
+				
+				
+				$("#btn-about-us").click(function(){
+					window.location.href = "http://mp.weixin.qq.com/s?__biz=MzAxNjQ2ODkyMw==&mid=205828699&idx=1&sn=20d2cc152d95f2025178893887ea05a2#rd";
+				});
+				
+	            //返回
+	            function back(){
+					_selection = 0;
+					clickTime=1;
+					_currentCase = 0;
+					_isOver = true;
+					_isTextOver = true;
+					_isSelectOver = true;
+					_study_selectTimes = 0;
+					_love_selectTimes = 0;
+					_work_selectTimes = 0;
+					_family_selectTimes = 0;
+					$("#btn-again").css("display","none");
+					$("#title").css("visibility","");
+					animation_select();
+				};
+			});
+			
+			//设置分享图片
+			function setLogo(type){
+				//alert("set logo "+type);
+				switch(type){
+					case 1: $("#logo").attr('src',"img/study.png"); break;
+					case 2: $("#logo").attr('src',"img/love.png"); break;
+					case 3: $("#logo").attr('src',"img/work.png"); break;
+					case 4: $("#logo").attr('src',"img/family.png"); break;
+					default: break;
+				}
+				
+			};
+			
+			function drawClickHand(){
+				var opacity = 0;
+				var isFadeIn = true;
+				var timerId = setInterval(function(){
+					if(isFadeIn){
+						if(opacity>=1){
+							isFadeIn = false;
+						}
+						opacity += 0.2;
+					}else{
+						if(opacity<=0){
+						 	isFadeIn = true;
+						}
+						opacity -= 0.2;
+					}
+					$("#clickHand").css("opacity",opacity);
+				},100);
+			};
+			
+			function hideClickHand(){
+				$("#clickHand").css("visibility","hidden");
+			};
+			
+			function showClickHand(){
+				$("#clickHand").css("visibility","visible");
+			};
+			
+			function showHome(){
+				$("#home").css("visibility","visible");
+			};
+			
+			function hideHome(){
+				$("#home").css("visibility","hidden");
+			};
+			
+			function showAboutUs(){
+				$(".about-us").css("display","block");
+				
+				$("#log").css("display","none");
+			};
+			
+			function hideAboutUs(){
+				$(".about-us").css("display","none");
+				$("#log").css("display","block");
+			};
+			
+			
+		</script>
+	</head>
+	
+	<body id="myBody">
+		<div id="shareit">
+			<img class="arrow" src="http://dev.vxtong.com/cases/nuannan/imgs/share-it.png">
+			<a href="#" id="follow">
+			  <img id="share-text" src="img/shareyou2.png">
+			</a>
+		</div>
+		<!-- <img id="home" src="img/home.png"/> -->
+		<div id="container" class="container-fluid">
+			
+			<div class="row">
+				<div id="div-home" class="col-md-4 col-xs-4" style="z-index:10"> <img id="home" src="img/home.png" style="float:left"/></div>
+				<div class="col-md-4 col-xs-4 myRow" align="center">
+					<h1><span class="text-center" id="txt">纸绘人生</span></h1>
+				</div>
+				<div class="col-md-4 .col-xs-4"></div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-12 div-title myRow" align="center">
+					<h2><span id="title">其实我们的人生只有900个月！</span></h2>
+				</div>
+			</div>
+			
+			<div class="row">
+				<canvas id="myCanvas" width="940" height="940"  style="border:1px solid #c3c3c3;">
+					Your browser does not support the canvas element.
+				</canvas>	
+			</div>
+			
+			<div class="row">
+				<div class="col-md-12">
+					<div class="div-blank" style="height: 30px;"></div>
+				</div>
+			</div>
+			<div class="row about-us" >
+				 <div class="col-md-12" align="center">
+				 	<button type="button" id="btn-about-us" class="btn  btn-success btn-lg " ><img src="img/finger_white.png" width="64px"><p style="display: inline; margin-top: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;关注我们&nbsp;&nbsp;&nbsp;&nbsp;</p></button>
+				 </div>
+			</div>
+			
+			<div class="row about-us">
+				 <div class="col-md-12" align="center">
+				 	<p>ViVi、167、笑傲、orange<br/>Sky、三水、ZJ</p>
+				 </div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-12" align="center"><div id="text"><textarea id="log"  readonly="readonly" disabled="disabled"></textarea></div></div>
+			</div>
+			
+			
+			<img id="clickHand" src="img/click.png"/>
+			
+			<div class="row">
+				<div id="footer" align="center" class=" col-md-12 myRow">
+					<span> &copy; 2015 <a href="/">gooflife.com</a></span>
+				</div>
+			</div>
+		</div>
+		<div style="display:none ;">
+			<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1254935038'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1254935038' type='text/javascript'%3E%3C/script%3E"));</script>
+		</div>
+		
+	</body>
+</html>
