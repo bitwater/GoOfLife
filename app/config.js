@@ -18,7 +18,7 @@ define([], function() {
     giveCellsEvery: 1, // generations
     
     // player settings
-    cellsPerPlayer: 600,
+    cellsPerPlayer: 300,
     defaultPlayerColor: '#00aaff',
     lastSeenTimeout: 180000,
 
