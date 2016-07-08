@@ -521,7 +521,7 @@ hr {
   margin-bottom: 0; }
 
 .game-intro a{
-  font-weight: 200;
+  font-weight: 500;
   text-decoration: none;
 }
 
@@ -569,6 +569,7 @@ hr {
     width: 55%;
     display: block;
     box-sizing: border-box;
+    margin-top: 3px;
     font-size: 20px;
     line-height: 2; }
 
@@ -766,4 +767,33 @@ hr {
     line-height: 30px !important;
     margin-top: 90px !important; }
   .game-message .lower {
-    margin-top: 36px !important; } }
+    margin-top: 36px !important; }
+}
+
+#audio_btn {
+  position: absolute;
+  display: block;
+  right: 5px;
+  top: 5px;
+  z-index: 200;
+  width: 30px;
+  height: 30px;
+  opacity: 0.7;
+}
+
+#audio_btn.off {
+  background-image: url(../meta/normalmusic.svg);
+  background-size: contain;
+  /*background-repeat: no-repeat;*/
+}
+
+#audio_btn.rotate {
+  -webkit-animation: rotating 1.6s linear infinite;
+  -moz-animation: rotating 1.6s linear infinite;
+  -o-animation: rotating 1.6s linear infinite;
+  animation: rotating 1.6s linear infinite;
+}
+
+@-moz-keyframes rotating { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes rotating { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes rotating { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
