@@ -74,8 +74,6 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
     this.loginLinkContainerEl = document.getElementById('login-link-container');
     this.loginLinkEl = document.getElementById('login-link');
     this.selectModelEl = document.getElementById('select-model');
-    this.doubleModel = document.getElementById('double-model');
-    this.multiModel = document.getElementById('multi-model');
     this.flashNewsEl = document.getElementById('flash-news');
 
     //this.flashNewsEl.style.left=(document.body.clientWidth-this.flashNewsEl.clientWidth)/2;
@@ -83,8 +81,8 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
     this.flashNewsEl.style.top=(document.body.clientHeight-this.flashNewsEl.clientHeight)/2+document.body.scrollTop;
     //this.flashNewsEl.style.top=(document.body.clientHeight-this.flashNewsEl.clientHeight)/2;
 
-    this.doubleModel.addEventListener('click', this._handleClickDouble.bind(this), false);
-    this.multiModel.addEventListener('click', this._handleClickMulti.bind(this), false);
+    //this.doubleModel.addEventListener('click', this._handleClickDouble.bind(this), false);
+    //this.multiModel.addEventListener('click', this._handleClickMulti.bind(this), false);
 
     this.initUI();
 
@@ -871,32 +869,10 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
     return this.grid.getCellFromPosition();
   };
 
-  Renderer.prototype._handleClickDouble = function (event) {
-    console.log("double");
-
-    this.view = 'big';
-    this.model = 'double';
-    //this.selectModelEl.style.display = 'none';
-    //this.canvas.style.display = 'none'
-    this.statsEl.style.display = 'none'
-    //this.tickBar.style.display = 'none'
-    //this.controlsEl.style.display = 'none'
-  };
-
-  Renderer.prototype._handleClickMulti = function (event) {
-    console.log("multi");
-    this.model = 'multi';
-    //this.selectModelEl.style.display = 'none';
-    //this.canvas.style.display = 'inline-block'
-    this.statsEl.style.display = 'inline-block'
-    //this.tickBar.style.display = 'inline-block'
-    //this.controlsEl.style.display = 'inline-block'
-  };
-
   Renderer.prototype._handleClickBigView = function (event) {
     this.view = 'big';
     this.placeCellsEl.style.display = 'none';
-    this.placeRandomCellsEl.style.display = 'none';
+    //this.placeRandomCellsEl.style.display = 'none';
     //$("#bigview").attr('checked', 'checked');
     //$("#bigview").removeAttr('checked');
     $("#bigview").prop("checked", true);
@@ -907,7 +883,7 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
   Renderer.prototype._handleClickSmallView = function (event) {
     this.view = 'small';
     this.placeCellsEl.style.display = 'inline-block';
-    this.placeRandomCellsEl.style.display = 'inline-block';
+    //this.placeRandomCellsEl.style.display = 'inline-block';
     //$("#bigview").prop("checked", false);
     $("#smallview").prop("checked", true);
     //$("#smallview").attr('checked', 'checked');
