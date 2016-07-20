@@ -814,8 +814,8 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
     if (this.view == 'big') {
       var cells = this.grid.getRandomCells(clickedCell);
       var man = this.board.getManFromCell(cells[0]);
-      //console.log("########", man);
-      if (man.playerId != "") {
+      console.log("########", man);
+      if (man.playerId) {
         this.flashMsg("无法落子...");
         return
       }
