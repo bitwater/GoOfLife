@@ -814,13 +814,17 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
     if (this.view == 'big') {
       var cells = this.grid.getRandomCells(clickedCell);
       var man = this.board.getManFromCell(cells[0]);
+      //console.log("########", man);
+      if (man.playerId != "") {
+        this.flashMsg("无法落子...");
+        return
+      }
       man.alive = true;
       man.playerId = player.id;
-      //console.log("########", man);
       if (! this.board.checkLiberties(man, player.id, this.board.createCheckedArray(this.boardWidth, this.boardHeight))) {
         this.flashMsg("无法落子...");
         man.alive = false;
-        man.playId = '';
+        man.playerId = '';
         return
       }
 
