@@ -204,6 +204,10 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
     $(function(){
       console.log("initUI.");
 
+      $("#force-text").click(function(e){
+        _this._handlePlaceRandomCells(e);
+      });
+
       $('#small-view').on('click', function () {
         _this._handleClickSmallView();
         $('#small-view').addClass('active');
@@ -396,11 +400,11 @@ define(['colorpicker', 'leaderboard', 'playersonline', 'chat', 'jquery'], functi
 
     //this._drawTickBar(this.game.percentageOfTick());
 
-    if (this.model == 'double') {
-      this.clear();
-      this._drawBoard();
-      return;
-    }
+    //if (this.model == 'double') {
+    //  this.clear();
+    //  this._drawBoard();
+    //  return;
+    //}
 
     if (this.view == 'big') {
       this.clear();
