@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="format-detection" content="telephone=no">
 
-  <title>Go of Life - 生命围棋</title>
+  <title>Go of Life</title>
   <meta name="description"
         content="Go of Life之生命围棋，生命游戏与围棋在二维世界的结合与涌现">
   <meta name="keywords"
@@ -17,206 +17,153 @@
   <!-- 新 Bootstrap 核心 CSS 文件 -->
   <!--<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">-->
   <link rel="stylesheet" href="css/bootstrap.css">
-  <link rel="stylesheet" href="css/transitions.css">
-  <link rel="stylesheet" href="css/main.css">
-  <!--<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>-->
-  <!--<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
-  <script src="js/lib/require.min.js" data-main="js/main.js"></script>
+  <!-- Custom CSS -->
+  <link href="css/landing-page.css" rel="stylesheet">
+  <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script src="//cdn.bootcss.com/gsap/latest/TweenLite.min.js"></script>
   <script src="js/qarticles.min.js"></script>
+  <script src="js/index.js"></script>
   <div id='wx_pic' style='margin:0 auto; display:none;'>
     <img src="logo.png"/>
   </div>
 </head>
 <body>
-<div id="play-more" class="btn-group">
-  <button type="button" class="btn btn-primary dropdown-toggle"
-          data-toggle="dropdown">
-    ••• <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu" role="menu">
-    <li><a href="/copylife">Copy's Life</a></li>
-    <li><a href="/nets">Nets</a></li>
-    <li><a href="/networkx">Networkx Demo</a></li>
-    <li><a href="/blackhole">Blackhole</a></li>
-    <li><a href="/2048">走近2050之演化</a></li>
-    <li><a href="/gridlife">纸绘人生</a></li>
-    <!--<li class="divider"></li>-->
-    <!--<li><a href="#">分离的链接</a></li>-->
-  </ul>
-</div>
-<div id="timestamp-tooltip"></div>
-<div id="rules">
-  <div class="rules-box">
-    <p>Go of Life - 生命围棋（昵称：玩儿命）</p>
-
-    <p>这是一个平行的二维世界，高层的棋盘上是围棋对弈规则，底层网格的下是生命游戏演化规则，点击即可放下你的自由活细胞，宏观微观的视角切换（按shift快速切换）
-      <br>时间嘀嗒一下，生命游戏演化一代，围棋检查气数后进行提子，同时生成一个自由活细胞。
-    </p>
-
-    <p>原力指数：影响Go of Life历史进程指数，目前每次时钟滴嗒时活细胞数进行线性叠加，后续考虑根据时间指数型衰减模型，按一定时间周期进行统计</p>
-
-    <p>去占领、发现和创造属于你的二维时空吧！这是一场浓缩的生命对弈游戏。</p>
-
-    <p>版本：V0.7.1_alpha <br> By 罗三水  微信号：lm_norway <br>正在持续开发中...<br>根据程序质能方程：Errors = more code^2<br>如有Bug 纯属正常 <br>开个玩笑，欢迎各种吐槽反馈 :)</p>
-  </div>
-</div>
-<canvas id="cov"></canvas>
-<div class="container">
-  <h1 class="brand-name">Go of Life</h1>
-  <h3>All of life is an act of letting go    -- Life of Pi </h3>
-  <div class="links-outer">
-    <div class="tablelink">
-      <ul class="links">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+  <div class="container topnav">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand topnav" href="#">Go of Life</a>
+    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
         <li>
-          <a href="#" id="rules-link">简介</a>
+          <a href="#game">游戏&程序</a>
         </li>
         <li>
-          <a href="http://wiki.swarma.net/index.php/%E7%94%9F%E5%91%BD%E6%B8%B8%E6%88%8F%E5%9B%B4%E6%A3%8B" target="_blank">
-            集智Wiki
-          </a>
+          <a href="#art">艺术&科学</a>
         </li>
         <li>
-          <a href="https://github.com/luomiao3/GoOfLife" target="_blank">
-            Github
-          </a>
+          <a href="#blog">博客</a>
         </li>
-        <li>
-          <a href="http://weibo.com/moshell" target="_blank">
-            微博互动
-          </a>
-        </li>
-        <li>
-          <a href="/room" id="double-go">双人对弈</a>
-        </li>
-        <li id="login-link-container">
-          <a href="#" id="login-link">登录</a>
-        </li>
-        <li id="leave-game-container">
-          <a href="#" id="leave-game">退出</a>
-        </li>
-        <!--<button onclick="TogetherJS(this); return false;">Start TogetherJS</button>-->
       </ul>
     </div>
+    <!-- /.navbar-collapse -->
   </div>
-  <div id="stats">
-    <div class="cell-count-container">
-      我的：自由活细胞：
-      <span class="cell-count"></span>
-    </div>
-    <div class="cells-on-grid-container">
-      <span id="cells-on-grid-stat">
-        场上活细胞：
-        <span class="cells-on-grid"></span>
-      </span>
-    </div>
-    <div class="high-score-container">
-      原力指数：
-      <span id="high-score">0</span>
-    </div>
-  </div>
-  <div id="select-model">
-    <label><input id="double-model" name="view" type="radio"  value=""/>双人对弈</label>
-    <label><input id="multi-model" name="view" type="radio" checked="true" value=""/>多人舞台</label>
-  </div>
-  <!--<div id="view">-->
-      <!--<li id="big-view" class="li active"><a>宏观视角</a></li>-->
-      <!--<li id="small-view" class="li"><a>微观视角</a></li>-->
-  <!--</div>-->
-  <!--<div id="view" class="btn-group" data-toggle="buttons">-->
-    <!--<label class="btn btn-primary btn-lg">-->
-      <!--<input type="radio" name="views" id="big-view" autocomplete="off"> 宏观视角-->
-    <!--</label>-->
-    <!--<label class="btn btn-primary btn-lg">-->
-      <!--<input type="radio" name="views" id="small-view" autocomplete="off"> 微观视角-->
-    <!--</label>-->
-    <!--&lt;!&ndash;<div class="btn btn-success btn-lg" id="double-go" >双人对弈</div>&ndash;&gt;-->
-  <!--</div>-->
-  <form id="view">
-    <label><input id="big-view" name="view" type="radio" checked="" value="1"/>宏观视角</label>
-    <label><input id="small-view" name="view" type="radio" value="2"/>微观视角</label>
-  </form>
-
-  <div id="connecting">
-    <div class="spinner"></div>
-    <h3>努力加载中...</h3>
-  </div>
-  <div class="flash">
-    <div id="flash-news"></div>
-  </div>
-  <div id="game">
-    <canvas id="tickbar"></canvas>
-    <!--<div class="alert alert-warning alert-dismissible" role="alert">-->
-      <!--<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
-      <!--<strong>Warning!</strong> Better check yourself, you're not looking too good.-->
-    <!--</div>-->
-    <div class="canvas-container">
-      <canvas id="c"></canvas>
-      <div class="new-player-container">
-        <div id="new-player">
-          <div class="colorpicker">
-            <div>
-              点击选择颜色
-            </div>
-          </div>
-          <input type="text" class="player-name" placeholder="昵称">
-          <a href="#" class="play">开始</a>
-          <a href="#" id="observe">或旁观</a>
-
-          <div id="new-player-error-message"></div>
+  <!-- /.container -->
+</nav>
+<!-- Header -->
+<!--<a name="about"></a>-->
+<div class="intro-header">
+  <div class="container">
+    <canvas id="reactive-bg-canvas"></canvas>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="intro-message">
+          <h1>bitwater</h1>
+          <h3>没有维度的时空</h3>
+          <!--<hr class="intro-divider">-->
+          <!--<ul class="list-inline intro-social-buttons">-->
+            <!--<li>-->
+              <!--<a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>-->
+            <!--</li>-->
+            <!--<li>-->
+              <!--<a href="https://github.com/IronSummitMedia/startbootstrap" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>-->
+            <!--</li>-->
+            <!--<li>-->
+              <!--<a href="#" class="btn btn-default btn-lg"><i class="fa fa-linkedin fa-fw"></i> <span class="network-name">Linkedin</span></a>-->
+            <!--</li>-->
+          <!--</ul>-->
         </div>
       </div>
     </div>
-    <div id="controls">
-      <div class="place-cells-container">
-        <a href="#" class="place-cells">自主放下</a>
-      </div>
-      <div class="place-cells-container">
-        <a href="#" class="place-cells enabled" id="place-random-cells">随机生成</a>
-      </div>
-    </div>
-    <h3>May the <span id="force-text">force</span> be with you    -- Star Wars </h3>
-    <div class="boards">
-      <div class="leaderboard-container">
-        <h3>玩家排行榜<br>影响Go of Life历史进程</h3>
-
-        <h3>原力指数</h3>
-
-        <div id="leaderboard"></div>
-      </div>
-      <div class="players-online-container">
-        <h2>在线玩家</h2>
-
-        <h3>活细胞</h3>
-
-        <div id="players-online"></div>
-      </div>
-      <div class="chat-container">
-        <h2>聊天</h2>
-        <!--<h3>Communicate and Strategize</h3>-->
-        <div id="chat">
-          <div id="chat-log"></div>
-          <input type="text" name="new-chat" id="new-chat" placeholder="输入 ╝" maxlength="140">
-        </div>
-      </div>
-    </div>
-    <p><br></p>
-    <!--<div class="span4 header-banner-area" style="display: inline-block; text-align: center;">-->
-      <!--<!-- 时钟 -->
-      <!--<div style="width:300px; height:120px;  margin: 0 auto; overflow: hidden;">-->
-        <!--<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0" width="300" height="150">-->
-          <!--<param name="movie" value="http://www.wsjz8.com/shizhong.swf">-->
-          <!--<param name="quality" value="high">-->
-          <!--<param name="wmode" value="transparent">-->
-          <!--<embed src="http://www.wsjz8.com/shizhong.swf" quality="high" wmode="transparent" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="300" height="150">-->
-        <!--</object>-->
-      <!--</div>-->
-    <!--</div>-->
-    <!--<p style="text-align: center; font-size: 15px; font-weight: bold">时钟 <a href="http://chabudai.org/blog/?p=59" target="_blank">--来自ホネホネ・クロック</a></p>-->
-    <!--<!-- 多说评论框 start -->
-    <!--<div class="ds-thread" data-thread-key="1" data-title="Go of Life · 生命对弈" data-url="gooflife.com"></div>-->
   </div>
+  <!-- /.container -->
 </div>
-<!--<script src="/js/stats.min.js"></script>-->
+<!-- /.intro-header -->
+<section id="team" class="light-bg">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <div class="section-title">
+          <h2>游戏</h2>
+          <p>游戏引领我们创造意义</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="team-item">
+          <div class="team-image">
+            <img src="img/gooflife-abs.jpeg" class="img-responsive" alt="*">
+          </div>
+          <div class="team-text">
+            <h3>生命围棋</h3>
+            <p>生命游戏和围棋都在二维空间，规则极简，是复杂性和涌现性的典范，二者结合会有怎样的火花？</p>
+            <a href="/gooflife"></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="team-item">
+          <div class="team-image">
+            <img src="img/2048evo-abs.png" class="img-responsive" alt="*">
+          </div>
+          <div class="team-text">
+            <h3>走近2050之演化</h3>
+            <p>知识的谱系，演化的阶梯，层次的上升，演化的终极答案是什么？或许只是一场游戏。</p>
+            <a href="/2048"></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="team-item">
+          <div class="team-image">
+            <img src="img/gridlife-abs.png" class="img-responsive" alt="*">
+          </div>
+          <div class="team-text">
+            <h3>格子人生</h3>
+            <p>我们的人生其实只有900个月，用一张格子白纸就可以涂满，你将如何度过？</p>
+            <a href="/gridlife"></a>
+          </div>
+        </div>
+      </div>
+      <!-- end team member item -->
+    </div>
+  </div>
+</section>
+</body>
+<!--<footer>-->
+  <!--<div>-->
+    <!--<p style="font-size: 14px; font-weight: bold"><a href="http://wiki.swarma.net/index.php/%E7%94%9F%E5%91%BD%E6%B8%B8%E6%88%8F%E5%9B%B4%E6%A3%8B"-->
+                                                     <!--target="_blank">-->
+      <!--© 2016 集智百科 Go Of Life · 生命围棋</a></p>-->
+  <!--</div>-->
+<!--</footer>-->
+<script src="./js/magic-canvas.js"></script>
+<script>
+  function random_move () {
+    $.magicCanvas.draw({
+      type:"random-move",
+      zIndex: 999,
+      rgb : function (circlePos) {
+        var px = circlePos.x;
+        var py = circlePos.y;
+        // do some computation....
+        return {r:parseInt(px % 255),g:parseInt(py % 255),b:203};
+      }
+    })
+  };
+  random_move();
+</script>
 <script>
   (function (global) {
 //    if ( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
@@ -243,78 +190,22 @@
   }
 
 </script>
-
-<script type="text/javascript">
-  window.zhuge = window.zhuge || [];
-  window.zhuge.methods = "_init debug identify track trackLink trackForm page".split(" ");
-  window.zhuge.factory = function(b) {
-    return function() {
-      var a = Array.prototype.slice.call(arguments);
-      a.unshift(b);
-      window.zhuge.push(a);
-      return window.zhuge
-    }
-  };
-  for (var i = 0; i < window.zhuge.methods.length; i++) {
-    var key = window.zhuge.methods[i];
-    window.zhuge[key] = window.zhuge.factory(key)
-  };
-  window.zhuge.load = function(b, x) {
-    if (!document.getElementById("zhuge-js")) {
-      var a = document.createElement("script");
-      var verDate = new Date();
-      var verStr = verDate.getFullYear().toString()
-              + verDate.getMonth().toString() + verDate.getDate().toString();
-      a.type = "text/javascript";
-      a.id = "zhuge-js";
-      a.async = !0;
-      a.src = "http://sdk.zhugeio.com/zhuge-lastest.min.js?v=" + verStr;
-      var c = document.getElementsByTagName("script")[0];
-      c.parentNode.insertBefore(a, c);
-      window.zhuge._init(b, x)
-    }
-  };
-  window.zhuge.load('3e493d43b6b8434db6fab297525010d7');
-</script>
-<script type='text/javascript'>
-  var _vds = _vds || [];
-  window._vds = _vds;
-  (function(){
-    _vds.push(['setAccountId', 'a2d6e101bded4107a46145e95259ab2f']);
-//      _vds.push(['setCS1','user_id', player.id]);
-    (function() {
-      var vds = document.createElement('script');
-      vds.type='text/javascript';
-      vds.async = true;
-      vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';
-      var s = document.getElementsByTagName('script')[0];
-      s.parentNode.insertBefore(vds, s);
-    })();
-  })();
-</script>
-
-<!--<script src="https://togetherjs.com/togetherjs-min.js"></script>-->
-
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<!--<script type="text/javascript">-->
-  <!--var duoshuoQuery = {short_name:"gooflife"};-->
-  <!--(function() {-->
-    <!--var ds = document.createElement('script');-->
-    <!--ds.type = 'text/javascript';ds.async = true;-->
-    <!--ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';-->
-    <!--ds.charset = 'UTF-8';-->
-    <!--(document.getElementsByTagName('head')[0]-->
-    <!--|| document.getElementsByTagName('body')[0]).appendChild(ds);-->
+<!--<script type='text/javascript'>-->
+  <!--var _vds = _vds || [];-->
+  <!--window._vds = _vds;-->
+  <!--(function(){-->
+    <!--_vds.push(['setAccountId', 'a2d6e101bded4107a46145e95259ab2f']);-->
+<!--//      _vds.push(['setCS1','user_id', player.id]);-->
+    <!--(function() {-->
+      <!--var vds = document.createElement('script');-->
+      <!--vds.type='text/javascript';-->
+      <!--vds.async = true;-->
+      <!--vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';-->
+      <!--var s = document.getElementsByTagName('script')[0];-->
+      <!--s.parentNode.insertBefore(vds, s);-->
+    <!--})();-->
   <!--})();-->
 <!--</script>-->
-<!-- 多说公共JS代码 end &nbsp;&nbsp;&nbsp; 京ICP备16001286号 -->
-<footer>
-  <div>
-    <p style="font-size: 14px; font-weight: bold"><a href="http://wiki.swarma.net/index.php/%E7%94%9F%E5%91%BD%E6%B8%B8%E6%88%8F%E5%9B%B4%E6%A3%8B"
-          target="_blank">
-      © 2016 集智百科 Go Of Life · 生命围棋</a></p>
-  </div>
 
-</footer>
-</body>
+<!-- &nbsp;&nbsp;&nbsp; 京ICP备16001286号 -->
 </html>
