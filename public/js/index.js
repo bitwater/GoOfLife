@@ -12,6 +12,12 @@ $(window).scroll(function () {
     opa = 0.96
 
   $('.navbar').css("opacity", opa);
+
+  if (scroll > 23) {
+    $('.intro-message').fadeOut();
+  } else {
+    $('.intro-message').fadeIn();
+  }
   //if ($(document).scrollTop() > 60 && $(document).scrollTop() <= 120 ) {
   //  //$('.navbar').css('background-color', 'rgba(255, 255, 255, 0.3)');
   //  $('.navbar').css("opacity", "0.3");

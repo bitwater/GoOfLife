@@ -17,7 +17,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: "Microsoft YaHei", "微软雅黑", STXihei, "华文细黑", "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
     font-weight: 700;
 }
 
@@ -226,7 +226,6 @@ p.copyright {
     height: 100%;
     z-index: 999;
 }
-
 
 .team-item:hover img {
     opacity: 0.4;
