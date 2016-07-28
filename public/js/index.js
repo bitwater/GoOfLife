@@ -11,28 +11,71 @@ $(window).scroll(function () {
   if (opa >= 0.96)
     opa = 0.96
 
-  $('.navbar').css("opacity", opa);
+  $('.navbar').css("opacity", 0);
 
-  if (scroll > 23) {
+  if (scroll > 99) {
     $('.intro-message').fadeOut();
   } else {
     $('.intro-message').fadeIn();
   }
-  //if ($(document).scrollTop() > 60 && $(document).scrollTop() <= 120 ) {
-  //  //$('.navbar').css('background-color', 'rgba(255, 255, 255, 0.3)');
-  //  $('.navbar').css("opacity", "0.3");
-  //} else if ($(document).scrollTop() > 120 && $(document).scrollTop() <= 180) {
-  //  //$('.navbar').css('background-color', 'rgba(255, 255, 255, 0.3)');
-  //  $('.navbar').css("opacity", "0.6");
-  //} else if ($(document).scrollTop() > 180 && $(document).scrollTop() <= 256) {
-  //  //$('.navbar').css('background-color', 'rgba(255, 255, 255, 0.3)');
-  //  $('.navbar').css("opacity", "0.9");
-  //} else if ($(document).scrollTop() > 256) {
-  //  //$('.navbar').css('background-color', 'rgba(255, 255, 255, 0.3)');
-  //  $('.navbar').css("opacity", "0.999");
-  //} else {
-  //  //$('.navbar').css('background-color', 'rgba(255, 255, 255, 0)');
-  //  $('.navbar').css("opacity", "0");
-  //}
+
+  parallax();
+
+  //$('.social .col-md-12').each(function(){
+  //
+  //  var imagePos = $(this).offset().top;
+  //  var topOfWindow = $(window).scrollTop();
+  //
+  //  if (imagePos < topOfWindow+550) {
+  //    $(this).addClass("animated fadeInLeft");
+  //  }
+  //});
 
 });
+
+
+$(function(){
+  $('.social .col-md-12').addClass('visibility');
+
+  var browserWidth = $(window).width();
+
+  if (browserWidth > 560){
+
+    $(window).scroll(function() {
+      parallax();
+    });
+
+  }
+})
+
+$(window).resize(function () {
+
+  var browserWidth = $(window).width();
+
+  if (browserWidth > 560){
+    $(window).scroll(function() {
+      parallax();
+    });
+
+  }
+
+});
+
+function parallax() {
+  // Turn parallax scrolling off for iOS devices
+  var iOS = false,
+    p = navigator.platform;
+
+  if (p === 'iPad' || p === 'iPhone' || p === 'iPod') {
+    iOS = true;
+  }
+
+  var scaleBg = -$(window).scrollTop() / 2;
+
+  if (iOS === false) {
+    //console.log(scaleBg);
+    //$('.payoff').css('background-position-y', scaleBg - 150);
+    $('.quote').css('background-position-y', scaleBg + 200);
+  }
+
+}
