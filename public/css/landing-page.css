@@ -194,6 +194,7 @@ p.copyright {
 .team-item {
     text-align: center;
     background-color: #fff;
+    padding: 16px 50px;
 }
 
 .team-item h3 {
@@ -228,7 +229,7 @@ p.copyright {
     z-index: 999;
 }
 
-.team-item:hover img {
+.team-item:hover {
     opacity: 0.4;
 }
 
