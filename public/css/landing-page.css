@@ -42,7 +42,8 @@ h6 {
 
 @media(max-width:767px) {
     .intro-header {
-        background: url(../img/starrynight1.jpg) no-repeat center center;
+        background: url(../img/starrynight_1.jpg) no-repeat center center;
+        height: 100%;
     }
 }
 
@@ -204,6 +205,11 @@ p.copyright {
     height: 436px;
 }
 
+@media(max-width:767px) {
+    .team-item {
+        height: 390px;
+    }
+}
 .team-item h3 {
     font-size: 16px;
     font-weight: 800;
