@@ -44,7 +44,7 @@ jQuery.magicCanvas = {
 
             width = $(window).width();
             height = $(".intro-header").height();
-            console.log("height: ", height)
+            //console.log("height: ", height)
             canvas.style.position = "absolute";
             canvas.style.zIndex = options.zIndex;
             canvas.style.top = '0px';

@@ -35,6 +35,8 @@ $(window).scroll(function () {
 
 
 $(function(){
+  setTimeout($('.intro-message').fadeIn(100), 500);
+
   $('.social .col-md-12').addClass('visibility');
 
   var browserWidth = $(window).width();
