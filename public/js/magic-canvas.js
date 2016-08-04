@@ -43,7 +43,8 @@ jQuery.magicCanvas = {
             canvas = document.getElementById("reactive-bg-canvas");
 
             width = $(window).width();
-            height = $(window).height();
+            height = $(".intro-header").height();
+            console.log("height: ", height)
             canvas.style.position = "absolute";
             canvas.style.zIndex = options.zIndex;
             canvas.style.top = '0px';

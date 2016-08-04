@@ -33,6 +33,7 @@ h6 {
 .intro-header {
     padding-top: 50px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
     padding-bottom: 50px;
+    display: block;
     text-align: center;
     color: #f8f8f8;
     background: url(../img/starrynight.jpg) no-repeat center center;
@@ -42,8 +43,15 @@ h6 {
 
 @media(max-width:767px) {
     .intro-header {
-        background: url(../img/starrynight_1.jpg) no-repeat center center;
-        height: 100%;
+        background: url(../img/starrynight1.jpg) no-repeat center center;
+        background-size: cover;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+    }
+    #reactive-bg-canvas {
+        /*z-index: 9999;*/
+        height: auto;
     }
 }
 
@@ -202,13 +210,13 @@ p.copyright {
     text-align: center;
     background-color: #fff;
     padding: 23px 60px;
-    height: 436px;
+    max-height: 436px;
 }
 
 @media(max-width:767px) {
-    .team-item {
-        height: 390px;
-    }
+    /*.team-item {*/
+        /*max-height: 390px;*/
+    /*}*/
 }
 .team-item h3 {
     font-size: 16px;
