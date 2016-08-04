@@ -35,18 +35,14 @@ $(window).scroll(function () {
 
 
 $(function(){
-  setTimeout($('.intro-message').fadeIn(100), 500);
+  setTimeout($('.intro-message').fadeIn("slow"), 600);
 
   $('.social .col-md-12').addClass('visibility');
-
   var browserWidth = $(window).width();
-
   if (browserWidth > 560){
-
     $(window).scroll(function() {
       parallax();
     });
-
   }
 })
 
