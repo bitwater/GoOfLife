@@ -31,9 +31,10 @@ h6 {
 }
 
 .intro-header {
-    padding-top: 50px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
-    padding-bottom: 50px;
+    /*padding-top: 50px; *//* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
+    /*padding-bottom: 50px;*/
     display: block;
+    position: relative;
     text-align: center;
     color: #f8f8f8;
     background: url(../img/starrynight.jpg) no-repeat center center;
@@ -47,7 +48,7 @@ h6 {
         background-size: cover;
         width: 100%;
         max-width: 100%;
-        height: auto;
+        /*height: auto;*/
     }
     #reactive-bg-canvas {
         /*z-index: 9999;*/
@@ -56,8 +57,13 @@ h6 {
     }
 }
 
+@media(max-width:468px) {
+    .intro-header {
+        height: 468px;
+    }
+}
 .intro-message > h1 {
-    margin: 0;
+    /*margin: 0;*/
     text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
     font-size: 5em;
 }
@@ -74,17 +80,24 @@ h6 {
 
 .intro-message {
     display: none;
-    /*position: absolute;*/
+    position: relative;
+    margin: auto;
     /*top: 50%;*/
-    /*left: 40%;*/
-    padding-top: 16%;
-    padding-bottom: 20%;
+    text-align: center;
+    /*left: 42%;*/
+    padding-top: 26%;
+    padding-bottom: 26%;
+}
+
+.vertical {
+    display: table-cell;
+    vertical-align: middle;
 }
 
 @media(max-width:767px) {
     .intro-message {
-        padding-top: 36%;
-        /*padding-bottom: 15%;*/
+        padding-top: 46%;
+        padding-bottom: 15%;
     }
 
     .intro-message > h1 {
