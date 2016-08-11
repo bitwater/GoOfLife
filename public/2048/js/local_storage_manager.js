@@ -24,7 +24,7 @@ function LocalStorageManager() {
 
   var supported = this.localStorageSupported();
   this.storage = supported ? window.localStorage : window.fakeStorage;
-  alert(supported + this.storage + this.getBestScore());
+  //alert(supported + this.storage + this.getBestScore());
 }
 
 LocalStorageManager.prototype.localStorageSupported = function () {
