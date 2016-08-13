@@ -226,7 +226,7 @@ p.copyright {
   Team
 --------------------*/
 
-.team-item {
+.game-item {
     text-align: center;
     background-color: #fff;
     padding: 23px 60px;
@@ -235,18 +235,18 @@ p.copyright {
 }
 
 @media(max-width:767px) {
-    /*.team-item {*/
+    /*.game-item {*/
         /*max-height: 390px;*/
     /*}*/
 }
-.team-item h3 {
+.game-item h3 {
     font-size: 16px;
     font-weight: 800;
     /*text-transform: uppercase;*/
     color: #2D2D2D;
 }
 
-.team-item .team-position {
+.game-item .game-position {
     color: #989898;
     font-size: 12px;
     margin: 15px 0 10px;
@@ -255,14 +255,14 @@ p.copyright {
     letter-spacing: 2px;
 }
 
-.team-item p {
+.game-item p {
     font-size: 13px;
     font-weight: 400;
     color: #292929;
     padding: 5px 10px 20px 10px;
 }
 
-.team-item a {
+.game-item a {
     position: absolute;
     top: 0;
     left: 0;
@@ -271,21 +271,21 @@ p.copyright {
     z-index: 999;
 }
 
-.team-item:hover {
+.game-item:hover {
     opacity: 0.4;
 }
 
-.team-socials {
+.game-socials {
     padding-bottom: 25px;
 }
 
-.team-socials a {
+.game-socials a {
     color: #B2B3B7;
     font-size: 20px;
     margin: 0 10px;
 }
 
-.team-socials a:hover {
+.game-socials a:hover {
     color: #000;
 }
 

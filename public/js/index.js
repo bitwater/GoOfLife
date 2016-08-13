@@ -11,7 +11,7 @@ $(window).scroll(function () {
   if (opa >= 0.96)
     opa = 0.96
 
-  $('.navbar').css("opacity", 0);
+  $('.navbar').css("opacity", opa);
 
   if (scroll > 99) {
     $('.intro-message').fadeOut();
