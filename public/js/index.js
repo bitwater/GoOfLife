@@ -35,7 +35,7 @@ $(window).scroll(function () {
 
 $(function(){
   if (Math.random() > 0.5) {
-    $('.intro-header').css("background", "url('http://oa06si0g5.bkt.clouddn.com/Journey6.jpeg') no-repeat center center");
+    $('.intro-header').css("background-image", "url('http://oa06si0g5.bkt.clouddn.com/Journey-bg.jpeg')");
   }
 
   setTimeout($('.intro-message').fadeIn("slow"), 600);

@@ -37,7 +37,8 @@ h6 {
     position: relative;
     text-align: center;
     color: #f8f8f8;
-    background: url(../img/starrynight.jpg) no-repeat center center;
+    background:#222 no-repeat center center;
+    background-image: url(../img/starrynight.jpg);
     background-size: cover;
     height: 100%;
 }
