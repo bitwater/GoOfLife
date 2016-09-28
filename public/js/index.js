@@ -20,7 +20,6 @@ $(window).scroll(function () {
   }
 
   parallax();
-
   //$('.social .col-md-12').each(function(){
   //
   //  var imagePos = $(this).offset().top;
@@ -35,8 +34,11 @@ $(window).scroll(function () {
 
 
 $(function(){
-  setTimeout($('.intro-message').fadeIn("slow"), 600);
+  if (Math.random() > 0.5) {
+    $('.intro-header').css("background", "url('http://oa06si0g5.bkt.clouddn.com/Journey6.jpeg') no-repeat center center");
+  }
 
+  setTimeout($('.intro-message').fadeIn("slow"), 600);
   $('.social .col-md-12').addClass('visibility');
   var browserWidth = $(window).width();
   if (browserWidth > 560){
