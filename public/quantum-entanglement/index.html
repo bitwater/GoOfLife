@@ -110,7 +110,16 @@ line.prototype.draw = function(i) {
 	ctx.beginPath();
 	var rando = rand(3, 30);
 	for (var j = 0, length = this.path.length; j < length; j++) {
-		ctx[(j === 0) ? 'moveTo' : 'lineTo'](this.path[j].x + rand(-rando, rando), this.path[j].y + rand(-rando, rando));
+//		ctx[(j === 0) ? 'moveTo' : 'lineTo'](this.path[j].x + rand(-rando, rando), this.path[j].y + rand(-rando, rando));
+		if (j === 0) {
+			ctx['moveTo'](this.path[j].x + rand(-rando, rando), this.path[j].y + rand(-rando, rando));
+		} else {
+			if (j % 2 === 0) {
+				ctx['lineTo'](this.path[j].x + rand(-rando, rando), this.path[j].y + rand(-rando, rando));
+			} else
+				ctx.arc(this.path[j].x + rand(-rando, rando), this.path[j].y + rand(-rando, rando), rando, 0, rand(0, 2)*Math.PI);
+//			ctx.arcTo(this.path[j].x, this.path[j].y, this.path[j].x + rand(-rando, rando), this.path[j].y + rand(-rando, rando), rand(1, rando));
+		}
 	}
 	ctx.strokeStyle = 'hsla(' + rand(this.hue, this.hue + 30) + ', 80%, 55%, ' + (this.life / 3) + ')';
 	ctx.lineWidth = rand(0.1, 3);
