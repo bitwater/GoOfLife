@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Magic Canvas</title>
+    <style>
+        body {
+            background: url("./bg.jpg") no-repeat;
+            background-size: cover;
+            min-height: 960px;
+        }
+
+        h1,h2 {
+            left:80%;
+            color: white;
+            position: fixed;
+        }
+
+        button {
+            font-size: large;
+        }
+    </style>
+</head>
+<body>
+<h1>Magic Canvas<br/></h1>
+<h2><br/><br/>by decaywood </h2>
+<canvas id="reactive-bg-canvas"></canvas>
+</body>
+<script></script>
+<script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/gsap/latest/TweenLite.min.js"></script>
+<script src="./magic-canvas.js"></script>
+<script>
+    function random_move () {
+        $.magicCanvas.draw({
+            type:"random-move",
+            rgb : function (circlePos) {
+                var px = circlePos.x;
+                var py = circlePos.y;
+                // do some computation....
+                return {r:parseInt(px % 255),g:parseInt(py % 255),b:203};
+            }
+        })
+    };
+    random_move();
+</script>
+</html>

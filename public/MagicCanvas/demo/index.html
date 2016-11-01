@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Magic Canvas</title>
+    <style>
+        body {
+            background: url("./MagicCanvas/bg.jpg") no-repeat;
+            background-size: cover;
+            min-height: 960px;
+        }
+
+        h1,h2 {
+            left:80%;
+            color: white;
+            position: fixed;
+        }
+
+        button {
+            font-size: large;
+        }
+    </style>
+</head>
+<body>
+<h1>Magic Canvas<br/></h1>
+<h2><br/><br/>by decaywood </h2>
+<canvas id="reactive-bg-canvas"></canvas>
+</body>
+<script></script>
+<script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/gsap/latest/TweenLite.min.js"></script>
+<script src="./MagicCanvas/magic-canvas.js"></script>
+<script>
+    function heart_beat () {
+        $.magicCanvas.draw({
+            lineLen: 18,
+            heartBeatCD: 3000,
+            heartBeatRange: 300,
+            type:"heart-beat",
+            rgb : function (circlePos, heartBeatCenter) {
+                var px = circlePos.x; // a point on boom circle
+                var py = circlePos.y;
+                var hbcx = heartBeatCenter.x;
+                var hbcy = heartBeatCenter.y;
+
+                var dis = Math.pow((px - hbcx), 2) + Math.pow((py - hbcy), 2);
+                var maxDis = 300 * 300;
+
+                var r = parseInt(255 * dis / maxDis);
+                // do some computation....
+                return {r:r,g:217,b:203};
+            }
+        })
+    }
+
+    heart_beat();
+</script>
+</html>
