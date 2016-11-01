@@ -108,7 +108,7 @@ line.prototype.changeTarget = function() {
 
 line.prototype.draw = function(i) {
 	ctx.beginPath();
-	var rando = rand(3, 25);
+	var rando = rand(3, 30);
 	for (var j = 0, length = this.path.length; j < length; j++) {
 		ctx[(j === 0) ? 'moveTo' : 'lineTo'](this.path[j].x + rand(-rando, rando), this.path[j].y + rand(-rando, rando));
 	}
