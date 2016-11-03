@@ -45,6 +45,7 @@ canvas { width: 100%; height: 100%; position: absolute; }
 <script>
 $(function(){
   var canvas = document.querySelector('canvas'),
+          tick = 0,
       ctx = canvas.getContext('2d')
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
@@ -58,7 +59,7 @@ $(function(){
 
   var dots = {
     nb: 1250,
-    distance: 46,
+    distance: 66,
     d_radius: 100,
     array: []
   };
@@ -101,7 +102,7 @@ $(function(){
     this.vy = -1 + Math.random() * 2;
 
     this.radius = Math.random() * 2;
-
+    this.distance = rand(0, 46);
     this.color = new Color();
 //    console.log(this);
   }
@@ -144,8 +145,7 @@ $(function(){
       for(j = 0; j < dots.nb; j++){
         i_dot = dots.array[i];
         j_dot = dots.array[j];
-        var distance = rand(10, dots.distance);
-        var distance = dots.distance;
+        var distance = i_dot.distance + j_dot.distance;
 
         if((i_dot.x - j_dot.x) < distance && (i_dot.y - j_dot.y) < distance && (i_dot.x - j_dot.x) > - distance && (i_dot.y - j_dot.y) > - distance){
 //          if((i_dot.x - mousePosition.x) < dots.d_radius && (i_dot.y - mousePosition.y) < dots.d_radius && (i_dot.x - mousePosition.x) > - dots.d_radius && (i_dot.y - mousePosition.y) > - dots.d_radius){
@@ -158,6 +158,14 @@ $(function(){
 //          }
         }
       }
+    }
+  }
+
+  function updateV() {
+    for(i = 0; i < dots.nb; i++) {
+      var dot = dots.array[i];
+      dot.vx = -1 + Math.random() * 2;
+      dot.vy = -1 + Math.random() * 2;
     }
   }
 
@@ -177,6 +185,10 @@ $(function(){
     moveDots();
     connectDots();
     drawDots();
+    tick++;
+    if (tick % 60 == 0) {
+      updateV();
+    }
 
     requestAnimationFrame(animateDots);	
   }
