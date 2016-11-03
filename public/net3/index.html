@@ -58,7 +58,7 @@ $(function(){
 
   var dots = {
     nb: 1250,
-    distance: 36,
+    distance: 66,
     d_radius: 100,
     array: []
   };
@@ -101,7 +101,7 @@ $(function(){
     this.vy = -1 + Math.random() * 2;
 
     this.radius = Math.random() * 2;
-
+    this.distance = rand(0, 33);
     this.color = new Color();
 //    console.log(this);
   }
@@ -144,8 +144,9 @@ $(function(){
       for(j = 0; j < dots.nb; j++){
         i_dot = dots.array[i];
         j_dot = dots.array[j];
+        var distance = i_dot.distance + j_dot.distance;
 
-        if((i_dot.x - j_dot.x) < dots.distance && (i_dot.y - j_dot.y) < dots.distance && (i_dot.x - j_dot.x) > - dots.distance && (i_dot.y - j_dot.y) > - dots.distance){
+        if((i_dot.x - j_dot.x) < distance && (i_dot.y - j_dot.y) < distance && (i_dot.x - j_dot.x) > - distance && (i_dot.y - j_dot.y) > - distance){
 //          if((i_dot.x - mousePosition.x) < dots.d_radius && (i_dot.y - mousePosition.y) < dots.d_radius && (i_dot.x - mousePosition.x) > - dots.d_radius && (i_dot.y - mousePosition.y) > - dots.d_radius){
             ctx.beginPath();
             ctx.strokeStyle = averageColorStyles(i_dot, j_dot);
@@ -157,6 +158,10 @@ $(function(){
         }
       }
     }
+  }
+
+  function rand(min, max) {
+    return Math.random() * (max - min) + min;
   }
 
   function drawDots() {
