@@ -1,11 +1,8 @@
 var User = require('../models/User');
-
+var apiHandler = require('../libs/ApiHandler');
 
 exports.postUser = function(req, res) {
     console.log(req.body);
-
-    var score = req.body.score;
-    var id = req.body.id;
     var name = req.body.name;
     var side = req.body.side;
 
@@ -18,13 +15,15 @@ exports.udpateScore = function(req, res) {
     var score = req.body.score;
     var id = req.body.id;
 
-    return User.findOneAndUpdate({openId: openId}, {score: score}, function(err, doc){
+    return User.findOneAndUpdate({_id: id}, {score: score}, function(err, doc){
         if (err) {
-
+            apiHandler.OUTER_DEF(res, err);
         }
 
         if (doc) {
-
+            apiHandler.OK(res, {
+                msg: "ok"
+            });
         }
     })
 }
@@ -33,5 +32,10 @@ exports.getLeaderbord = function(req, res) {
     var id = req.params.id;
     var side = 'life';
 
-
 };
+
+exports.test = function(req, res) {
+    apiHandler.OK(res, {
+        msg: "user ok"
+    })
+}

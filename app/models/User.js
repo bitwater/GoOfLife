@@ -12,7 +12,7 @@ var
 var schema = new Schema({
   name: String,
   avatar: String,
-  score: {type: Number, default: 0},
+  score_2048: {type: Number, default: 0},
   createdAt: {type: Number, default: Date.now},
   updatedAt: {type: Number, default: Date.now},
   isDeleted: {type: Boolean, default: false}
