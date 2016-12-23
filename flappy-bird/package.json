@@ -1,0 +1,51 @@
+{
+  "name": "flappy-bird-reborn-multiplayer",
+  "private": "true",
+  "version": "0.0.0",
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browser": {
+    "Phaser": "./node_modules/phaser/build/custom/phaser-arcade-physics.js"
+  },
+  "browserify-shim": {
+    "Phaser": "Phaser"
+  },
+  "devDependencies": {
+    "browserify": "~10.2.3",
+    "browserify-shim": "~3.8.7",
+    "connect-livereload": "^0.5.3",
+    "grunt": "~0.4.2",
+    "grunt-autoprefixer": "~3.0.1",
+    "grunt-browserify": "~3.8.0",
+    "grunt-concurrent": "^1.0.0",
+    "grunt-contrib-clean": "~0.6.0",
+    "grunt-contrib-concat": "~0.5.1",
+    "grunt-contrib-copy": "~0.8.0",
+    "grunt-contrib-cssmin": "~0.12.3",
+    "grunt-contrib-imagemin": "~0.9.4",
+    "grunt-contrib-jshint": "~0.11.2",
+    "grunt-contrib-less": "~1.0.1",
+    "grunt-contrib-uglify": "~0.9.1",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-nodemon": "~0.4.0",
+    "grunt-recess": "~1.0.1",
+    "grunt-rev": "~0.1.0",
+    "grunt-usemin": "~3.0.0",
+    "jshint-stylish": "~2.0.0",
+    "load-grunt-tasks": "~3.2.0",
+    "phaser": "~2.3.0",
+    "socket.io-client": "^1.3.5",
+    "time-grunt": "~1.2.1"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "dependencies": {
+    "express": "^4.12.4",
+    "socket.io": "^1.3.5"
+  },
+  "start": "node server.js"
+}
