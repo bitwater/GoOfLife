@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>走近2050之演化</title>
+
+  <link href="style/main.css" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="meta/apple-touch-icon.png">
+  <meta name="description"
+        content="走近2050之演化">
+  <meta name="keywords"
+        content="2048,走近2050,原子,分子,基因,细胞,个体,群落,语言,文化,生命,游戏,网络,复杂,自由">
+  <!--<link rel="apple-touch-startup-image" href="meta/apple-touch-startup-image-640x1096.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"> &lt;!&ndash; iPhone 5+ &ndash;&gt;-->
+  <!--<link rel="apple-touch-startup-image" href="meta/apple-touch-startup-image-640x920.png"  media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2)"> &lt;!&ndash; iPhone, retina &ndash;&gt;-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport"
+        content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+<body>
+<div id='wx_pic' style='margin:0 auto; display:none;'>
+  <img src="/logo.png"/>
+</div>
+<div id="audio_btn" class="off">
+  <audio loop="" src="http://oa06si0g5.bkt.clouddn.com/Christopher%20Tin%20-%20Sogno%20di%20Volare%20%28%E2%80%9CThe%20Dream%20of%20Flight%E2%80%9D%29.mp3" id="audio"></audio>
+</div>
+
+<div class="container">
+  <div class="heading">
+    <h1 class="title">2050</h1>
+
+    <div class="scores-container">
+      <div class="score-container">0</div>
+      <div class="best-container">0</div>
+    </div>
+  </div>
+
+  <div class="above-game">
+    <p class="game-intro"><a href="https://www.amazon.cn/gp/product/B01GZD9KF6/ref=oh_aui_detailpage_o00_s00?ie=UTF8&psc=1"
+                             target="_blank">走近2050之演化</a></p>
+    <!--<a class="restart-button">新游戏</a>-->
+    <a class="restart-button" id="leaderboard">排行榜</a>
+  </div>
+
+  <div class="game-container">
+    <div class="game-message">
+      <p></p>
+
+      <div class="lower">
+        <a class="keep-playing-button">继续</a>
+        <a class="retry-button">再来一次</a>
+      </div>
+    </div>
+
+    <div class="grid-container">
+      <div class="grid-row">
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+      </div>
+      <div class="grid-row">
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+      </div>
+      <div class="grid-row">
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+      </div>
+      <div class="grid-row">
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+      </div>
+    </div>
+
+    <div class="tile-container">
+
+    </div>
+  </div>
+
+  <br><br><br><br><br>
+  <hr>
+  <p class="game-explanation">
+    KK:【科技想要什么】<br>
+    演化历史上重大革命如下：<br>
+    单一可复制分子 → 可复制分子互动群落 <br>
+    可复制分子 → 由可复制分子串成染色体 <br>
+    RNA酶型染色体 → DNA蛋白质 <br>
+    无核细胞 → 有核细胞 <br>
+    无性繁殖（克隆） → 有性重组 <br>
+    单细胞有机体 → 多细胞有机体 <br>
+    单一个体 → 群落和超个体 <br>
+    灵长类群体 → 以语言为基础的群体 <br>
+    口头传说 → 文字/数学符号 <br>
+    手稿 → 印刷品 <br>
+    书本知识 → 科学方法 <br>
+    手工制造 → 规模化生产 <br>
+    工业革命 → 无所不在的全球通信 <br>
+    Next Coming Soon ... <br>
+    互联网 → <span id="ai">超AI？</span><br>
+    <a href="https://www.amazon.cn/gp/product/B01GZD9KF6/ref=oh_aui_detailpage_o00_s00?ie=UTF8&psc=1"
+       style="font-size: 22px;" target="_blank">走近2050！</a>
+  </p>
+  <hr>
+  <p>
+    Based on <a href="https://github.com/gabrielecirulli/2048" target="_blank">Gabriele Cirulli 2048</a>
+    <br>BGM: Christopher Tin - Sogno di Volare (“The Dream of Flight”)
+    <br>More &nbsp <a href="http://wiki.swarma.net/index.php/%E9%9B%86%E6%99%BA%E5%AE%9E%E9%AA%8C%E5%AE%A4" target="_blank">集智实验室</a> &nbsp <a href="http://caiyunapp.com" target="_blank">彩云天气</a> &nbsp <a href="/">Go of Life</a>
+    <br>By bitwater
+  </p>
+</div>
+
+<script src="js/bind_polyfill.js"></script>
+<script src="js/classlist_polyfill.js"></script>
+<script src="js/animframe_polyfill.js"></script>
+<script src="js/keyboard_input_manager.js"></script>
+<script src="js/html_actuator.js"></script>
+<script src="js/grid.js"></script>
+<script src="js/tile.js"></script>
+<script src="js/ai.js"></script>
+<script src="js/local_storage_manager.js"></script>
+<script src="js/game_manager.js"></script>
+<script src="js/application.js"></script>
+<script type='text/javascript'>
+  var _vds = _vds || [];
+  window._vds = _vds;
+  (function () {
+    _vds.push(['setAccountId', 'a2d6e101bded4107a46145e95259ab2f']);
+    //      _vds.push(['setCS1','user_id', player.id]);
+    (function () {
+      var vds = document.createElement('script');
+      vds.type = 'text/javascript';
+      vds.async = true;
+      vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(vds, s);
+    })();
+  })();
+</script>
+</body>
+</html>
