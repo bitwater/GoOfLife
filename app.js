@@ -82,7 +82,7 @@ var environment = process.env.NODE_ENV || 'development';
 // General configuration
 app.set('port', process.env.PORT || 3000);
 http.listen(app.get('port'), function() {
-  console.log('Conway started: ' + app.get('port') + ' (' + environment + ')');
+  console.log('Conway started: ' + app.get('port') + ' (' + environment + ')', http.address());
 });
 
 requirejs.config({
