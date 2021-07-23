@@ -78,20 +78,20 @@ KeyboardInputManager.prototype.listen = function () {
   //  e.preventDefault();
   //  self.emit('run');
   //})
-  var audioButton = document.getElementById('audio_btn');
-  var audio = document.getElementById('audio');
-  audioButton.addEventListener('click', function(e) {
-    e.preventDefault();
-    if (onOff) {
-      audioButton.classList.add('rotate');
-      onOff = false;
-      audio.play();
-    } else {
-      audioButton.classList.remove('rotate');
-      onOff = true;
-      audio.pause();
-    }
-  })
+  // var audioButton = document.getElementById('audio_btn');
+  // var audio = document.getElementById('audio');
+  // audioButton.addEventListener('click', function(e) {
+  //   e.preventDefault();
+  //   if (onOff) {
+  //     audioButton.classList.add('rotate');
+  //     onOff = false;
+  //     audio.play();
+  //   } else {
+  //     audioButton.classList.remove('rotate');
+  //     onOff = true;
+  //     audio.pause();
+  //   }
+  // })
 
   // Respond to swipe events
   var touchStartClientX, touchStartClientY;
